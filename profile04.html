@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dr. Venkatasaarathy | Pediatric Cardiologist</title>
+    <!-- Font Awesome 6 (free) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(145deg, #eef2f7 0%, #f8fafc 100%);
+            font-family: 'Inter', 'Segoe UI', Roboto, system-ui, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 20px;
+            padding: 10px;
+        }
+
+        .profile-article {
+            max-width: 1000px;
+            background: white;
+            border-radius: 42px;
+            box-shadow: 0 30px 60px -15px rgba(0, 40, 60, 0.25);
+            overflow: hidden;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255,255,255,0.5);
+            backdrop-filter: blur(2px);
+        }
+
+        /* article header – hero with card integration */
+        .article-header {
+            background: #0b2f4e;
+            background-image: radial-gradient(circle at 70% 20%, #1b4b70, #05233b);
+            padding: 30px 40px 20px 40px;
+            color: white;
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        .breadcrumb {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            letter-spacing: 0.3px;
+        }
+
+        .breadcrumb i {
+            margin-right: 6px;
+        }
+
+        .profile-badge {
+            background: rgba(255,255,255,0.15);
+            padding: 6px 16px;
+            border-radius: 40px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            border: 1px solid rgba(255,255,255,0.25);
+        }
+
+        .title-section h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            line-height: 1.1;
+            margin-bottom: 10px;
+        }
+
+        .title-section .tagline {
+            font-size: 1.4rem;
+            font-weight: 300;
+            opacity: 0.9;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .title-section .tagline span {
+            background: rgba(255,215,0,0.2);
+            padding: 4px 12px;
+            border-radius: 100px;
+            font-size: 1rem;
+            font-weight: 500;
+            border: 1px solid #f5c542;
+        }
+
+        /* article body – two column layout */
+        .article-body {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .doctor-visual {
+            flex: 1 1 300px;
+            background: #f4f9ff;
+            padding: 35px 25px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border-right: 2px dashed #d9e6f2;
+        }
+
+        /* reusing doctor-card styling with some adaptation */
+        .doctor-card {
+            width: 100%;
+            max-width: 320px;
+            background: white;
+            border-radius: 36px;
+            box-shadow: 0 25px 40px -12px rgba(0,45,75,0.25);
+            overflow: hidden;
+            border: 1px solid rgba(0,98,155,0.1);
+            transition: transform 0.3s;
+            margin-bottom: 25px;
+        }
+
+        .doctor-card:hover {
+            transform: translateY(-6px);
+        }
+
+        .doctor-image {
+            position: relative;
+            width: 100%;
+            height: 350px;
+            background: #cbdbe9;
+        }
+
+        .doctor-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: top;
+        }
+
+        .experience-badge {
+            position: absolute;
+            bottom: 16px;
+            right: 16px;
+            background: #1f4e7a;
+            backdrop-filter: blur(4px);
+            background: linear-gradient(135deg, #1f3f5c, #12314b);
+            padding: 10px 16px;
+            border-radius: 60px;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            line-height: 1.2;
+            box-shadow: 0 10px 15px -5px rgba(0,0,0,0.4);
+            border: 1px solid #ffd966;
+        }
+
+        .experience-badge .years {
+            font-size: 1.7rem;
+            font-weight: 800;
+        }
+
+        .experience-badge .text {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .doctor-info {
+            padding: 22px 18px 20px;
+            text-align: center;
+        }
+
+        .doctor-info h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+            color: #0a2942;
+        }
+
+        .designation {
+            color: #1e6491;
+            font-weight: 600;
+            font-size: 1rem;
+            margin-bottom: 15px;
+            letter-spacing: 0.3px;
+        }
+
+        .doctor-specialties {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .specialty-tag {
+            background: #e2effb;
+            color: #0a3d62;
+            padding: 5px 15px;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .doctor-details {
+            background: #f4f9fe;
+            border-radius: 24px;
+            padding: 15px;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .detail-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 8px 0;
+            border-bottom: 1px solid #d5e2ed;
+            font-size: 0.95rem;
+        }
+
+        .detail-item:last-child {
+            border-bottom: none;
+        }
+
+        .detail-item i {
+            width: 22px;
+            color: #1d6f9c;
+            font-size: 1.1rem;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+        }
+
+        .btn-primary, .btn-secondary {
+            text-decoration: none;
+            padding: 12px 25px;
+            border-radius: 40px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .btn-primary {
+            background: #1d5b8e;
+            color: white;
+            box-shadow: 0 5px 12px rgba(23,85,140,0.3);
+        }
+
+        .btn-primary:hover {
+            background: #0b3d62;
+            transform: scale(1.02);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #1d5b8e;
+            border: 1px solid #1d5b8e;
+        }
+
+        .btn-secondary:hover {
+            background: #e9f0f9;
+        }
+
+        .mini-note {
+            font-size: 0.8rem;
+            color: #3a6685;
+            margin-top: 12px;
+        }
+
+        /* profile story section */
+        .doctor-story {
+            flex: 2 1 500px;
+            background: white;
+            padding: 40px 40px 35px 40px;
+        }
+
+        .story-section {
+            margin-bottom: 30px;
+        }
+
+        .story-section h3 {
+            font-size: 1.5rem;
+            font-weight: 650;
+            color: #0a2c44;
+            margin-bottom: 18px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 3px solid #adc9e6;
+            padding-bottom: 8px;
+        }
+
+        .story-section h3 i {
+            color: #1e6a9f;
+            font-size: 1.7rem;
+        }
+
+        .story-section p {
+            font-size: 1.08rem;
+            line-height: 1.6;
+            color: #1e313f;
+            margin-bottom: 18px;
+        }
+
+        .highlight-list {
+            list-style: none;
+        }
+
+        .highlight-list li {
+            margin-bottom: 16px;
+            display: flex;
+            gap: 15px;
+            align-items: flex-start;
+        }
+
+        .highlight-list li i {
+            color: #1d6f9c;
+            font-size: 1.3rem;
+            min-width: 28px;
+            margin-top: 3px;
+        }
+
+        .highlight-list li strong {
+            color: #0f3e60;
+            font-weight: 700;
+        }
+
+        .testimonial-mini {
+            background: #e9f2fb;
+            border-radius: 28px;
+            padding: 25px;
+            margin-top: 20px;
+            border-left: 6px solid #1d6f9c;
+        }
+
+        .testimonial-mini i {
+            color: #2c6085;
+            margin-right: 5px;
+            font-size: 1.2rem;
+            opacity: 0.7;
+        }
+
+        .testimonial-mini p {
+            font-style: italic;
+            margin-bottom: 12px;
+        }
+
+        .testimonial-mini .author {
+            font-weight: 600;
+            color: #0a2942;
+        }
+
+        .footer-note {
+            margin-top: 25px;
+            font-size: 0.9rem;
+            color: #4f6f8a;
+            border-top: 1px solid #cbdae7;
+            padding-top: 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-note .social a {
+            text-decoration: none;
+            font-size: 1.4rem;
+            margin-left: 15px;
+            color: #264e70;
+            transition: color 0.3s;
+        }
+
+        .footer-note .social a:hover {
+            color: #1d6f9c;
+        }
+
+        @media (max-width: 800px) {
+            .article-body {
+                flex-direction: column;
+            }
+            .doctor-visual {
+                border-right: none;
+                border-bottom: 2px dashed #c0d4e5;
+            }
+            .title-section h1 {
+                font-size: 2.3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="profile-article">
+        <!-- header with name and context (paediatric cardiology) -->
+        <div class="article-header">
+            <div class="header-top">
+                <div class="breadcrumb"><i class="fas fa-heart"></i>  paediatric cardiology · congenital heart disease</div>
+                <div class="profile-badge"><i class="fas fa-star"></i> senior consultant</div>
+            </div>
+            <div class="title-section">
+                <h1>Dr. Venkatasaarathy</h1>
+                <div class="tagline">
+                    <span>MBBS, MD Pediatrics, FNB Pediatric Cardiology</span>
+                    <span>13+ years</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- article body: left card + right narrative -->
+        <div class="article-body">
+            <!-- left column: doctor card for Dr. Venkatasaaarathy -->
+            <div class="doctor-visual">
+                <div class="doctor-card">
+                    <div class="doctor-image">
+                        <!-- venkat.png with fallback -->
+                        <img src="venkat.png" alt="Dr. Venkatasaaarathy" onerror="this.src='https://via.placeholder.com/400x350/2b5b7a/fff?text=Dr.+Venkatasaaarathy'">
+                        <div class="experience-badge">
+                            <span class="years">13+</span>
+                            <span class="text">Years</span>
+                        </div>
+                    </div>
+                    
+                    <div class="doctor-info">
+                        <h2>Dr. Venkatasaarathy</h2>
+                        <p class="designation">Pediatric Cardiologist & Child Health</p>
+                        
+                        <div class="doctor-specialties">
+                            <span class="specialty-tag">Pediatric Cardiology</span>
+                            <span class="specialty-tag">Neonatal Care</span>
+                            <span class="specialty-tag">Congenital HD</span>
+                            <span class="specialty-tag">Adolescent Health</span>
+                        </div>
+                        
+                        <div class="doctor-details">
+                            <div class="detail-item">
+                                <i class="fas fa-graduation-cap"></i>
+                                <span>MBBS, MD Pediatrics, FNB Pediatric Cardiology</span>
+                            </div>
+                            <div class="detail-item">
+                                <i class="fas fa-hospital"></i>
+                                <span>Colorful Children's Hospital & Apollo Clinic</span>
+                            </div>
+                            <div class="detail-item">
+                                <i class="fas fa-calendar-alt"></i>
+                                <span>13+ Years treating little hearts</span>
+                            </div>
+                            <div class="detail-item">
+                                <i class="fas fa-heart"></i>
+                                <span>Special interest: fetal echocardiography</span>
+                            </div>
+                        </div>
+                        
+                        <div class="action-buttons">
+                            <a href="appointment.html" class="btn-primary"><i class="fas fa-calendar-check"></i> Book (kids)</a>
+                            <a href="about.html" class="btn-secondary"><i class="fas fa-arrow-left"></i> Back</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="mini-note"><i class="fas fa-arrow-up"></i> detailed story below</div>
+            </div>
+
+            <!-- right column: long‑form profile article for Dr. Venkatasaaarathy -->
+            <div class="doctor-story">
+                <!-- introduction -->
+                <div class="story-section">
+                    <h3><i class="fas fa-user-md"></i>  Meet Dr. Venkatasaaarathy</h3>
+                    <p>Dr. Venkatasaaarathy is a distinguished <strong>Pediatric Cardiologist</strong> with over 13 years of dedicated experience in diagnosing and managing heart conditions in children — from fetuses to adolescents. He currently serves as a senior consultant at <strong>Colorful Children's Hospital & Apollo Clinic</strong>, where he leads the fetal cardiology and postnatal cardiac care programs. His empathetic approach and clinical precision have made him a trusted name among families dealing with congenital and acquired heart disease.</p>
+                </div>
+
+                <!-- qualifications & training -->
+                <div class="story-section">
+                    <h3><i class="fas fa-graduation-cap"></i>  Education & fellowships</h3>
+                    <ul class="highlight-list">
+                        <li><i class="fas fa-check-circle"></i> <strong>MBBS</strong> – Madras Medical College, Chennai (2008)</li>
+                        <li><i class="fas fa-check-circle"></i> <strong>MD Pediatrics</strong> – All India Institute of Medical Sciences, New Delhi (2012)</li>
+                        <li><i class="fas fa-check-circle"></i> <strong>FNB Pediatric Cardiology</strong> – Narayana Health, Bengaluru (2016)</li>
+                        <li><i class="fas fa-check-circle"></i> Advanced fetal echocardiography – Great Ormond Street Hospital, London (2019)</li>
+                    </ul>
+                </div>
+
+                <!-- core expertise & specialty domains -->
+                <div class="story-section">
+                    <h3><i class="fas fa-stethoscope"></i>  Core expertise</h3>
+                    <p>Dr. Venkatasaaarathy's clinical practice covers the entire spectrum of paediatric cardiology, with special focus on early intervention and family-centred care. He has performed over <strong>1,500+ echocardiograms</strong> in neonates and is skilled in both non-invasive and invasive cardiac procedures for children.</p>
+                    <div style="display: flex; flex-wrap: wrap; gap: 12px; margin: 20px 0;">
+                        <span style="background:#e7f0fb; padding:6px 18px; border-radius: 60px; font-weight:500;">🔹 Fetal echocardiography (from 16 weeks)</span>
+                        <span style="background:#e7f0fb; padding:6px 18px; border-radius: 60px; font-weight:500;">🔹 Neonatal cardiac ICU</span>
+                        <span style="background:#e7f0fb; padding:6px 18px; border-radius: 60px; font-weight:500;">🔹 Device closure (ASD, VSD, PDA)</span>
+                        <span style="background:#e7f0fb; padding:6px 18px; border-radius: 60px; font-weight:500;">🔹 Kawasaki disease follow‑up</span>
+                        <span style="background:#e7f0fb; padding:6px 18px; border-radius: 60px; font-weight:500;">🔹 Heart failure in children</span>
+                    </div>
+                </div>
+
+                <!-- hospital & team -->
+                <div class="story-section">
+                    <h3><i class="fas fa-hospital"></i>  Colorful Children's Hospital & Apollo Clinic</h3>
+                    <p>At this dedicated paediatric centre, Dr. Venkatasaaarathy works within a multidisciplinary team that includes paediatric cardiac surgeons, intensivists, and fetal medicine specialists. Together they run a comprehensive <strong>congenital heart program</strong> offering prenatal counselling, surgical correction, and long‑term follow‑up. The institution is known for its child‑friendly environment and high success rates in complex neonatal cardiac surgery.</p>
+                </div>
+
+                <!-- philosophy -->
+                <div class="story-section">
+                    <h3><i class="fas fa-quote-left"></i>  Care philosophy</h3>
+                    <p>"Every child's heart is unique. My goal is to guide families through the uncertainty of a diagnosis with clarity and compassion. From the first fetal scan to the teenager ready for sports, I believe in treating the child, not just the condition."</p>
+                </div>
+
+                <!-- parent testimonial -->
+                <div class="testimonial-mini">
+                    <i class="fas fa-quote-left"></i> <p>"Dr. Venkatasaaarathy diagnosed our baby's heart defect at 22 weeks of pregnancy. He walked us through every step, and after delivery, the treatment was seamless. Today our daughter is a playful 4‑year‑old. We are forever grateful."</p>
+                    <div class="author">— S. Rajan, father of Aadhya</div>
+                </div>
+
+                <!-- publications & research -->
+                <div class="story-section">
+                    <h3><i class="fas fa-scroll"></i>  Selected publications</h3>
+                    <ul style="list-style-type: none; padding-left: 0;">
+                        <li style="margin-bottom: 10px;"><i class="fas fa-file-alt" style="color:#26648b; width: 24px;"></i> <em>Outcomes of transcatheter PDA closure in preterm infants under 2kg</em> (Indian Pediatrics, 2023)</li>
+                        <li style="margin-bottom: 10px;"><i class="fas fa-file-alt" style="color:#26648b; width: 24px;"></i> <em>Fetal echocardiography in rural outreach – a telemedicine model</em> (J. Fetal Medicine, 2022)</li>
+                        <li style="margin-bottom: 10px;"><i class="fas fa-file-alt" style="color:#26648b; width: 24px;"></i> <em>Iron deficiency and its impact on cardiac function in adolescents</em> (Pediatric Cardiology Today, 2021)</li>
+                    </ul>
+                </div>
+
+                <!-- footer note inside article -->
+                <div class="footer-note">
+                    <span><i class="fas fa-calendar-alt"></i>  practising at Apollo Hospital · Chennai</span>
+                    <span class="social">
+                        <a href="https://www.linkedin.com/in/venkatasaarathy-r-73a226386/" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="https://www.instagram.com/_venkat_1506/" target="_blank"><i class="fab fa-instagram"></i></a>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

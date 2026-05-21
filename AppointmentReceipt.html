@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Dr. PK Clinic | Official Appointment Receipt</title>
+    <!-- html2pdf bundle for PDF generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <!-- Google Fonts for professional typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <!-- Font Awesome 6 (free icons) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(145deg, #eef2f7 0%, #d9e2ec 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem 1.5rem;
+        }
+
+        /* main receipt card */
+        .receipt-container {
+            max-width: 720px;
+            width: 100%;
+            margin: 0 auto;
+            background: transparent;
+        }
+
+        .receipt-card {
+            background: #ffffff;
+            border-radius: 32px;
+            box-shadow: 0 25px 45px -12px rgba(0, 0, 0, 0.25), 0 2px 6px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+            transition: transform 0.2s ease;
+        }
+
+        /* header with elegant accent */
+        .receipt-header {
+            background: linear-gradient(112deg, #0f3b5f 0%, #1a5276 100%);
+            padding: 1.8rem 2rem 1.5rem 2rem;
+            color: white;
+            text-align: center;
+            position: relative;
+        }
+
+        .clinic-badge {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+        }
+
+        .clinic-icon {
+            font-size: 2.2rem;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+        }
+
+        .clinic-name {
+            font-size: 1.9rem;
+            font-weight: 700;
+            letter-spacing: -0.3px;
+            margin: 0;
+            line-height: 1.2;
+        }
+
+        .receipt-sub {
+            font-size: 0.9rem;
+            font-weight: 400;
+            opacity: 0.85;
+            margin-top: 6px;
+            letter-spacing: 0.3px;
+        }
+
+        .receipt-divider {
+            height: 4px;
+            width: 70px;
+            background: #ffb347;
+            margin: 14px auto 0 auto;
+            border-radius: 4px;
+        }
+
+        /* main content */
+        .receipt-body {
+            padding: 1.8rem 2rem 2rem 2rem;
+        }
+
+        /* payment status pill */
+        .status-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: #f8fafc;
+            padding: 0.6rem 1.2rem;
+            border-radius: 100px;
+            width: auto;
+            margin: 0 auto 1.8rem auto;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 1rem;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+            border: 1px solid #e2e8f0;
+        }
+
+        .status-success {
+            background: #e6f9ed;
+            color: #1e7b48;
+            border-left: 4px solid #2b9348;
+        }
+
+        .status-pending {
+            background: #fff5eb;
+            color: #c2410c;
+            border-left: 4px solid #f97316;
+        }
+
+        /* info grid - modern two-column layout */
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem 1.5rem;
+            margin: 1.5rem 0 1rem 0;
+        }
+
+        .info-item {
+            border-bottom: 1px solid #edf2f7;
+            padding-bottom: 0.75rem;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .info-label {
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #5b6e8c;
+            margin-bottom: 6px;
+        }
+
+        .info-value {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #0f2b3d;
+            word-break: break-word;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .info-value i {
+            color: #2c7da0;
+            font-size: 0.85rem;
+            width: 20px;
+        }
+
+        /* full-width rows (special cases) */
+        .full-row {
+            grid-column: span 2;
+        }
+
+        .problem-text {
+            background: #f1f5f9;
+            padding: 0.5rem 0.9rem;
+            border-radius: 16px;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        /* footer meta */
+        .receipt-footer {
+            margin-top: 1.8rem;
+            padding-top: 1rem;
+            border-top: 2px dashed #e2edf7;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            font-size: 0.7rem;
+            color: #5c6f87;
+        }
+
+        .clinic-contact {
+            display: flex;
+            gap: 18px;
+        }
+
+        .clinic-contact span i {
+            margin-right: 5px;
+            font-size: 0.7rem;
+        }
+
+        .receipt-stamp {
+            font-family: monospace;
+            font-size: 0.65rem;
+            background: #fef9e6;
+            padding: 4px 10px;
+            border-radius: 30px;
+            color: #b45309;
+        }
+
+        /* button panel */
+        .action-buttons {
+            display: flex;
+            gap: 14px;
+            margin-top: 28px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 12px 10px;
+            border-radius: 44px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .btn-primary {
+            background: #1f6392;
+            color: white;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-primary:hover {
+            background: #0f4a6e;
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background: #f1f5f9;
+            color: #1e2f44;
+            border: 1px solid #cbd5e1;
+        }
+
+        .btn-secondary:hover {
+            background: #e2e8f0;
+            transform: translateY(-1px);
+        }
+
+        /* watermark / brand */
+        .digital-stamp {
+            text-align: right;
+            font-size: 0.65rem;
+            margin-top: 0.5rem;
+            opacity: 0.7;
+        }
+
+        @media (max-width: 560px) {
+            .receipt-body {
+                padding: 1.5rem;
+            }
+            .info-grid {
+                grid-template-columns: 1fr;
+                gap: 0.8rem;
+            }
+            .full-row {
+                grid-column: span 1;
+            }
+            .clinic-name {
+                font-size: 1.5rem;
+            }
+        }
+
+        /* print optimization */
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+                margin: 0;
+            }
+            .receipt-container {
+                max-width: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            .receipt-card {
+                box-shadow: none;
+                border-radius: 0;
+            }
+            .action-buttons {
+                display: none;
+            }
+            .receipt-header {
+                background: #0f3b5f;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .status-pill {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .btn, button {
+                display: none;
+            }
+            .receipt-footer {
+                border-top: 1px solid #ccc;
+            }
+        }
+
+        /* minor animations */
+        .receipt-card {
+            animation: fadeSlideUp 0.4s ease-out;
+        }
+
+        @keyframes fadeSlideUp {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="receipt-container">
+    <div class="receipt-card" id="receiptBox">
+        <!-- Header Section with branding -->
+        <div class="receipt-header">
+            <div class="clinic-badge">
+                <i class="fas fa-stethoscope clinic-icon"></i>
+                <h1 class="clinic-name">Dr. PK Clinic</h1>
+                <i class="fas fa-heartbeat clinic-icon"></i>
+            </div>
+            <div class="receipt-sub">Advanced Multi-specialty Care</div>
+            <div class="receipt-divider"></div>
+            <div style="margin-top: 12px; font-size: 0.8rem; letter-spacing: 1px;">
+                <i class="fas fa-receipt"></i> OFFICIAL APPOINTMENT RECEIPT
+            </div>
+        </div>
+
+        <!-- Body Content -->
+        <div class="receipt-body">
+            <!-- Dynamic payment status block -->
+            <div id="paymentStatusBlock" style="text-align: center; margin-bottom: 8px;"></div>
+
+            <!-- dynamic receipt information grid -->
+            <div id="receiptContentGrid" class="info-grid"></div>
+
+            <!-- Footer info: timestamp + clinic info -->
+            <div class="receipt-footer">
+                <div class="clinic-contact">
+                    <span><i class="fas fa-phone-alt"></i> +91 98765 43210</span>
+                    <span><i class="fas fa-envelope"></i> care@drpkclinic.com</span>
+                </div>
+                <div class="receipt-stamp">
+                    <i class="fas fa-check-circle"></i> Digitally Verified
+                </div>
+            </div>
+            <div class="digital-stamp">
+                <i class="far fa-clock"></i> Generated on system • Keep for records
+            </div>
+        </div>
+    </div>
+
+    <!-- Action Buttons Panel (outside print area but remains functional) -->
+    <div class="action-buttons">
+        <button class="btn btn-primary" id="downloadPdfBtn">
+            <i class="fas fa-file-pdf"></i> Download PDF Receipt
+        </button>
+        <button class="btn btn-secondary" id="printReceiptBtn">
+            <i class="fas fa-print"></i> Print Receipt
+        </button>
+    </div>
+</div>
+
+<script>
+    (function() {
+        // --------------------------------------------------------------
+        // 1. Retrieve appointment data from localStorage
+        // --------------------------------------------------------------
+        let appointmentData = {};
+        try {
+            const stored = localStorage.getItem("appointmentReceipt");
+            if (stored && stored !== "undefined") {
+                appointmentData = JSON.parse(stored);
+            }
+        } catch(e) {
+            console.warn("Error parsing receipt data", e);
+            appointmentData = {};
+        }
+
+        // Ensure default fallbacks for missing fields (graceful handling)
+        const defaultData = {
+            appointmentId: "PK" + Math.floor(Math.random() * 10000),
+            name: "Guest Patient",
+            phone: "Not provided",
+            age: "--",
+            date: "Not scheduled",
+            time: "--:--",
+            problem: "General consultation",
+            gender: "other",
+            payment: "COD",
+            created: new Date().toLocaleString()
+        };
+
+        // Merge with defaults (keep original data if exists)
+        const finalData = { ...defaultData, ...appointmentData };
+        // If appointmentId missing but we have something from storage, ensure not empty
+        if (!finalData.appointmentId || finalData.appointmentId === "") {
+            finalData.appointmentId = "PK" + Math.floor(Math.random() * 100000);
+        }
+        if (!finalData.created || finalData.created === "") {
+            finalData.created = new Date().toLocaleString();
+        }
+
+        // Helper: Gender formatting with icons
+        const formatGender = (gender) => {
+            const g = (gender || "").toLowerCase();
+            if (g === "male") return "Male <i class='fas fa-mars'></i>";
+            if (g === "female") return "Female <i class='fas fa-venus'></i>";
+            return "Other <i class='fas fa-genderless'></i>";
+        };
+
+        // Payment method mapping with icon
+        const formatPaymentMethod = (method) => {
+            const m = (method || "").toUpperCase();
+            if (m === "UPI") return "<i class='fab fa-google-pay'></i> UPI Payment";
+            if (m === "CARD") return "<i class='fas fa-credit-card'></i> Credit / Debit Card";
+            if (m === "COD") return "<i class='fas fa-money-bill-wave'></i> Cash on Arrival";
+            return "<i class='fas fa-wallet'></i> " + (method || "Standard");
+        };
+
+        // Determine payment status & styling
+        const paymentMethod = finalData.payment;
+        let isPaid = (paymentMethod === "UPI" || paymentMethod === "Card" || paymentMethod === "CARD");
+        let paymentStatusText = "";
+        let statusClass = "";
+
+        if (isPaid) {
+            paymentStatusText = `<i class="fas fa-check-circle"></i> PAYMENT CONFIRMED · Transaction successful`;
+            statusClass = "status-success";
+        } else if (paymentMethod === "COD") {
+            paymentStatusText = `<i class="fas fa-hourglass-half"></i> PENDING PAYMENT · Cash to be paid at clinic`;
+            statusClass = "status-pending";
+        } else {
+            paymentStatusText = `<i class="fas fa-exclamation-triangle"></i> PAYMENT STATUS · Awaiting confirmation`;
+            statusClass = "status-pending";
+        }
+
+        // Inject status pill into dedicated container
+        const statusContainer = document.getElementById("paymentStatusBlock");
+        if (statusContainer) {
+            statusContainer.innerHTML = `
+                <div class="status-pill ${statusClass}" style="display: inline-flex; gap: 10px;">
+                    ${paymentStatusText}
+                </div>
+            `;
+        }
+
+        // --------------------------------------------------------------
+        // 2. Build professional receipt grid (structured & readable)
+        // --------------------------------------------------------------
+        const gridContainer = document.getElementById("receiptContentGrid");
+        if (gridContainer) {
+            // Prepare data fields for clear display
+            const appointmentIdVal = finalData.appointmentId || "N/A";
+            const patientNameVal = finalData.name || "—";
+            const phoneVal = finalData.phone || "—";
+            const ageVal = finalData.age ? finalData.age + " yrs" : "—";
+            const dateVal = finalData.date || "—";
+            const timeVal = finalData.time || "—";
+            const problemVal = finalData.problem || "Not specified";
+            const genderHtml = formatGender(finalData.gender);
+            const paymentHtml = formatPaymentMethod(finalData.payment);
+            const bookedOnVal = finalData.created || new Date().toLocaleString();
+
+            // Build grid items (two-column responsive)
+            // We'll use a combination of standard rows and a special full-width for problem for better UX
+            const gridHTML = `
+                <div class="info-item">
+                    <div class="info-label"><i class="fas fa-hashtag"></i> APPOINTMENT ID</div>
+                    <div class="info-value"><strong>${escapeHtml(appointmentIdVal)}</strong></div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label"><i class="fas fa-user-circle"></i> PATIENT NAME</div>
+                    <div class="info-value">${escapeHtml(patientNameVal)}</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label"><i class="fas fa-phone-alt"></i> PHONE NUMBER</div>
+                    <div class="info-value">${escapeHtml(phoneVal)}</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label"><i class="fas fa-calendar-alt"></i> AGE / GENDER</div>
+                    <div class="info-value">${escapeHtml(ageVal)} &nbsp; ${genderHtml}</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label"><i class="far fa-calendar-check"></i> APPOINTMENT DATE</div>
+                    <div class="info-value"><i class="fas fa-calendar-day"></i> ${escapeHtml(dateVal)}</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label"><i class="far fa-clock"></i> APPOINTMENT TIME</div>
+                    <div class="info-value"><i class="fas fa-hourglass-start"></i> ${escapeHtml(timeVal)}</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label"><i class="fas fa-credit-card"></i> PAYMENT METHOD</div>
+                    <div class="info-value">${paymentHtml}</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label"><i class="fas fa-calendar-week"></i> BOOKED ON</div>
+                    <div class="info-value"><i class="far fa-save"></i> ${escapeHtml(bookedOnVal)}</div>
+                </div>
+                <div class="info-item full-row">
+                    <div class="info-label"><i class="fas fa-notes-medical"></i> CHIEF COMPLAINT / PROBLEM</div>
+                    <div class="info-value problem-text"><i class="fas fa-stethoscope"></i> ${escapeHtml(problemVal)}</div>
+                </div>
+            `;
+            gridContainer.innerHTML = gridHTML;
+        }
+
+        // Helper to avoid XSS while allowing safe icons (we only escape text, but we already inserted HTML for gender & payment)
+        function escapeHtml(str) {
+            if (!str) return "";
+            return str
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#39;");
+        }
+
+        // --------------------------------------------------------------
+        // 3. PDF Generation (using html2pdf with professional settings)
+        // --------------------------------------------------------------
+        const downloadBtn = document.getElementById("downloadPdfBtn");
+        const printBtn = document.getElementById("printReceiptBtn");
+
+        // Prepare high-quality PDF options
+        const pdfOptions = {
+            margin:        [0.5, 0.5, 0.5, 0.5], // top, right, bottom, left (in inches)
+            filename:     `Appointment_Receipt_${finalData.appointmentId || "clinic"}.pdf`,
+            image:        { type: 'jpeg', quality: 0.98 },
+            html2canvas:  { scale: 2, letterRendering: true, useCORS: true, logging: false },
+            jsPDF:        { unit: 'in', format: 'a4', orientation: 'portrait' }
+        };
+
+        function downloadPDF() {
+            const element = document.getElementById("receiptBox");
+            // Show temporary loading effect (optional)
+            const originalBtnText = downloadBtn.innerHTML;
+            downloadBtn.innerHTML = '<i class="fas fa-spinner fa-pulse"></i> Generating PDF...';
+            downloadBtn.disabled = true;
+
+            // Use html2pdf with our professional options
+            html2pdf().set(pdfOptions).from(element).save().then(() => {
+                downloadBtn.innerHTML = originalBtnText;
+                downloadBtn.disabled = false;
+            }).catch(err => {
+                console.error("PDF error: ", err);
+                downloadBtn.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Retry PDF';
+                downloadBtn.disabled = false;
+                alert("PDF could not be generated. Please try again.");
+            });
+        }
+
+        function printReceipt() {
+            // Print the receipt card (excluding action buttons automatically due to @media print)
+            window.print();
+        }
+
+        if (downloadBtn) downloadBtn.addEventListener("click", downloadPDF);
+        if (printBtn) printBtn.addEventListener("click", printReceipt);
+
+        // Additional feature: if the receipt does not have appointmentId in localstorage but we need a smooth display,
+        // we also update document title to reflect professional naming.
+        document.title = `Receipt - ${finalData.name} | Dr. PK Clinic`;
+        
+        // Also append invisible fallback if the logo was missing (we removed external broken image logo)
+        // The old design used /sources/logoo.png which may cause 404. Instead we use Font Awesome icon style.
+        // No broken image reference anymore. Great!
+        
+        // small extra: If payment is COD, we add a subtle note about pending status on footer inside card? Already status pill covers.
+        // Ensure payment status pill shows correct for edge case where payment = "Card" with capital C.
+        if (paymentMethod === "Card" || paymentMethod === "CARD" || paymentMethod === "UPI") {
+            // Already marked as paid
+        } else if (paymentMethod === "COD") {
+            // optionally, we could add note, but the status-pill is clear.
+        }
+
+        // Auto-clean localstorage? We don't remove because user may need to re-print. That's fine.
+        // For better experience, we also add a small console message for debugging.
+        console.log("Receipt loaded for patient: " + finalData.name + " | ID: " + finalData.appointmentId);
+    })();
+</script>
+</body>
+</html>

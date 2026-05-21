@@ -1,0 +1,1790 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Dr. PK Clinic - Medical Store</title>
+    <link rel="icon" href ="logoo.png" type="image/png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<style>
+     * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background-color: #f5f7fa;
+            color: #2c3e50;
+            padding-top: 70px;
+            line-height: 1.6;
+        }
+
+        /* ================= NAVBAR ================= */
+        .top-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 70px;
+            background: linear-gradient(135deg, #1e4b7a, #154977);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 5%;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            z-index: 1000;
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-left .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            color: white;
+            font-size: 22px;
+            font-weight: 700;
+        }
+
+        .nav-left img {
+            width: 50px;
+            height: 50px;
+            object-fit: contain;
+            filter: brightness(0) invert(1);
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .nav-right a {
+            color: rgba(255,255,255,0.9);
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 600;
+            padding: 8px 12px;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-right a:hover {
+            color: white;
+            background: rgba(255,255,255,0.1);
+            transform: translateY(-2px);
+        }
+
+        .nav-right a.active {
+            color: white;
+            background: rgba(255,255,255,0.2);
+        }
+
+        .nav-right a::after {
+            content: "";
+            position: absolute;
+            left: 50%;
+            bottom: -2px;
+            width: 0;
+            height: 3px;
+            background: #ffd700;
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        .nav-right a:hover::after,
+        .nav-right a.active::after {
+            width: 80%;
+        }
+
+
+
+
+/* ================= PAGE HEADER ================= */
+.page-header {
+    text-align: center;
+    padding: 50px 20px 30px;
+    background: linear-gradient(135deg, #f5f8fb, #ffffff);
+}
+
+.page-header h1 {
+    font-size: 36px;
+    color: #154977;
+    margin-bottom: 15px;
+}
+
+.page-header h1 span {
+    color: #C83438;
+    position: relative;
+}
+
+.page-header p {
+    color: #64748b;
+    font-size: 18px;
+    margin-bottom: 15px;
+}
+
+.header-underline {
+    width: 80px;
+    height: 4px;
+    background: linear-gradient(90deg, #154977, #C83438);
+    margin: 0 auto;
+    border-radius: 2px;
+}
+
+/* ================= SHOP SECTION ================= */
+.shop-section {
+    padding: 40px 20px;
+    max-width: 1400px;
+    margin: 0 auto;
+    transition: margin-right 0.4s ease;
+}
+
+.shop-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 25px;
+    transition: margin-right 0.4s ease;
+}
+
+/* Product Card */
+.product-card {
+    background: white;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    transition: all 0.3s ease;
+    position: relative;
+    border: 1px solid #e0e7f0;
+
+}
+
+.product-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 30px rgba(21,73,119,0.15);
+    border-color: #154977;
+}
+
+.product-badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: #C83438;
+    color: white;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    z-index: 1;
+    box-shadow: 0 2px 8px rgba(200,52,56,0.3);
+}
+
+.product-image {
+    height: 200px;
+    overflow: hidden;
+    background: #f8fafc;
+    padding: 15px;
+}
+
+.product-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    transition: transform 0.5s ease;
+}
+
+.product-card:hover .product-image img {
+    transform: scale(1.1);
+}
+
+.product-info {
+    padding: 20px;
+    text-align: center;
+}
+
+.product-info h3 {
+    color: #154977;
+    font-size: 18px;
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+.product-desc {
+    color: #64748b;
+    font-size: 13px;
+    margin-bottom: 12px;
+    line-height: 1.5;
+}
+
+.product-price {
+    margin: 15px 0;
+}
+
+.current-price {
+    color: #C83438;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.add-to-cart {
+    width: 100%;
+    padding: 12px;
+    background: #154977;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.add-to-cart:hover {
+    background: #1a5a9c;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 15px rgba(21,73,119,0.2);
+}
+
+.add-to-cart i {
+    font-size: 16px;
+}
+
+/* Side Cart Styles */
+.side-cart .cart-header h3 {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.cart-item .qty-btn {
+    transition: all 0.2s ease;
+}
+
+.cart-item .qty-btn:hover {
+    transform: scale(1.1);
+}
+
+.checkout-btn:hover {
+    background: #218838 !important;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 15px rgba(40,167,69,0.2);
+}
+
+/* ================= BACK TO TOP BUTTON ================= */
+        #topBtn {
+            position: fixed;
+            bottom: 40px;
+            right: 40px;
+            width: 55px;
+            height: 55px;
+            background: #154977;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            font-size: 24px;
+            cursor: pointer;
+            display: none;
+            box-shadow: 0 10px 25px rgba(21, 73, 119, 0.4);
+            transition: all 0.3s ease;
+            z-index: 99;
+        }
+
+        #topBtn:hover {
+            background: #1e5a9c;
+            transform: translateY(-5px) scale(1.1);
+        }
+
+        /* ================= FOOTER ================= */
+        .site-footer {
+            background: #0a1a2a;
+            color: #a0b8cc;
+            padding: 60px 0 0;
+            margin-top: 60px;
+        }
+
+        .footer-container {
+            max-width: 1300px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+            padding: 0 30px;
+        }
+
+        .footer-col h3 {
+            color: white;
+            font-size: 18px;
+            margin-bottom: 25px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-col h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background: #4a90e2;
+        }
+
+        .footer-col p, .footer-col ul {
+            font-size: 14px;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 12px;
+        }
+
+        .footer-col ul li a {
+            color: #a0b8cc;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer-col ul li a:hover {
+            color: white;
+            padding-left: 8px;
+        }
+
+        /* Social icons */
+.social-icons {
+    display: flex;
+    gap: 10px; /* Reduced from 12px */
+    margin-top: 12px; /* Reduced from 15px */
+}
+
+.social-icons a {
+    width: 32px; /* Reduced from 38px */
+    height: 32px; /* Reduced from 38px */
+    border-radius: 50%;
+    background: rgba(255,255,255,0.12);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 14px; /* Reduced from 16px */
+    transition: 0.3s ease;
+}
+
+/* Brand hover colors */
+.social-icons a.facebook {
+    background: linear-gradient(135deg, #1877f2);
+}
+
+.social-icons a.youtube {
+    background: linear-gradient(135deg, #ff0000);
+}
+
+.social-icons a.linkedin {
+    background: linear-gradient(#0937d1);
+}
+
+.social-icons a.instagram {
+    background: radial-gradient(circle at 30% 110%, 
+        #fdf497 0%, #fdf497 5%, #fd5949 45%, 
+        #d6249f 60%, #285AEB 90%);
+}
+
+        .watch-live, .appointment {
+            display: inline-block;
+            padding: 12px 25px;
+            border-radius: 40px;
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            margin: 5px 10px 5px 0;
+            transition: all 0.3s ease;
+        }
+
+        .watch-live {
+            background: #e74c3c;
+        }
+
+        .watch-live:hover {
+            background: #c0392b;
+            transform: translateY(-3px);
+        }
+
+        .appointment {
+            background: #154977;
+        }
+
+        .appointment:hover {
+            background: #1e5a9c;
+            transform: translateY(-3px);
+        }
+
+        .store-buttons {
+            display: flex;
+            gap: 15px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .store-buttons a {
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+
+        .store-buttons a:hover {
+            transform: translateY(-5px);
+        }
+
+        .store-buttons img {
+            height: 45px;
+            width: auto;
+        }
+
+        .footer-bottom {
+            background: #05111f;
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+            color: #a0b8cc;
+            font-size: 14px;
+        }
+
+        /* ================= RESPONSIVE DESIGN ================= */
+        @media (max-width: 1200px) {
+            .footer-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 992px) {
+            .appointment-form {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-section,
+            .gender-fieldset,
+            .select-wrapper,
+            .payment-section {
+                grid-column: span 1;
+            }
+            
+            .payment-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            body { padding-top: 120px; }
+            
+            .top-nav {
+                height: auto;
+                padding: 15px 20px;
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .nav-right {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 10px;
+            }
+            
+            .nav-right a {
+                font-size: 14px;
+                padding: 6px 10px;
+            }
+            
+            .appointment-container {
+                padding: 0 20px;
+            }
+            
+            .timings-section,
+            .appointment-form-section {
+                padding: 25px;
+            }
+            
+            .footer-container {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            
+            .footer-col h3::after {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+            
+            .gender-options {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .gender-fieldset label {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .timings-table {
+                display: block;
+                overflow-x: auto;
+            }
+            
+            .checkbox-group,
+            .radio-group {
+                grid-template-columns: 1fr;
+            }
+            
+            .payment-option {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            #topBtn {
+                bottom: 20px;
+                right: 20px;
+                width: 45px;
+                height: 45px;
+                font-size: 20px;
+            }
+        }
+
+        /* ================= ANIMATIONS ================= */
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease;
+        }
+        .profile-icon {
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        background: linear-gradient(135deg, #ff0d00, #ffb347) !important;
+        border-radius: 50% !important;
+        padding: 0 !important;
+        font-weight: bold !important;
+        font-size: 18px !important;
+        color: #154977 !important;
+        text-transform: uppercase;
+        border: 2px solid white !important;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.2) !important;
+        transition: all 0.3s ease !important;
+        animation: profilePulse 2s infinite;
+    }
+
+    .profile-icon:hover {
+        transform: scale(1.1) rotate(5deg) !important;
+        background: linear-gradient(135deg, #ffb347, #ffd700) !important;
+        box-shadow: 0 6px 15px rgba(255,215,0,0.4) !important;
+    }
+
+    .profile-icon span {
+        display: block;
+        line-height: 1;
+        text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+    }
+
+    @keyframes profilePulse {
+        0%, 100% { box-shadow: 0 4px 10px rgba(255,215,0,0.3); }
+        50% { box-shadow: 0 6px 15px rgba(255,215,0,0.6); }
+    }
+    .logout-popup {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(8px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .logout-popup.fade-out {
+            animation: fadeOut 0.3s ease forwards;
+        }
+
+        .popup-content {
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+            padding: 35px 45px;
+            border-radius: 25px;
+            box-shadow: 0 20px 60px rgba(21, 73, 119, 0.3);
+            text-align: center;
+            max-width: 450px;
+            width: 90%;
+            transform: scale(0.9);
+            animation: scaleIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .popup-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #154977, #4CAF50, #154977);
+            background-size: 200% 100%;
+            animation: gradient 3s linear infinite;
+        }
+
+        .popup-content i {
+            font-size: 75px;
+            color: #4CAF50;
+            margin-bottom: 20px;
+            animation: bounceIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            background: rgba(76, 175, 80, 0.1);
+            padding: 20px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .popup-content h3 {
+            color: #154977;
+            font-size: 28px;
+            margin-bottom: 12px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .popup-content p {
+            color: #4a5568;
+            font-size: 16px;
+            margin: 8px 0;
+            line-height: 1.6;
+        }
+
+        .popup-content .popup-message {
+            font-size: 18px;
+            color: #2d3748;
+            font-weight: 500;
+            margin-top: 10px;
+        }
+
+        .popup-content .popup-redirect {
+            color: #718096;
+            font-size: 15px;
+            margin-top: 15px;
+            font-style: italic;
+        }
+
+        .popup-progress {
+            width: 100%;
+            height: 6px;
+            background: #e2e8f0;
+            border-radius: 10px;
+            margin-top: 25px;
+            overflow: hidden;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .progress-bar {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg, #154977, #4CAF50);
+            border-radius: 10px;
+            animation: progress 2s linear forwards;
+            box-shadow: 0 0 10px rgba(76, 175, 80, 0.5);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeOut {
+            from { opacity: 1; }
+            to { opacity: 0; }
+        }
+
+        @keyframes scaleIn {
+            from {
+                transform: scale(0.5);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        @keyframes bounceIn {
+            0% {
+                transform: scale(0.3);
+                opacity: 0;
+            }
+            50% {
+                transform: scale(1.2);
+                opacity: 0.9;
+            }
+            80% {
+                transform: scale(0.9);
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        @keyframes progress {
+            from { width: 0%; }
+            to { width: 100%; }
+        }
+
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Notification animation */
+        @keyframes slideInRight {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+</style>
+<body>
+    <!-- NAVBAR -->
+    <!-- NAVBAR -->
+<nav class="top-nav">
+    <div class="nav-left">
+        <div class="logo">
+            <img src="logoo.png" width="60">
+            Dr. PK Clinic
+        </div>
+    </div>
+    <div class="nav-right">
+        <a href="index.html">Home</a>
+        <a href="appointment.html">Appointment</a>
+        <a href="about.html">About</a>
+        <a href="services.html">Services</a>
+        <a href="testimonials.html">Testimonials</a>
+        <a href="contact.html">Contact</a>
+        <a href="shopping.html">Shopping</a>
+        <a href="login.html" id="loginLink">Login</a>
+        <!-- Profile icon - hidden by default -->
+        <a href="profile.html" id="profileLink" style="display: none;" class="profile-icon">
+            <span id="profileInitial"></span>
+        </a>
+    </div>
+</nav>
+
+    <br><br><br>
+
+    <div class="page-header">
+        <h1>Dr. PK <span>Medical Store</span></h1>
+        <p>Trusted Medicines • Genuine Products • Fast Delivery</p>
+        <div class="header-underline"></div>
+    </div>
+
+    <!-- SHOP SECTION -->
+    <section class="shop-section">
+        <div class="shop-container">
+            
+            <!-- Medicine Card 1 -->
+            <div class="product-card">
+                <div class="product-badge">Essential</div>
+                <div class="product-image">
+                    <img src="First Aid Kit.jpg" alt="First Aid Kit">
+                </div>
+                <div class="product-info">
+                    <h3>First Aid Kit</h3>
+                    <p class="product-desc">Emergency kit with essential supplies</p>
+                    <div class="product-price">
+                        <span class="current-price">₹350</span>
+                    </div>
+                    <button class="add-to-cart">
+                        <i class="fas fa-shopping-cart"></i> Add to Cart
+                    </button>
+                </div>
+            </div>
+
+            <!-- Medicine Card 2 -->
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="Paracetamol Tablet.png" alt="Paracetamol Tablet">
+                </div>
+                <div class="product-info">
+                    <h3>Paracetamol 500mg</h3>
+                    <p class="product-desc">Pain relief & fever reducer</p>
+                    <div class="product-price">
+                        <span class="current-price">₹35</span>
+                    </div>
+                    <button class="add-to-cart">
+                        <i class="fas fa-shopping-cart"></i> Add to Cart
+                    </button>
+                </div>
+            </div>
+
+            <!-- Medicine Card 3 -->
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="Cetrizine Tablet.png" alt="Cetrizine Tablet">
+                </div>
+                <div class="product-info">
+                    <h3>Cetrizine 10mg</h3>
+                    <p class="product-desc">Allergy relief tablet</p>
+                    <div class="product-price">
+                        <span class="current-price">₹20</span>
+                    </div>
+                    <button class="add-to-cart">
+                        <i class="fas fa-shopping-cart"></i> Add to Cart
+                    </button>
+                </div>
+            </div>
+
+            <!-- Medicine Card 4 -->
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="Vitamin C.jpg" alt="Vitamin C Tablet">
+                </div>
+                <div class="product-info">
+                    <h3>Vitamin C Tablets</h3>
+                    <p class="product-desc">Boost immunity & antioxidants</p>
+                    <div class="product-price">
+                        <span class="current-price">₹120</span>
+                    </div>
+                    <button class="add-to-cart">
+                        <i class="fas fa-shopping-cart"></i> Add to Cart
+                    </button>
+                </div>
+            </div>
+
+            <!-- Medicine Card 5 -->
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="Azithromycin Tablet.png" alt="Azithromycin Tablet">
+                </div>
+                <div class="product-info">
+                    <h3>Azithromycin 250mg</h3>
+                    <p class="product-desc">Antibiotic for bacterial infections</p>
+                    <div class="product-price">
+                        <span class="current-price">₹85</span>
+                    </div>
+                    <button class="add-to-cart">
+                        <i class="fas fa-shopping-cart"></i> Add to Cart
+                    </button>
+                </div>
+            </div>
+
+            <!-- Medicine Card 6 -->
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="Ibuprofen Tablet.jpg" alt="Ibuprofen Tablet">
+                </div>
+                <div class="product-info">
+                    <h3>Ibuprofen 400mg</h3>
+                    <p class="product-desc">Relieves pain, inflammation & fever</p>
+                    <div class="product-price">
+                        <span class="current-price">₹65</span>
+                    </div>
+                    <button class="add-to-cart">
+                        <i class="fas fa-shopping-cart"></i> Add to Cart
+                    </button>
+                </div>
+            </div>
+
+            <!-- Medicine Card 7 -->
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="Antacid Syrup Box & Label.jpg" alt="Antacid Syrup">
+                </div>
+                <div class="product-info">
+                    <h3>Antacid Syrup</h3>
+                    <p class="product-desc">Relief from acidity & indigestion</p>
+                    <div class="product-price">
+                        <span class="current-price">₹95</span>
+                    </div>
+                    <button class="add-to-cart">
+                        <i class="fas fa-shopping-cart"></i> Add to Cart
+                    </button>
+                </div>
+            </div>
+
+            <!-- Medicine Card 8 -->
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="Calamine Lotion.jpg" alt="Calamine Lotion">
+                </div>
+                <div class="product-info">
+                    <h3>Calamine Lotion</h3>
+                    <p class="product-desc">Soothes skin irritation & itching</p>
+                    <div class="product-price">
+                        <span class="current-price">₹60</span>
+                    </div>
+                    <button class="add-to-cart">
+                        <i class="fas fa-shopping-cart"></i> Add to Cart
+                    </button>
+                </div>
+            </div>
+
+            <!-- Medicine Card 9 -->
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="Aloe Vera Gel.jpg" alt="Aloe Vera Gel">
+                </div>
+                <div class="product-info">
+                    <h3>Aloe Vera Gel</h3>
+                    <p class="product-desc">Hydrates & cools skin naturally</p>
+                    <div class="product-price">
+                        <span class="current-price">₹110</span>
+                    </div>
+                    <button class="add-to-cart">
+                        <i class="fas fa-shopping-cart"></i> Add to Cart
+                    </button>
+                </div>
+            </div>
+
+            <!-- Medicine Card 10 -->
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="Antiseptic Cream.jpg" alt="Antiseptic Cream">
+                </div>
+                <div class="product-info">
+                    <h3>Antiseptic Cream</h3>
+                    <p class="product-desc">Prevents infection in cuts & wounds</p>
+                    <div class="product-price">
+                        <span class="current-price">₹75</span>
+                    </div>
+                    <button class="add-to-cart">
+                        <i class="fas fa-shopping-cart"></i> Add to Cart
+                    </button>
+                </div>
+            </div>
+
+            <!-- Medicine Card 11 -->
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="Garnier Face Wash.jpg" alt="Garnier Face Wash">
+                </div>
+                <div class="product-info">
+                    <h3>Garnier Men's Face Wash</h3>
+                    <p class="product-desc">Germs & oil attack men's skin</p>
+                    <div class="product-price">
+                        <span class="current-price">₹210</span>
+                    </div>
+                    <button class="add-to-cart">
+                        <i class="fas fa-shopping-cart"></i> Add to Cart
+                    </button>
+                </div>
+            </div>
+
+            <!-- Medicine Card 12 -->
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="cetaphil.jpg" alt="Cetaphil Face Wash">
+                </div>
+                <div class="product-info">
+                    <h3>Cetaphil Face Wash</h3>
+                    <p class="product-desc">Leaves skin feeling clean without stripping</p>
+                    <div class="product-price">
+                        <span class="current-price">₹250</span>
+                    </div>
+                    <button class="add-to-cart">
+                        <i class="fas fa-shopping-cart"></i> Add to Cart
+                    </button>
+                </div>
+            </div>
+
+            <!-- Medicine Card 13 -->
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="Dove Body Wash.jpg" alt="Dove Body Wash">
+                </div>
+                <div class="product-info">
+                    <h3>Dove Body Wash</h3>
+                    <p class="product-desc">For sensitive skin, effectively washes</p>
+                    <div class="product-price">
+                        <span class="current-price">₹350</span>
+                    </div>
+                    <button class="add-to-cart">
+                        <i class="fas fa-shopping-cart"></i> Add to Cart
+                    </button>
+                </div>
+            </div>
+
+            <!-- Medicine Card 14 -->
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="Multivitamin Tablets.jpg" alt="Multivitamin Tablet">
+                </div>
+                <div class="product-info">
+                    <h3>Multivitamin Tablets</h3>
+                    <p class="product-desc">Complete daily nutrition supplement</p>
+                    <div class="product-price">
+                        <span class="current-price">₹180</span>
+                    </div>
+                    <button class="add-to-cart">
+                        <i class="fas fa-shopping-cart"></i> Add to Cart
+                    </button>
+                </div>
+            </div>
+
+            <!-- Medicine Card 15 -->
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="Metformin Tablet.jpg" alt="Metformin Tablet">
+                </div>
+                <div class="product-info">
+                    <h3>Metformin 500mg</h3>
+                    <p class="product-desc">Helps control blood sugar levels</p>
+                    <div class="product-price">
+                        <span class="current-price">₹50</span>
+                    </div>
+                    <button class="add-to-cart">
+                        <i class="fas fa-shopping-cart"></i> Add to Cart
+                    </button>
+                </div>
+            </div>
+
+            <!-- Medicine Card 16 -->
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="Amoxicillin Capsule.jpg" alt="Amoxicillin Capsule">
+                </div>
+                <div class="product-info">
+                    <h3>Amoxicillin 500mg</h3>
+                    <p class="product-desc">Antibiotic for bacterial infections</p>
+                    <div class="product-price">
+                        <span class="current-price">₹90</span>
+                    </div>
+                    <button class="add-to-cart">
+                        <i class="fas fa-shopping-cart"></i> Add to Cart
+                    </button>
+                </div>
+            </div>
+
+            <!-- Medicine Card 17 -->
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="Fish Oil Capsule.jpg" alt="Fish Oil Capsule">
+                </div>
+                <div class="product-info">
+                    <h3>Fish Oil Capsules</h3>
+                    <p class="product-desc">Supports heart & brain health</p>
+                    <div class="product-price">
+                        <span class="current-price">₹300</span>
+                    </div>
+                    <button class="add-to-cart">
+                        <i class="fas fa-shopping-cart"></i> Add to Cart
+                    </button>
+                </div>
+            </div>
+
+            <!-- Medicine Card 18 -->
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="Dettol.jpg" alt="Dettol Soap">
+                </div>
+                <div class="product-info">
+                    <h3>Dettol Soap</h3>
+                    <p class="product-desc">Moisturizes and softens skin</p>
+                    <div class="product-price">
+                        <span class="current-price">₹36</span>
+                    </div>
+                    <button class="add-to-cart">
+                        <i class="fas fa-shopping-cart"></i> Add to Cart
+                    </button>
+                </div>
+            </div>
+
+            <!-- Medicine Card 19 -->
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="Himalaya.jpg" alt="Himalaya Face Wash">
+                </div>
+                <div class="product-info">
+                    <h3>Himalaya Face Wash</h3>
+                    <p class="product-desc">Gentle cleansing for all skin types</p>
+                    <div class="product-price">
+                        <span class="current-price">₹130</span>
+                    </div>
+                    <button class="add-to-cart">
+                        <i class="fas fa-shopping-cart"></i> Add to Cart
+                    </button>
+                </div>
+            </div>
+
+            <!-- Medicine Card 20 -->
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="Oral-B Toothpaste.jpg" alt="Oral-B Toothpaste">
+                </div>
+                <div class="product-info">
+                    <h3>Oral-B Toothpaste</h3>
+                    <p class="product-desc">Cavity protection & fresh breath</p>
+                    <div class="product-price">
+                        <span class="current-price">₹120</span>
+                    </div>
+                    <button class="add-to-cart">
+                        <i class="fas fa-shopping-cart"></i> Add to Cart
+                    </button>
+                </div>
+            </div>
+
+            <!-- Medicine Card 21 -->
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="Hand Sanitizer.jpg" alt="Hand Sanitizer">
+                </div>
+                <div class="product-info">
+                    <h3>Hand Sanitizer 100ml</h3>
+                    <p class="product-desc">Kills 99.9% germs & bacteria</p>
+                    <div class="product-price">
+                        <span class="current-price">₹80</span>
+                    </div>
+                    <button class="add-to-cart">
+                        <i class="fas fa-shopping-cart"></i> Add to Cart
+                    </button>
+                </div>
+            </div>
+
+            <!-- Medicine Card 22 -->
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="protein power.jpg" alt="Protein Powder">
+                </div>
+                <div class="product-info">
+                    <h3>Whey Protein</h3>
+                    <p class="product-desc">Supports muscle growth & recovery</p>
+                    <div class="product-price">
+                        <span class="current-price">₹1200</span>
+                    </div>
+                    <button class="add-to-cart">
+                        <i class="fas fa-shopping-cart"></i> Add to Cart
+                    </button>
+                </div>
+            </div>
+
+            <!-- Medicine Card 23 -->
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="Sugar Free Chocolate.jpg" alt="Sugar Free Chocolate">
+                </div>
+                <div class="product-info">
+                    <h3>Sugar Free Chocolate</h3>
+                    <p class="product-desc">Organic bitter sweet - 50mg</p>
+                    <div class="product-price">
+                        <span class="current-price">₹55</span>
+                    </div>
+                    <button class="add-to-cart">
+                        <i class="fas fa-shopping-cart"></i> Add to Cart
+                    </button>
+                </div>
+            </div>
+
+            <!-- Medicine Card 24 -->
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="Pampers Pants.jpg" alt="Pampers">
+                </div>
+                <div class="product-info">
+                    <h3>Pampers Size M</h3>
+                    <p class="product-desc">For kids, comfortable fit</p>
+                    <div class="product-price">
+                        <span class="current-price">₹105</span>
+                    </div>
+                    <button class="add-to-cart">
+                        <i class="fas fa-shopping-cart"></i> Add to Cart
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <button id="topBtn" onclick="scrollToTop()">↑</button>
+
+</body>
+<!-- FOOTER -->
+<footer class="site-footer">
+    <div class="footer-container">
+        <!-- About -->
+        <div class="footer-col">
+            <h3>About Us</h3>
+            <p>
+                <ul>Dr Praveen Kumar A – Expert in lifestyle disease reversal, an acclaimed
+                author, speaker, and specialist in <strong>natural health</strong>.
+                He has helped a large number of patients of different diseases
+                and reversed it through natural healing, researcher of medicine,
+                launched own natural products for <strong>diabetes reversal</strong>,
+                nutrition and <strong>drug-free healing</strong>.</ul>
+            </p>
+            <a href="about.html" class="footer-link">For More Details</a>
+
+            <h4>Find Us On:</h4>
+            <div class="social-icons">
+                <a href="https://www.facebook.com/profile.php?id=100053479690246" class="facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://www.youtube.com/@move_with_praveen" class="youtube"><i class="fab fa-youtube"></i></a>
+                <a href="https://www.linkedin.com/in/praveen-kumar-792b8a395/" class="linkedin"><i class="fab fa-linkedin-in"></i></a>
+                <a href="https://www.instagram.com/praveeneyy19/" class="instagram"><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
+
+        <!-- Quick Links -->
+        <div class="footer-col">
+            <h3>Quick Links</h3>
+            <ul>
+                <li><a href="#">Biswas E-Magazine</a></li>
+                <li><a href="#">Download Free Ebook</a></li>
+                <li><a href="#">Coronakaal.tv</a></li>
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Gallery</a></li>
+                <li><a href="#">Blogs</a></li>
+                <li><a href="#">Credentials</a></li>
+                <li><a href="#">Research Papers</a></li>
+                <li><a href="#">Refund & Cancellation Policy</a></li>
+                <li><a href="#">Privacy Policy</a></li>
+                <li><a href="#">Shipping Policy</a></li>
+            </ul>
+        </div>
+
+        <!-- Live -->
+        <div class="footer-col">
+            <h3>Join Dr. PK Clinic</h3>
+            <p><ul>To be a part of Dr. Praveen Kumar's next LIVE event</ul></p>
+            <a href="https://youtu.be/28CYhgjrBLA?si=qzg48QoZ8obTjWdv" class="watch-live">CARDIOVASCULAR SYSTEM OVERVIEW</a>
+            <a href="appointment.html" class="appointment">Book Appointment</a>
+        </div>
+        
+        <div class="footer-col">
+            <h3>Download App</h3>
+            <div class="store-buttons">
+                <a href="https://play.google.com/store/apps/details?id=com.needstreet.health.hppatient">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Get it on Google Play">
+                </a>
+                <a href="https://apps.apple.com/in/app/continuouscare-health-app/id674531353">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/3/3c/Download_on_the_App_Store_Badge.svg" alt="Download on the App Store">
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-bottom">
+        <p class="text-white">&copy; 2026 Dr. PK Clinic. All Rights Reserved.</p>
+    </div>
+</footer>
+    
+<script>
+    // ===== STYLED LOGOUT POPUP FUNCTION =====
+    function showLogoutPopup() {
+        // Remove any existing popup
+        const existingPopup = document.querySelector('.logout-popup');
+        if (existingPopup) {
+            existingPopup.remove();
+        }
+        
+        // Create popup element
+        const popup = document.createElement('div');
+        popup.className = 'logout-popup';
+        popup.innerHTML = `
+            <div class="popup-content">
+                <i class="fas fa-check-circle"></i>
+                <h3>Successfully Logged Out!</h3>
+                <p class="popup-message">You have been logged out of your account.</p>
+                <p class="popup-redirect">Redirecting to homepage in 2 seconds...</p>
+                <div class="popup-progress">
+                    <div class="progress-bar"></div>
+                </div>
+            </div>
+        `;
+        
+        // Add popup to body
+        document.body.appendChild(popup);
+        
+        // Prevent scrolling on background
+        document.body.style.overflow = 'hidden';
+        
+        // Redirect after 2 seconds
+        setTimeout(() => {
+            popup.classList.add('fade-out');
+            
+            // Restore scrolling
+            document.body.style.overflow = '';
+            
+            // Remove popup and redirect after fade out
+            setTimeout(() => {
+                popup.remove();
+                window.location.href = "homepage.html";
+            }, 300);
+        }, 2000);
+    }
+
+    let topButton = document.getElementById("topBtn");
+
+    window.onscroll = function() {
+        if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+            topButton.style.display = "block";
+            topButton.style.animation = "fadeIn 0.3s ease";
+        } else {
+            topButton.style.display = "none";
+        }
+    };
+
+    function scrollToTop() {
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
+        initializeApp();
+    });
+
+    function initializeApp() {
+        initializeNavbar();
+        initializeShoppingCart();
+    }
+
+    // ================= NAVBAR FUNCTIONALITY =================
+    function initializeNavbar() {
+        // Login/Logout functionality
+        const loginLink = document.getElementById("loginLink");
+        
+        if (loginLink) {
+            const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+            
+            if (isLoggedIn) {
+                loginLink.textContent = "Logout";
+                loginLink.href = "#";
+                
+                const newLoginLink = loginLink.cloneNode(true);
+                loginLink.parentNode.replaceChild(newLoginLink, loginLink);
+                
+                newLoginLink.addEventListener("click", function(e) {
+                    e.preventDefault();
+                    localStorage.removeItem("isLoggedIn");
+                    localStorage.removeItem("savedCart");
+                    localStorage.removeItem("cartTotal");
+                    localStorage.removeItem("cartItems");
+                    localStorage.removeItem("currentUser");
+                    sessionStorage.removeItem("isLoggedIn");
+                    sessionStorage.removeItem("redirectAfterLogin");
+                    
+                    // Show styled popup instead of alert
+                    showLogoutPopup();
+                });
+            } else {
+                loginLink.textContent = "Login";
+                loginLink.href = "login.html";
+            }
+        }
+        
+        // Active page highlighting
+        const navLinks = document.querySelectorAll(".nav-right a");
+        const currentPage = window.location.pathname.split("/").pop();
+        
+        navLinks.forEach(link => {
+            const linkPage = link.getAttribute("href");
+            if (linkPage === currentPage) {
+                link.classList.add("active");
+            }
+        });
+    }
+
+    // ================= SHOPPING CART FUNCTIONALITY =================
+    function initializeShoppingCart() {
+        let total = 0;
+        let cart = [];
+
+        // Check if user is logged in
+        function isUserLoggedIn() {
+            return localStorage.getItem("isLoggedIn") === "true";
+        }
+
+        // Load cart from storage
+        function loadCartFromStorage() {
+            const savedCart = localStorage.getItem("savedCart");
+            if (savedCart && isUserLoggedIn()) {
+                cart = JSON.parse(savedCart);
+                updateCartUI();
+            }
+        }
+
+        // Save cart to storage
+        function saveCartToStorage() {
+            if (isUserLoggedIn()) {
+                localStorage.setItem("savedCart", JSON.stringify(cart));
+            }
+        }
+
+        // ===== CREATE SIDE CART =====
+        let sideCart = document.createElement("div");
+        sideCart.className = "side-cart";
+        sideCart.style.cssText = `
+            position: fixed;
+            top: 70px;
+            right: -350px;
+            width: 320px;
+            height: calc(100% - 70px);
+            background: white;
+            padding: 20px;
+            box-shadow: -5px 0 20px rgba(0,0,0,0.15);
+            overflow-y: auto;
+            z-index: 999;
+            transition: right 0.4s ease;
+            border-left: 1px solid #e0e7f0;
+        `;
+
+        let cartHeader = document.createElement("div");
+        cartHeader.className = "cart-header";
+        cartHeader.style.cssText = `
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #154977;
+        `;
+        cartHeader.innerHTML = `
+            <h3 style="color: #154977;">Your Cart</h3>
+            <span class="cart-close" style="cursor: pointer; font-size: 24px; color: #C83438;">&times;</span>
+        `;
+
+        let cartTitle = document.createElement("h2");
+        cartTitle.style.cssText = `
+            text-align: center;
+            color: #154977;
+            font-size: 18px;
+            margin-bottom: 20px;
+        `;
+        cartTitle.innerText = "Total: ₹0";
+
+        let cartItemsContainer = document.createElement("div");
+        cartItemsContainer.className = "cart-items";
+
+        let checkoutBtn = document.createElement("button");
+        checkoutBtn.className = "checkout-btn";
+        checkoutBtn.style.cssText = `
+            width: 100%;
+            padding: 14px;
+            margin-top: 20px;
+            background: #28a745;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        `;
+        checkoutBtn.innerHTML = '<i class="fas fa-credit-card"></i> Proceed to Checkout';
+
+        sideCart.appendChild(cartHeader);
+        sideCart.appendChild(cartTitle);
+        sideCart.appendChild(cartItemsContainer);
+        sideCart.appendChild(checkoutBtn);
+        document.body.appendChild(sideCart);
+
+        // Close cart functionality
+        const closeCart = sideCart.querySelector('.cart-close');
+        closeCart.addEventListener('click', function() {
+            sideCart.style.right = '-350px';
+            document.querySelector('.shop-container').style.marginRight = '0';
+        });
+
+        // ===== UPDATE CART UI =====
+        function updateCartUI() {
+            cartItemsContainer.innerHTML = "";
+            total = 0;
+
+            cart.forEach(item => {
+                total += item.price * item.qty;
+
+                let itemDiv = document.createElement("div");
+                itemDiv.className = "cart-item";
+                itemDiv.style.cssText = `
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+                    padding: 15px 0;
+                    border-bottom: 1px solid #e0e7f0;
+                `;
+
+                itemDiv.innerHTML = `
+                    <img src="${item.img}" width="60" height="60" style="object-fit: cover; border-radius: 8px;">
+                    <div style="flex: 1;">
+                        <strong style="color: #154977;">${item.name}</strong>
+                        <p style="color: #C83438; font-weight: bold;">₹${item.price}</p>
+                    </div>
+                    <div class="quantity-control" style="display: flex; align-items: center; gap: 8px;">
+                        <button class="qty-btn minus" style="width: 30px; height: 30px; border: 1px solid #154977; background: white; color: #154977; border-radius: 5px; cursor: pointer;">-</button>
+                        <span class="qty" style="min-width: 20px; text-align: center;">${item.qty}</span>
+                        <button class="qty-btn plus" style="width: 30px; height: 30px; border: 1px solid #154977; background: #154977; color: white; border-radius: 5px; cursor: pointer;">+</button>
+                    </div>
+                `;
+
+                cartItemsContainer.appendChild(itemDiv);
+
+                const plusBtn = itemDiv.querySelector(".plus");
+                const minusBtn = itemDiv.querySelector(".minus");
+                const qtySpan = itemDiv.querySelector(".qty");
+
+                plusBtn.onclick = () => {
+                    item.qty++;
+                    qtySpan.innerText = item.qty;
+                    updateCartUI();
+                };
+
+                minusBtn.onclick = () => {
+                    item.qty--;
+                    if (item.qty <= 0) {
+                        cart = cart.filter(c => c.name !== item.name);
+                    }
+                    updateCartUI();
+                };
+            });
+
+            cartTitle.innerText = "Total: ₹" + total;
+
+            if (cart.length > 0) {
+                sideCart.style.right = "0";
+                document.querySelector(".shop-container").style.marginRight = "340px";
+            } else {
+                sideCart.style.right = "-350px";
+                document.querySelector(".shop-container").style.marginRight = "0";
+            }
+
+            saveCartToStorage();
+        }
+
+        // ===== ADD TO CART BUTTONS WITH LOGIN CHECK =====
+        const buttons = document.querySelectorAll(".add-to-cart");
+
+        buttons.forEach(button => {
+            button.addEventListener("click", function() {
+                if (!isUserLoggedIn()) {
+                    sessionStorage.setItem("redirectAfterLogin", "shopping.html");
+                    
+                    // Show login required popup instead of alert
+                    const loginPopup = document.createElement('div');
+                    loginPopup.className = 'logout-popup';
+                    loginPopup.innerHTML = `
+                        <div class="popup-content">
+                            <i class="fas fa-exclamation-triangle" style="color: #dc3545;"></i>
+                            <h3>Login Required</h3>
+                            <p class="popup-message">Please login first to add items to cart!</p>
+                            <p class="popup-redirect">Redirecting to login page in 2 seconds...</p>
+                            <div class="popup-progress">
+                                <div class="progress-bar"></div>
+                            </div>
+                        </div>
+                    `;
+                    
+                    document.body.appendChild(loginPopup);
+                    document.body.style.overflow = 'hidden';
+                    
+                    setTimeout(() => {
+                        loginPopup.classList.add('fade-out');
+                        document.body.style.overflow = '';
+                        setTimeout(() => {
+                            loginPopup.remove();
+                            window.location.href = "login.html";
+                        }, 300);
+                    }, 2000);
+                    
+                    return;
+                }
+
+                const card = this.closest(".product-card");
+                const name = card.querySelector("h3").innerText;
+                const price = parseInt(card.querySelector(".current-price").innerText.replace("₹", ""));
+                const img = card.querySelector("img").src;
+
+                let existingItem = cart.find(item => item.name === name);
+                if (existingItem) {
+                    existingItem.qty++;
+                } else {
+                    cart.push({ name, price, qty: 1, img });
+                }
+
+                updateCartUI();
+                
+                // Show notification
+                const notification = document.createElement("div");
+                notification.style.cssText = `
+                    position: fixed;
+                    top: 80px;
+                    right: 20px;
+                    background: #28a745;
+                    color: white;
+                    padding: 12px 24px;
+                    border-radius: 30px;
+                    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+                    z-index: 9999;
+                    animation: slideInRight 0.3s ease;
+                `;
+                notification.innerHTML = `<i class="fas fa-check-circle"></i> ${name} added to cart!`;
+                document.body.appendChild(notification);
+                
+                setTimeout(() => {
+                    notification.remove();
+                }, 2000);
+            });
+        });
+
+        // ===== CHECKOUT WITH LOGIN CHECK =====
+        checkoutBtn.addEventListener("click", function() {
+            if (!isUserLoggedIn()) {
+                sessionStorage.setItem("redirectAfterLogin", "shopping.html");
+                
+                // Show login required popup instead of alert
+                const loginPopup = document.createElement('div');
+                loginPopup.className = 'logout-popup';
+                loginPopup.innerHTML = `
+                    <div class="popup-content">
+                        <i class="fas fa-exclamation-triangle" style="color: #dc3545;"></i>
+                        <h3>Login Required</h3>
+                        <p class="popup-message">Please login first to proceed with checkout!</p>
+                        <p class="popup-redirect">Redirecting to login page in 2 seconds...</p>
+                        <div class="popup-progress">
+                            <div class="progress-bar"></div>
+                        </div>
+                    </div>
+                `;
+                
+                document.body.appendChild(loginPopup);
+                document.body.style.overflow = 'hidden';
+                
+                setTimeout(() => {
+                    loginPopup.classList.add('fade-out');
+                    document.body.style.overflow = '';
+                    setTimeout(() => {
+                        loginPopup.remove();
+                        window.location.href = "login.html";
+                    }, 300);
+                }, 2000);
+                
+                return;
+            }
+
+            if (cart.length > 0) {
+                localStorage.setItem("cartTotal", total);
+                localStorage.setItem("cartItems", JSON.stringify(cart));
+                window.location.href = "payment.html";
+            } else {
+                // Show empty cart popup
+                const emptyPopup = document.createElement('div');
+                emptyPopup.className = 'logout-popup';
+                emptyPopup.innerHTML = `
+                    <div class="popup-content">
+                        <i class="fas fa-exclamation-triangle" style="color: #dc3545;"></i>
+                        <h3>Empty Cart</h3>
+                        <p class="popup-message">Your cart is empty! Please add items.</p>
+                        <div class="popup-progress">
+                            <div class="progress-bar"></div>
+                        </div>
+                    </div>
+                `;
+                
+                document.body.appendChild(emptyPopup);
+                document.body.style.overflow = 'hidden';
+                
+                setTimeout(() => {
+                    emptyPopup.classList.add('fade-out');
+                    document.body.style.overflow = '';
+                    setTimeout(() => {
+                        emptyPopup.remove();
+                    }, 300);
+                }, 2000);
+            }
+        });
+
+        // Initialize cart
+        loadCartFromStorage();
+
+        // Add animation styles if not already present
+        const style = document.createElement("style");
+        style.textContent = `
+            @keyframes slideInRight {
+                from {
+                    transform: translateX(100%);
+                    opacity: 0;
+                }
+                to {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    }
+    // In checkout/payment process
+const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+
+const newOrder = {
+    orderId: "ORD" + Date.now() + Math.floor(Math.random() * 1000),
+    customerName: tempName,
+    customerPhone: currentUser?.phone || "Not provided",
+    customerEmail: currentUser?.email || "Not provided",
+    // ... rest of order data
+};
+</script>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    updateNavbarProfile();
+});
+
+function updateNavbarProfile() {
+    const loginLink = document.getElementById("loginLink");
+    const profileLink = document.getElementById("profileLink");
+    const profileInitial = document.getElementById("profileInitial");
+    
+    const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+    const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+    
+    if (loginLink && profileLink && profileInitial) {
+        if (isLoggedIn && currentUser) {
+            loginLink.style.display = "none";
+            profileLink.style.display = "flex";
+            const initial = (currentUser.name || "U").charAt(0).toUpperCase();
+            profileInitial.textContent = initial;
+        } else {
+            loginLink.style.display = "inline-block";
+            profileLink.style.display = "none";
+        }
+    }
+}
+</script>
+</html>

@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Order Receipt - Dr. PK Clinic</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(135deg, #154977, #1a3a68);
+            margin: 0;
+            padding: 40px 0;
+            text-align: center;
+            min-height: 100vh;
+        }
+
+        .receipt-box {
+            background: #ffffff;
+            width: 600px;
+            padding: 30px 35px;
+            margin: 0 auto;
+            border-radius: 16px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            text-align: left;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 10px;
+            color: #154977;
+            font-size: 28px;
+            font-weight: 600;
+        }
+
+        .success {
+            text-align: center;
+            font-weight: 600;
+            margin-bottom: 25px;
+            font-size: 18px;
+            padding: 12px;
+            border-radius: 8px;
+        }
+
+        .info-row {
+            display: flex;
+            margin: 8px 0;
+            padding: 5px 0;
+            border-bottom: 1px dashed #eef2f6;
+        }
+
+        .info-row span:first-child {
+            width: 120px;
+            font-weight: 600;
+            color: #154977;
+        }
+
+        .info-row span:last-child {
+            color: #2c3e50;
+            font-weight: 500;
+        }
+
+        .item-header, .item-row {
+            display: flex;
+            margin: 8px 0;
+            font-size: 15px;
+        }
+
+        .item-header {
+            font-weight: 700;
+            background: linear-gradient(135deg, #f8fafc, #f1f5f9);
+            padding: 12px 0;
+            border-radius: 8px;
+            color: #154977;
+        }
+
+        .item-header span:nth-child(1),
+        .item-row span:nth-child(1) {
+            width: 50%;
+            padding-left: 12px;
+        }
+
+        .item-header span:nth-child(2),
+        .item-row span:nth-child(2) {
+            width: 15%;
+            text-align: center;
+        }
+
+        .item-header span:nth-child(3),
+        .item-row span:nth-child(3) {
+            width: 15%;
+            text-align: right;
+        }
+
+        .item-header span:nth-child(4),
+        .item-row span:nth-child(4) {
+            width: 20%;
+            text-align: right;
+            padding-right: 12px;
+            font-weight: 600;
+        }
+
+        .item-row {
+            border-bottom: 1px solid #eef2f6;
+            padding: 8px 0;
+        }
+
+        hr {
+            border: 0;
+            border-top: 2px solid #154977;
+            margin: 20px 0;
+            opacity: 0.2;
+        }
+
+        .delivery-row, .total-row {
+            display: flex;
+            justify-content: space-between;
+            font-weight: 600;
+            margin-top: 12px;
+            padding: 8px 0;
+            font-size: 16px;
+        }
+
+        .total-row {
+            font-size: 20px;
+            color: #154977;
+            border-top: 2px solid #154977;
+            margin-top: 15px;
+            padding-top: 15px;
+        }
+
+        .address {
+            margin-top: 25px;
+            font-size: 14px;
+            background: #f8fafc;
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 4px solid #154977;
+        }
+
+        .address strong {
+            color: #154977;
+            display: block;
+            margin-bottom: 8px;
+        }
+        
+        .address .phone-info {
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px dashed #ddd;
+            color: #28a745;
+        }
+        
+        .address .phone-info i {
+            color: #154977;
+            margin-right: 5px;
+        }
+
+        .button-container {
+            display: flex;
+            gap: 12px;
+            margin-top: 30px;
+        }
+
+        button {
+            flex: 1;
+            padding: 14px;
+            background: linear-gradient(135deg, #154977, #1a3a68);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 15px -5px rgba(21, 73, 119, 0.3);
+        }
+
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 25px -8px rgba(21, 73, 119, 0.4);
+            background: linear-gradient(135deg, #1a3a68, #154977);
+        }
+
+        button:active {
+            transform: translateY(-1px);
+        }
+        
+        .logo {
+            display: block;
+            margin: 0 auto 15px;
+            width: 70px;
+            height: auto;
+        }
+
+        .order-id {
+            background: #f8fafc;
+            padding: 8px 15px;
+            border-radius: 50px;
+            display: inline-block;
+            margin-bottom: 15px;
+            font-weight: 600;
+            color: #154977;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 50px;
+            color: #666;
+        }
+
+        .error-box {
+            text-align: center;
+            padding: 40px;
+            color: #dc3545;
+            background: #ffebee;
+            border-radius: 10px;
+        }
+        
+        .debug-info {
+            font-size: 12px;
+            color: #999;
+            margin-top: 20px;
+            padding: 10px;
+            border-top: 1px solid #eee;
+            text-align: left;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="receipt-box" id="receiptBox">
+    <img src="logoo.png" class="logo" alt="Clinic Logo">
+    <h2>Payment Receipt</h2>
+    
+    <div style="text-align: center; margin-bottom: 10px;">
+        <span class="order-id" id="orderIdDisplay">Loading...</span>
+    </div>
+
+    <div class="success" id="paymentStatus">Loading...</div>
+
+    <div id="receiptContent">
+        <div class="loading">
+            <i class="fas fa-spinner fa-spin fa-3x"></i>
+            <p>Loading receipt data...</p>
+        </div>
+    </div>
+
+    <div class="button-container">
+        <button onclick="downloadReceipt()">
+            <i class="fas fa-download"></i> Download PDF
+        </button>
+        <button onclick="window.print()">
+            <i class="fas fa-print"></i> Print
+        </button>
+        <button onclick="goToTracking()">
+            <i class="fas fa-truck"></i> Track Order
+        </button>
+    </div>
+</div>
+
+<script>
+// ===== LOAD RECEIPT DATA FROM MULTIPLE SOURCES =====
+function loadReceiptData() {
+    console.log("Loading receipt data...");
+    
+    let data = {};
+    
+    // Try all possible storage keys
+    const possibleKeys = [
+        "receiptData",
+        "lastOrder",
+        "currentReceipt",
+        "orderData"
+    ];
+    
+    for (let key of possibleKeys) {
+        const stored = localStorage.getItem(key);
+        if (stored && stored !== "undefined" && stored !== "null") {
+            try {
+                const parsed = JSON.parse(stored);
+                if (parsed && Object.keys(parsed).length > 0) {
+                    data = {...data, ...parsed};
+                    console.log(`Loaded from ${key}:`, parsed);
+                }
+            } catch(e) {
+                console.log(`Error parsing ${key}:`, e);
+            }
+        }
+    }
+    
+    // Try to get individual items
+    const name = localStorage.getItem("lastCustomerName");
+    const phone = localStorage.getItem("lastCustomerPhone");
+    const address = localStorage.getItem("lastCustomerAddress");
+    
+    if (name && !data.name && !data.customerName) data.name = name;
+    if (phone && !data.phone && !data.customerPhone) data.phone = phone;
+    if (address && !data.address && !data.customerAddress) data.address = address;
+    
+    console.log("Final merged data:", data);
+    return data;
+}
+
+// ===== GET ITEMS FROM MULTIPLE SOURCES =====
+function getOrderItems() {
+    // Try receiptData first
+    const data = loadReceiptData();
+    if (data.items && Array.isArray(data.items) && data.items.length > 0) {
+        return data.items;
+    }
+    
+    // Try receiptItems
+    const itemsStr = localStorage.getItem("receiptItems");
+    if (itemsStr && itemsStr !== "undefined" && itemsStr !== "null") {
+        try {
+            const items = JSON.parse(itemsStr);
+            if (Array.isArray(items) && items.length > 0) {
+                return items;
+            }
+        } catch(e) {}
+    }
+    
+    // Try orders array
+    const ordersStr = localStorage.getItem("orders");
+    if (ordersStr && ordersStr !== "undefined" && ordersStr !== "null") {
+        try {
+            const orders = JSON.parse(ordersStr);
+            if (Array.isArray(orders) && orders.length > 0) {
+                const lastOrder = orders[orders.length - 1];
+                if (lastOrder.items && Array.isArray(lastOrder.items)) {
+                    return lastOrder.items;
+                }
+            }
+        } catch(e) {}
+    }
+    
+    return [];
+}
+
+// ===== SAFELY GET VALUE WITH MULTIPLE KEY FALLBACKS =====
+function getValue(data, possibleKeys, defaultValue = 'Not provided') {
+    for (let key of possibleKeys) {
+        if (data[key] !== undefined && data[key] !== null && data[key] !== '') {
+            return data[key];
+        }
+    }
+    return defaultValue;
+}
+
+// ===== RENDER RECEIPT =====
+function renderReceipt() {
+    const data = loadReceiptData();
+    const items = getOrderItems();
+    
+    console.log("Rendering with data:", data);
+    console.log("Rendering with items:", items);
+    
+    const paymentStatusEl = document.getElementById("paymentStatus");
+    const orderIdDisplay = document.getElementById("orderIdDisplay");
+    const receiptContent = document.getElementById("receiptContent");
+    
+    // Get order ID with fallbacks
+    const orderId = getValue(data, ['orderId', 'id', 'ORDER_ID'], 'ORD' + Date.now().toString().slice(-8));
+    orderIdDisplay.textContent = `Order ID: ${orderId}`;
+    
+    // Determine payment status
+    const paymentMethod = getValue(data, ['paymentMethod', 'payment', 'method'], 'N/A');
+    
+    if (paymentMethod === "UPI" || paymentMethod === "Card") {
+        paymentStatusEl.textContent = "✅ Payment Successful";
+        paymentStatusEl.style.color = "#28a745";
+        paymentStatusEl.style.backgroundColor = "#e8f5e9";
+    }
+    else if (paymentMethod === "COD") {
+        paymentStatusEl.textContent = "⏳ Payment Pending (Cash on Delivery)";
+        paymentStatusEl.style.color = "#dc3545";
+        paymentStatusEl.style.backgroundColor = "#ffebee";
+    }
+    else {
+        paymentStatusEl.textContent = "✅ Order Placed Successfully";
+        paymentStatusEl.style.color = "#154977";
+        paymentStatusEl.style.backgroundColor = "#e3f2fd";
+    }
+    
+    // Calculate totals
+    let subtotal = 0;
+    let itemsHTML = '';
+    
+    if (items && items.length > 0) {
+        items.forEach((item, index) => {
+            const qty = item.quantity || 1;
+            const price = item.price || 0;
+            const name = item.name || `Item ${index + 1}`;
+            
+            const itemTotal = price * qty;
+            subtotal += itemTotal;
+            
+            itemsHTML += `
+            <div class="item-row">
+                <span>${name}</span>
+                <span>${qty}</span>
+                <span>₹${price.toFixed(2)}</span>
+                <span>₹${itemTotal.toFixed(2)}</span>
+            </div>
+            `;
+        });
+    } else {
+        itemsHTML = '<div style="text-align: center; padding: 30px; color: #999; background: #f8fafc; border-radius: 10px;">🛒 No items in this order</div>';
+    }
+    
+    // Get pricing with fallbacks
+    const itemsPrice = getValue(data, ['itemsPrice', 'subtotal', 'itemTotal'], subtotal);
+    const delivery = getValue(data, ['delivery', 'deliveryCharge', 'shipping'], 
+                              (itemsPrice > 0 && itemsPrice < 100 ? 34 : 0));
+    const grandTotal = getValue(data, ['total', 'grandTotal', 'amount'], itemsPrice + delivery);
+    
+    // Get customer details with ALL possible key variations
+    const customerName = getValue(data, 
+        ['name', 'customerName', 'fullName', 'userName', 'deliveryName'], 
+        'Guest Customer');
+    
+    const customerPhone = getValue(data, 
+        ['phone', 'customerPhone', 'mobile', 'phoneNumber', 'contact', 'tempUserPhone'], 
+        'Not provided');
+    
+    const customerAddress = getValue(data, 
+        ['address', 'customerAddress', 'deliveryAddress', 'fullAddress', 'userAddress'], 
+        'No address provided');
+    
+    const orderDate = getValue(data, ['date', 'orderDate', 'timestamp'], new Date().toLocaleString());
+    
+    receiptContent.innerHTML = `
+    <div class="info-row"><span>Order ID:</span><span>${orderId}</span></div>
+    <div class="info-row"><span>Date:</span><span>${orderDate}</span></div>
+    <div class="info-row"><span>Customer:</span><span>${customerName}</span></div>
+    <div class="info-row"><span>Phone:</span><span>${customerPhone}</span></div>
+    <div class="info-row"><span>Payment:</span><span>${paymentMethod}</span></div>
+    
+    <hr>
+    
+    <div class="item-header">
+        <span>Item</span>
+        <span>Qty</span>
+        <span>Price</span>
+        <span>Total</span>
+    </div>
+    
+    ${itemsHTML}
+    
+    <hr>
+    
+    <div class="delivery-row">
+        <span>Subtotal:</span>
+        <span>₹${Number(itemsPrice).toFixed(2)}</span>
+    </div>
+    
+    <div class="delivery-row">
+        <span>Delivery Charge:</span>
+        <span>₹${Number(delivery).toFixed(2)}</span>
+    </div>
+    
+    <div class="total-row">
+        <span>Grand Total:</span>
+        <span>₹${Number(grandTotal).toFixed(2)}</span>
+    </div>
+    
+    <div class="address">
+        <strong>📦 Delivery Address:</strong>
+        ${customerAddress}
+        <div class="phone-info">
+            <i class="fas fa-phone"></i> Contact: ${customerPhone}
+        </div>
+    </div>
+    `;
+}
+
+// ===== DOWNLOAD PDF FUNCTION =====
+function downloadReceipt() {
+    const button = event.target.closest('button');
+    const originalText = button.innerHTML;
+    
+    button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generating PDF...';
+    button.disabled = true;
+    
+    try {
+        const element = document.getElementById("receiptBox");
+        
+        // Create clone without buttons
+        const clone = element.cloneNode(true);
+        const buttonContainer = clone.querySelector('.button-container');
+        if (buttonContainer) buttonContainer.remove();
+        
+        // Remove any other buttons
+        clone.querySelectorAll('button').forEach(btn => btn.remove());
+        
+        // Set PDF options
+        const opt = {
+            margin: [0.5, 0.5, 0.5, 0.5],
+            filename: `Receipt_${document.getElementById('orderIdDisplay').textContent.replace('Order ID: ', '')}.pdf`,
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { scale: 2, letterRendering: true, backgroundColor: '#ffffff' },
+            jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
+        };
+        
+        // Generate PDF
+        html2pdf().set(opt).from(clone).save()
+            .then(() => {
+                button.innerHTML = originalText;
+                button.disabled = false;
+            })
+            .catch((error) => {
+                console.error('PDF Error:', error);
+                alert('PDF generation failed. Using print instead.');
+                window.print();
+                button.innerHTML = originalText;
+                button.disabled = false;
+            });
+            
+    } catch (error) {
+        console.error('PDF Error:', error);
+        alert('Error generating PDF. Please use Print.');
+        button.innerHTML = originalText;
+        button.disabled = false;
+    }
+}
+
+function goToTracking() {
+    window.location.href = "tracking.html";
+}
+
+// Initialize on page load
+document.addEventListener('DOMContentLoaded', function() {
+    renderReceipt();
+    
+    // Check if we have data and show debug info if needed
+    setTimeout(() => {
+        const data = loadReceiptData();
+        if (!data.orderId && !data.name) {
+            console.warn("No receipt data found!");
+            document.getElementById('receiptContent').innerHTML = `
+                <div class="error-box">
+                    <i class="fas fa-exclamation-triangle fa-3x"></i>
+                    <h3>No Receipt Data Found</h3>
+                    <p>Please complete an order first.</p>
+                    <button onclick="window.location.href='shopping.html'" style="margin-top: 15px; padding: 10px 20px; background: #154977; color: white; border: none; border-radius: 5px; cursor: pointer;">
+                        Go to Shopping
+                    </button>
+                </div>
+            `;
+        }
+    }, 500);
+});
+
+// Make functions global
+window.downloadReceipt = downloadReceipt;
+window.goToTracking = goToTracking;
+</script>
+
+</body>
+</html> 

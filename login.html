@@ -1,0 +1,1178 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Dr. PK Clinic - Patient Login</title>
+    <link rel="icon" href="logoo.png" type="image/png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<style>
+     * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background-color: #f5f7fa;
+            color: #2c3e50;
+            padding-top: 70px;
+            line-height: 1.6;
+        }
+
+        /* ================= NAVBAR ================= */
+        .top-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 70px;
+            background: linear-gradient(135deg, #1e4b7a, #154977);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 5%;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            z-index: 1000;
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-left .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            color: white;
+            font-size: 22px;
+            font-weight: 700;
+        }
+
+        .nav-left img {
+            width: 50px;
+            height: 50px;
+            object-fit: contain;
+            filter: brightness(0) invert(1);
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .nav-right a {
+            color: rgba(255,255,255,0.9);
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 600;
+            padding: 8px 12px;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-right a:hover {
+            color: white;
+            background: rgba(255,255,255,0.1);
+            transform: translateY(-2px);
+        }
+
+        .nav-right a.active {
+            color: white;
+            background: rgba(255,255,255,0.2);
+        }
+
+        .nav-right a::after {
+            content: "";
+            position: absolute;
+            left: 50%;
+            bottom: -2px;
+            width: 0;
+            height: 3px;
+            background: #ffd700;
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        .nav-right a:hover::after,
+        .nav-right a.active::after {
+            width: 80%;
+        }
+
+
+
+        /* ===== LOGIN SECTION ===== */
+        .login-section {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+            min-height: calc(100vh - 70px);
+        }
+
+        .login-card {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            max-width: 1000px;
+            width: 100%;
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 25px 50px rgba(21,73,119,0.15);
+            animation: slideUp 0.5s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ===== LEFT IMAGE SECTION ===== */
+        .login-image {
+            background: linear-gradient(135deg, #154977, #1a5a9c);
+            padding: 60px 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .login-image::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: rotate 30s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .login-image h2 {
+            color: white;
+            font-size: 32px;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .login-image p {
+            color: rgba(255,255,255,0.9);
+            font-size: 16px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ===== RIGHT FORM SECTION ===== */
+        .login-form {
+            padding: 50px 45px;
+            background: white;
+        }
+
+        .logoo {
+            width: 70px;
+            height: 70px;
+            object-fit: contain;
+            margin: 0 auto 15px;
+            display: block;
+        }
+
+        .login-form h3 {
+            color: #154977;
+            font-size: 24px;
+            margin-bottom: 30px;
+            text-align: center;
+            font-weight: 600;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        .login-form h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: #C83438;
+        }
+
+        .input-group {
+            position: relative;
+            margin-bottom: 25px;
+        }
+
+        .input-group i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #154977;
+            font-size: 18px;
+            z-index: 1;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 16px 20px 16px 50px;
+            border: 2px solid #e0e7f0;
+            border-radius: 12px;
+            font-size: 15px;
+            transition: all 0.3s ease;
+            background: #f8fafc;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: #154977;
+            box-shadow: 0 0 0 4px rgba(21,73,119,0.1);
+            background: white;
+        }
+
+        .input-group input::placeholder {
+            color: #94a3b8;
+        }
+
+        #errorMsg {
+            text-align: center;
+            margin: 15px 0;
+            font-size: 14px;
+            font-weight: 500;
+            min-height: 20px;
+        }
+
+        button[type="submit"] {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #154977, #1a5a9c);
+            color: white;
+            border: none;
+            border-radius: 40px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 20px 0 15px;
+            box-shadow: 0 8px 20px rgba(21,73,119,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        button[type="submit"]:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(21,73,119,0.3);
+        }
+
+        button[type="submit"]:active {
+            transform: translateY(-1px);
+        }
+
+        .form-links {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .form-links a {
+            color: #154977;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 5px 0;
+            position: relative;
+        }
+
+        .form-links a:hover {
+            color: #C83438;
+        }
+
+        .form-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #C83438;
+            transition: width 0.3s ease;
+        }
+
+        .form-links a:hover::after {
+            width: 100%;
+        }
+
+
+        /* ================= FOOTER ================= */
+        .site-footer {
+            background: #0a1a2a;
+            color: #a0b8cc;
+            padding: 60px 0 0;
+            margin-top: 60px;
+        }
+
+        .footer-container {
+            max-width: 1300px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+            padding: 0 30px;
+        }
+
+        .footer-col h3 {
+            color: white;
+            font-size: 18px;
+            margin-bottom: 25px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-col h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background: #4a90e2;
+        }
+
+        .footer-col p, .footer-col ul {
+            font-size: 14px;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 12px;
+        }
+
+        .footer-col ul li a {
+            color: #a0b8cc;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer-col ul li a:hover {
+            color: white;
+            padding-left: 8px;
+        }
+
+        /* Social icons */
+.social-icons {
+    display: flex;
+    gap: 10px; /* Reduced from 12px */
+    margin-top: 12px; /* Reduced from 15px */
+}
+
+.social-icons a {
+    width: 32px; /* Reduced from 38px */
+    height: 32px; /* Reduced from 38px */
+    border-radius: 50%;
+    background: rgba(255,255,255,0.12);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 14px; /* Reduced from 16px */
+    transition: 0.3s ease;
+}
+
+/* Brand hover colors */
+.social-icons a.facebook {
+    background: linear-gradient(135deg, #1877f2);
+}
+
+.social-icons a.youtube {
+    background: linear-gradient(135deg, #ff0000);
+}
+
+.social-icons a.linkedin {
+    background: linear-gradient(#0937d1);
+}
+
+.social-icons a.instagram {
+    background: radial-gradient(circle at 30% 110%, 
+        #fdf497 0%, #fdf497 5%, #fd5949 45%, 
+        #d6249f 60%, #285AEB 90%);
+}
+
+        .watch-live, .appointment {
+            display: inline-block;
+            padding: 12px 25px;
+            border-radius: 40px;
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            margin: 5px 10px 5px 0;
+            transition: all 0.3s ease;
+        }
+
+        .watch-live {
+            background: #e74c3c;
+        }
+
+        .watch-live:hover {
+            background: #c0392b;
+            transform: translateY(-3px);
+        }
+
+        .appointment {
+            background: #154977;
+        }
+
+        .appointment:hover {
+            background: #1e5a9c;
+            transform: translateY(-3px);
+        }
+
+        .store-buttons {
+            display: flex;
+            gap: 15px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .store-buttons a {
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+
+        .store-buttons a:hover {
+            transform: translateY(-5px);
+        }
+
+        .store-buttons img {
+            height: 45px;
+            width: auto;
+        }
+
+        .footer-bottom {
+            background: #05111f;
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+            color: #a0b8cc;
+            font-size: 14px;
+        }
+
+        /* ================= RESPONSIVE DESIGN ================= */
+        @media (max-width: 1200px) {
+            .footer-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 992px) {
+            .appointment-form {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-section,
+            .gender-fieldset,
+            .select-wrapper,
+            .payment-section {
+                grid-column: span 1;
+            }
+            
+            .payment-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            body { padding-top: 120px; }
+            
+            .top-nav {
+                height: auto;
+                padding: 15px 20px;
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .nav-right {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 10px;
+            }
+            
+            .nav-right a {
+                font-size: 14px;
+                padding: 6px 10px;
+            }
+            
+            .appointment-container {
+                padding: 0 20px;
+            }
+            
+            .timings-section,
+            .appointment-form-section {
+                padding: 25px;
+            }
+            
+            .footer-container {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            
+            .footer-col h3::after {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+            
+            .gender-options {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .gender-fieldset label {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .timings-table {
+                display: block;
+                overflow-x: auto;
+            }
+            
+            .checkbox-group,
+            .radio-group {
+                grid-template-columns: 1fr;
+            }
+            
+            .payment-option {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            #topBtn {
+                bottom: 20px;
+                right: 20px;
+                width: 45px;
+                height: 45px;
+                font-size: 20px;
+            }
+        }
+
+        /* ================= ANIMATIONS ================= */
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .profile-icon {
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        background: linear-gradient(135deg, #ff0d00, #ffb347) !important;
+        border-radius: 50% !important;
+        padding: 0 !important;
+        font-weight: bold !important;
+        font-size: 18px !important;
+        color: #154977 !important;
+        text-transform: uppercase;
+        border: 2px solid white !important;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.2) !important;
+        transition: all 0.3s ease !important;
+        animation: profilePulse 2s infinite;
+    }
+
+    .profile-icon:hover {
+        transform: scale(1.1) rotate(5deg) !important;
+        background: linear-gradient(135deg, #ffb347, #ffd700) !important;
+        box-shadow: 0 6px 15px rgba(255,215,0,0.4) !important;
+    }
+
+    .profile-icon span {
+        display: block;
+        line-height: 1;
+        text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+    }
+
+    @keyframes profilePulse {
+        0%, 100% { box-shadow: 0 4px 10px rgba(255,215,0,0.3); }
+        50% { box-shadow: 0 6px 15px rgba(255,215,0,0.6); }
+    }
+</style>
+<body>
+<!-- NAVBAR -->
+<nav class="top-nav">
+    <div class="nav-left">
+        <div class="logo">
+            <img src="logoo.png" width="60">
+            Dr. PK Clinic
+        </div>
+    </div>
+    <div class="nav-right">
+        <a href="index.html">Home</a>
+        <a href="appointment.html">Appointment</a>
+        <a href="about.html">About</a>
+        <a href="services.html">Services</a>
+        <a href="testimonials.html">Testimonials</a>
+        <a href="contact.html">Contact</a>
+        <a href="shopping.html">Shopping</a>
+        <a href="login.html" id="loginLink">Login</a>
+        <!-- Profile icon - hidden by default -->
+        <a href="profile.html" id="profileLink" style="display: none;" class="profile-icon">
+            <span id="profileInitial"></span>
+        </a>
+    </div>
+</nav>
+
+<!-- LOGIN SECTION -->
+<section class="login-section">
+
+    <div class="login-card">
+
+        <!-- LEFT IMAGE -->
+        <div class="login-image">
+            <h2>Welcome Back!</h2>
+            <p>Your heart health is our priority.<br>Sign in to access your account.</p>
+        </div>
+
+        <!-- RIGHT FORM -->
+        <div class="login-form">
+            <img src="logoo.png" class="logoo" alt="Clinic Logo">
+            <h3>Patient Login</h3>
+
+            <!-- IMPORTANT FIX: Added id -->
+            <form id="loginForm">
+
+                <div class="input-group">
+                    <i class="fa fa-envelope"></i>
+                    <input type="email" id="email" placeholder="Email Address" required>
+                </div>
+
+                <div class="input-group">
+                    <i class="fa fa-lock"></i>
+                    <input type="password" id="password" placeholder="Password" required>
+                </div>
+
+                <p id="errorMsg" style="color:red; font-size:14px;"></p>
+
+                <button type="submit">
+                    <i class="fas fa-sign-in-alt"></i> Login
+                </button>
+
+                <div class="form-links">
+                    <a href="forgetpassword.html">Forgot Password?</a>
+                    <a href="signup.html">Create Account</a>
+                </div>
+
+            </form>
+        </div>
+
+    </div>
+</section>
+
+<!-- FOOTER WITH ARROWS -->
+<footer class="site-footer">
+    <div class="footer-container">
+
+        <!-- About -->
+        <div class="footer-col">
+            <h3>About Us</h3>
+            <p>Dr Praveen Kumar A – Expert in lifestyle disease reversal, an acclaimed author, speaker, and specialist in natural health. He has helped a large number of patients reverse diseases through natural healing.</p>
+            <a href="about.html" class="footer-link">For More Details →</a>
+
+            <h4>Find Us On:</h4>
+            <div class="social-icons">
+                    <a href="https://www.facebook.com/profile.php?id=100053479690246" class="facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.youtube.com/@move_with_praveen" class="youtube"><i class="fab fa-youtube"></i></a>
+                    <a href="https://www.linkedin.com/in/praveen-kumar-792b8a395/" class="linkedin"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="https://www.instagram.com/praveeneyy19/" class="instagram"><i class="fab fa-instagram"></i></a>
+                </div>
+        </div>
+
+        <!-- Quick Links -->
+        <div class="footer-col">
+            <h3>Quick Links</h3>
+            <ul>
+                <li><a href="#">Biswas E-Magazine →</a></li>
+                <li><a href="#">Download Free Ebook →</a></li>
+                <li><a href="#">Coronakaal.tv →</a></li>
+                <li><a href="#">About Us →</a></li>
+                <li><a href="#">Gallery →</a></li>
+                <li><a href="#">Blogs →</a></li>
+                <li><a href="#">Credentials →</a></li>
+                <li><a href="#">Research Papers →</a></li>
+                <li><a href="#">Refund & Cancellation Policy →</a></li>
+                <li><a href="#">Privacy Policy →</a></li>
+                <li><a href="#">Shipping Policy →</a></li>
+            </ul>
+        </div>
+
+        <!-- Live -->
+        <div class="footer-col">
+            <h3>Join Dr. PK Clinic</h3>
+            <p>To be a part of Dr. Praveen Kumar's next LIVE event</p>
+            <a href="https://youtu.be/28CYhgjrBLA?si=qzg48QoZ8obTjWdv" class="watch-live">CARDIOVASCULAR SYSTEM OVERVIEW →</a>
+            <a href="appointment.html" class="appointment">Book Appointment →</a>
+        </div>
+
+        <!-- Download App -->
+        <div class="footer-col">
+            <h3>Download App</h3>
+            <div class="store-buttons">
+                <a href="https://play.google.com/store/apps/details?id=com.needstreet.health.hppatient">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Get it on Google Play">
+                </a>
+                <a href="https://apps.apple.com/in/app/continuouscare-health-app/id674531353">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/3/3c/Download_on_the_App_Store_Badge.svg" alt="Download on the App Store">
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-bottom">
+        <p class="text-white">&copy; 2026 Dr. PK Clinic. All Rights Reserved.</p>
+    </div>
+</footer>
+
+<!-- JAVASCRIPT -->
+ <script>
+document.addEventListener("DOMContentLoaded", function () {
+    // ===== LOGIN FORM HANDLER =====
+    const form = document.getElementById("loginForm");
+    const errorMsg = document.getElementById("errorMsg");
+    const emailInput = document.getElementById("email");
+    const passwordInput = document.getElementById("password");
+
+    form.addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        const email = emailInput.value.trim();
+        const password = passwordInput.value;
+
+        // Clear previous error message
+        errorMsg.textContent = "";
+
+        // Validate inputs
+        if (!email || !password) {
+            errorMsg.textContent = "Please enter both email and password";
+            errorMsg.style.color = "#dc3545";
+            return;
+        }
+
+        // STEP 1: Get all users from localStorage (users array)
+        let users = [];
+        try {
+            users = JSON.parse(localStorage.getItem("users")) || [];
+            // Ensure it's an array
+            if (!Array.isArray(users)) {
+                users = [users];
+            }
+        } catch (e) {
+            console.error("Error parsing users:", e);
+            users = [];
+        }
+
+        // Also check for old userData format (for backward compatibility)
+        const oldUserData = localStorage.getItem("userData");
+        if (oldUserData && oldUserData !== "undefined" && oldUserData !== "null") {
+            try {
+                const oldUser = JSON.parse(oldUserData);
+                if (oldUser && typeof oldUser === 'object' && !Array.isArray(oldUser)) {
+                    // Check if this user is not already in users array
+                    const exists = users.some(u => u.email === oldUser.email);
+                    if (!exists) {
+                        users.push({
+                            name: oldUser.name || "User",
+                            email: oldUser.email,
+                            phone: oldUser.phone || "",
+                            password: oldUser.password,
+                            registeredOn: oldUser.time || new Date().toLocaleString()
+                        });
+                        // Save converted data
+                        localStorage.setItem("users", JSON.stringify(users));
+                        // Optionally remove old key
+                        // localStorage.removeItem("userData");
+                    }
+                }
+            } catch (e) {
+                console.error("Error converting old userData:", e);
+            }
+        }
+
+        // STEP 2: Find user with matching email and password
+        const user = users.find(u => u.email === email && u.password === password);
+
+        if (user) {
+            // Login successful
+            
+            // Track this login in loginHistory array
+            trackLogin(user);
+            
+            // Set logged in flag
+            localStorage.setItem("isLoggedIn", "true");
+            
+            // Store current user info (optional - for session)
+            localStorage.setItem("currentUser", JSON.stringify({
+                name: user.name,
+                email: user.email,
+                phone: user.phone
+            }));
+            
+            // Show success message
+            errorMsg.style.color = "#28a745";
+            errorMsg.textContent = "Login successful! Redirecting...";
+            
+            // Check if there's a page to redirect to
+            const redirectUrl = sessionStorage.getItem("redirectAfterLogin") || "index.html";
+            sessionStorage.removeItem("redirectAfterLogin");
+            
+            setTimeout(() => {
+                window.location.href = redirectUrl;
+            }, 1000);
+            
+        } else {
+            // Login failed
+            errorMsg.style.color = "#dc3545";
+            
+            // Check if email exists but password is wrong
+            const emailExists = users.some(u => u.email === email);
+            
+            if (emailExists) {
+                errorMsg.textContent = "Incorrect password. Please try again.";
+            } else {
+                errorMsg.textContent = "Email not found. Please sign up first.";
+            }
+        }
+    });
+
+    // ===== TRACK LOGIN FUNCTION =====
+    function trackLogin(user) {
+        try {
+            // Get existing login history array
+            let loginHistory = JSON.parse(localStorage.getItem("loginHistory")) || [];
+            
+            // Ensure it's an array
+            if (!Array.isArray(loginHistory)) {
+                loginHistory = [];
+            }
+            
+            // Add new login record
+            loginHistory.push({
+                name: user.name || "Unknown",
+                email: user.email,
+                phone: user.phone || "N/A",
+                loginTime: new Date().toLocaleString(),
+                device: detectDevice(),
+                page: window.location.pathname
+            });
+            
+            // Keep only last 50 logins to prevent storage overflow
+            if (loginHistory.length > 50) {
+                loginHistory = loginHistory.slice(-50);
+            }
+            
+            // Save back to localStorage
+            localStorage.setItem("loginHistory", JSON.stringify(loginHistory));
+            
+            console.log("Login tracked for:", user.email);
+            
+        } catch (e) {
+            console.error("Error tracking login:", e);
+        }
+    }
+
+    // ===== DETECT DEVICE TYPE =====
+    function detectDevice() {
+        const ua = navigator.userAgent;
+        if (/(tablet|ipad|playbook|silk)|(android(?!.*mobi))/i.test(ua)) {
+            return "Tablet";
+        }
+        if (/Mobile|Android|iP(hone|od)|IEMobile|BlackBerry|Kindle|Silk-Accelerated|(hpw|web)OS|Opera M(obi|ini)/.test(ua)) {
+            return "Mobile";
+        }
+        return "Desktop";
+    }
+
+    // ===== AUTO-FILL DEMO CREDENTIALS (for testing) =====
+    function addDemoCredentials() {
+        // Check if we have any users
+        let users = JSON.parse(localStorage.getItem("users")) || [];
+        
+        if (users.length === 0) {
+            // Create a demo user if none exists
+            const demoUser = {
+                name: "Demo User",
+                email: "demo@example.com",
+                phone: "9876543210",
+                password: "demo123",
+                registeredOn: new Date().toLocaleString()
+            };
+            
+            users.push(demoUser);
+            localStorage.setItem("users", JSON.stringify(users));
+            console.log("Demo user created");
+        }
+        
+        // Auto-fill demo credentials (optional)
+        // Uncomment if you want to auto-fill for testing
+        // emailInput.value = "demo@example.com";
+        // passwordInput.value = "demo123";
+    }
+
+    // ===== CALL DEMO CREDENTIALS FUNCTION =====
+    addDemoCredentials();
+
+    // ===== ACTIVE NAV LINK HIGHLIGHTING =====
+    const navLinks = document.querySelectorAll(".nav-right a");
+    const currentPage = window.location.pathname.split("/").pop();
+
+    navLinks.forEach(link => {
+        const linkPage = link.getAttribute("href");
+        if (linkPage === currentPage) {
+            link.classList.add("active");
+        }
+    });
+
+    // ===== INPUT VALIDATION (real-time) =====
+    emailInput.addEventListener("input", function() {
+        // Basic email validation
+        const email = this.value.trim();
+        if (email && !isValidEmail(email)) {
+            this.style.borderColor = "#dc3545";
+        } else {
+            this.style.borderColor = "#e0e7f0";
+        }
+    });
+
+    passwordInput.addEventListener("input", function() {
+        // Password length validation
+        const password = this.value;
+        if (password && password.length < 6) {
+            this.style.borderColor = "#dc3545";
+        } else {
+            this.style.borderColor = "#e0e7f0";
+        }
+    });
+
+    function isValidEmail(email) {
+        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return re.test(email);
+    }
+
+    // ===== FORGOT PASSWORD HANDLER (optional) =====
+    // This can be expanded if you implement password reset
+    const forgotLink = document.querySelector('a[href="forgetpassword.html"]');
+    if (forgotLink) {
+        forgotLink.addEventListener("click", function(e) {
+            const email = emailInput.value.trim();
+            if (email && isValidEmail(email)) {
+                // Store email for forgot password page
+                sessionStorage.setItem("resetEmail", email);
+            }
+        });
+    }
+
+    // ===== CHECK FOR EXISTING SESSION =====
+    function checkExistingSession() {
+        const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+        const currentUser = localStorage.getItem("currentUser");
+        
+        if (isLoggedIn && currentUser) {
+            // User is already logged in
+            // Optionally show a message or auto-redirect
+            console.log("User already logged in");
+            
+            // Uncomment to auto-redirect logged in users
+            // window.location.href = "homepage.html";
+        }
+    }
+    
+    checkExistingSession();
+
+    // ===== DEMO: SHOW ALL USERS IN CONSOLE (for debugging) =====
+    function debugShowAllUsers() {
+        const users = JSON.parse(localStorage.getItem("users")) || [];
+        console.log("=== All Registered Users ===");
+        users.forEach((user, index) => {
+            console.log(`${index + 1}. ${user.name} - ${user.email} (${user.phone})`);
+        });
+    }
+    
+    // Uncomment for debugging
+    // debugShowAllUsers();
+
+});
+document.addEventListener("DOMContentLoaded", function () {
+    const form = document.getElementById("loginForm");
+    const errorMsg = document.getElementById("errorMsg");
+    const emailInput = document.getElementById("email");
+    const passwordInput = document.getElementById("password");
+
+    form.addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        const email = emailInput.value.trim();
+        const password = passwordInput.value;
+
+        errorMsg.textContent = "";
+
+        if (!email || !password) {
+            errorMsg.textContent = "Please enter both email and password";
+            errorMsg.style.color = "#dc3545";
+            return;
+        }
+
+        let users = [];
+        try {
+            users = JSON.parse(localStorage.getItem("users")) || [];
+            if (!Array.isArray(users)) {
+                users = [users];
+            }
+        } catch (e) {
+            console.error("Error parsing users:", e);
+            users = [];
+        }
+
+        const user = users.find(u => u.email === email && u.password === password);
+
+        if (user) {
+            // Login successful
+            trackLogin(user);
+            
+            localStorage.setItem("isLoggedIn", "true");
+            
+            // Store current user for profile
+            localStorage.setItem("currentUser", JSON.stringify({
+                name: user.name,
+                email: user.email,
+                phone: user.phone
+            }));
+            
+            errorMsg.style.color = "#28a745";
+            errorMsg.textContent = "Login successful! Redirecting...";
+            
+            const redirectUrl = sessionStorage.getItem("redirectAfterLogin") || "index.html";
+            sessionStorage.removeItem("redirectAfterLogin");
+            
+            setTimeout(() => {
+                window.location.href = redirectUrl;
+            }, 1000);
+            
+        } else {
+            errorMsg.style.color = "#dc3545";
+            const emailExists = users.some(u => u.email === email);
+            
+            if (emailExists) {
+                errorMsg.textContent = "Incorrect password. Please try again.";
+            } else {
+                errorMsg.textContent = "Email not found. Please sign up first.";
+            }
+        }
+    });
+
+    function trackLogin(user) {
+        try {
+            let loginHistory = JSON.parse(localStorage.getItem("loginHistory")) || [];
+            if (!Array.isArray(loginHistory)) {
+                loginHistory = [];
+            }
+            
+            loginHistory.push({
+                name: user.name || "Unknown",
+                email: user.email,
+                phone: user.phone || "N/A",
+                loginTime: new Date().toLocaleString(),
+                device: detectDevice(),
+                page: window.location.pathname
+            });
+            
+            if (loginHistory.length > 50) {
+                loginHistory = loginHistory.slice(-50);
+            }
+            
+            localStorage.setItem("loginHistory", JSON.stringify(loginHistory));
+        } catch (e) {
+            console.error("Error tracking login:", e);
+        }
+    }
+
+    function detectDevice() {
+        const ua = navigator.userAgent;
+        if (/(tablet|ipad|playbook|silk)|(android(?!.*mobi))/i.test(ua)) {
+            return "Tablet";
+        }
+        if (/Mobile|Android|iP(hone|od)|IEMobile|BlackBerry|Kindle|Silk-Accelerated|(hpw|web)OS|Opera M(obi|ini)/.test(ua)) {
+            return "Mobile";
+        }
+        return "Desktop";
+    }
+});
+</script>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    updateNavbarProfile();
+});
+
+function updateNavbarProfile() {
+    const loginLink = document.getElementById("loginLink");
+    const profileLink = document.getElementById("profileLink");
+    const profileInitial = document.getElementById("profileInitial");
+    
+    const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+    const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+    
+    if (loginLink && profileLink && profileInitial) {
+        if (isLoggedIn && currentUser) {
+            loginLink.style.display = "none";
+            profileLink.style.display = "flex";
+            const initial = (currentUser.name || "U").charAt(0).toUpperCase();
+            profileInitial.textContent = initial;
+        } else {
+            loginLink.style.display = "inline-block";
+            profileLink.style.display = "none";
+        }
+    }
+}
+</script>
+</body>
+</html>

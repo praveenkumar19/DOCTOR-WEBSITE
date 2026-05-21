@@ -1,0 +1,1286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dr. PK Clinic - Services</title>
+    <link rel="icon" href="logoo.png" type="image/png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background-color: #f5f7fa;
+            color: #2c3e50;
+            padding-top: 70px;
+            line-height: 1.6;
+        }
+
+        /* ================= NAVBAR ================= */
+        .top-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 70px;
+            background: linear-gradient(135deg, #1e4b7a, #154977);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 5%;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            z-index: 1000;
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-left .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            color: white;
+            font-size: 22px;
+            font-weight: 700;
+        }
+
+        .nav-left img {
+            width: 50px;
+            height: 50px;
+            object-fit: contain;
+            filter: brightness(0) invert(1);
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .nav-right a {
+            color: rgba(255,255,255,0.9);
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 600;
+            padding: 8px 12px;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-right a:hover {
+            color: white;
+            background: rgba(255,255,255,0.1);
+            transform: translateY(-2px);
+        }
+
+        .nav-right a.active {
+            color: white;
+            background: rgba(255,255,255,0.2);
+        }
+
+        .nav-right a::after {
+            content: "";
+            position: absolute;
+            left: 50%;
+            bottom: -2px;
+            width: 0;
+            height: 3px;
+            background: #ffd700;
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        .nav-right a:hover::after,
+        .nav-right a.active::after {
+            width: 80%;
+        }
+
+        /* ================= PAGE HEADER ================= */
+        .page-header {
+            text-align: center;
+            padding: 50px 20px 30px;
+            background: linear-gradient(135deg, #f5f8fb, #ffffff);
+        }
+
+        .page-header h1 {
+            font-size: 36px;
+            color: #154977;
+            margin-bottom: 15px;
+        }
+
+        .page-header h1 span {
+            color: #C83438;
+            position: relative;
+        }
+
+        .page-header p {
+            color: #64748b;
+            font-size: 18px;
+            margin-bottom: 15px;
+        }
+
+        .header-underline {
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, #154977, #C83438);
+            margin: 0 auto;
+            border-radius: 2px;
+        }
+
+        /* ================= SERVICE ARTICLES SECTION ================= */
+        .service-articles-section {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 30px;
+        }
+
+        .service-articles-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .service-articles-header h2 {
+            font-size: 32px;
+            color: #154977;
+            margin-bottom: 15px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .service-articles-header h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: #C83438;
+        }
+
+        .service-articles-header p {
+            font-size: 16px;
+            color: #64748b;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .service-article-card {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 30px;
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(21, 73, 119, 0.08);
+            margin-bottom: 30px;
+            transition: all 0.3s ease;
+            border: 1px solid #e0e7f0;
+        }
+
+        .service-article-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(21, 73, 119, 0.15);
+            border-color: #154977;
+        }
+
+        .service-article-image {
+            position: relative;
+            height: 100%;
+            min-height: 280px;
+            overflow: hidden;
+        }
+
+        .service-article-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .service-article-card:hover .service-article-image img {
+            transform: scale(1.05);
+        }
+
+        .service-badge {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: #154977;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 30px;
+            font-size: 14px;
+            font-weight: 600;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            z-index: 2;
+        }
+
+        .service-article-content {
+            padding: 30px 30px 30px 0;
+        }
+
+        .service-meta {
+            display: flex;
+            gap: 25px;
+            color: #64748b;
+            font-size: 14px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        .service-meta i {
+            color: #154977;
+            margin-right: 6px;
+        }
+
+        .service-article-content h3 {
+            font-size: 24px;
+            color: #154977;
+            margin-bottom: 15px;
+            line-height: 1.3;
+        }
+
+        .service-description {
+            color: #475569;
+            line-height: 1.7;
+            margin-bottom: 20px;
+            font-size: 15px;
+        }
+
+        .service-details {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin: 25px 0;
+            padding: 25px 0;
+            border-top: 1px solid #e2e8f0;
+            border-bottom: 1px solid #e2e8f0;
+            background: #f8fafc;
+            border-radius: 10px;
+        }
+
+        .service-detail-item {
+            text-align: center;
+            padding: 0 10px;
+        }
+
+        .service-detail-item i {
+            font-size: 28px;
+            color: #154977;
+            margin-bottom: 10px;
+            background: white;
+            width: 50px;
+            height: 50px;
+            line-height: 50px;
+            border-radius: 50%;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        .service-detail-item h4 {
+            font-size: 14px;
+            color: #154977;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+
+        .service-detail-item p {
+            font-size: 13px;
+            color: #64748b;
+            font-weight: 500;
+        }
+
+        .service-benefits {
+            margin: 25px 0;
+        }
+
+        .service-benefits h4 {
+            color: #154977;
+            margin-bottom: 15px;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .service-benefits ul {
+            list-style: none;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
+        .service-benefits ul li {
+            color: #475569;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            background: #f8fafc;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .service-benefits ul li:hover {
+            background: #e6f0fa;
+            transform: translateX(5px);
+        }
+
+        .service-benefits ul li i {
+            color: #154977;
+            font-size: 14px;
+        }
+
+        .service-faq {
+            background: #f8fafc;
+            padding: 20px 25px;
+            border-radius: 12px;
+            margin: 25px 0;
+            border-left: 4px solid #154977;
+        }
+
+        .service-faq h4 {
+            color: #154977;
+            margin-bottom: 15px;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .faq-item {
+            margin-bottom: 15px;
+        }
+
+        .faq-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .faq-item h5 {
+            color: #154977;
+            font-size: 15px;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .faq-item h5 i {
+            color: #C83438;
+            font-size: 14px;
+        }
+
+        .faq-item p {
+            color: #64748b;
+            font-size: 14px;
+            line-height: 1.6;
+            padding-left: 26px;
+        }
+
+        .service-testimonials {
+            display: flex;
+            gap: 15px;
+            margin: 25px 0;
+            flex-wrap: wrap;
+        }
+
+        .testimonial-mini {
+            background: #f1f5f9;
+            padding: 15px;
+            border-radius: 12px;
+            flex: 1;
+            min-width: 180px;
+            border-left: 3px solid #C83438;
+        }
+
+        .testimonial-mini p {
+            font-size: 13px;
+            color: #475569;
+            font-style: italic;
+            margin-bottom: 8px;
+            line-height: 1.5;
+        }
+
+        .testimonial-mini span {
+            font-size: 12px;
+            color: #154977;
+            font-weight: 600;
+            display: block;
+            text-align: right;
+        }
+
+        .service-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: #154977;
+            color: white;
+            padding: 14px 35px;
+            border-radius: 40px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+            margin-top: 15px;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(21, 73, 119, 0.3);
+        }
+
+        .service-cta:hover {
+            background: #1a5a9c;
+            gap: 18px;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(21, 73, 119, 0.4);
+        }
+
+        .service-cta i {
+            font-size: 16px;
+        }
+
+        /* ================= BACK TO TOP BUTTON ================= */
+        #topBtn {
+            position: fixed;
+            bottom: 40px;
+            right: 40px;
+            width: 55px;
+            height: 55px;
+            background: #154977;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            font-size: 24px;
+            cursor: pointer;
+            display: none;
+            box-shadow: 0 10px 25px rgba(21, 73, 119, 0.4);
+            transition: all 0.3s ease;
+            z-index: 99;
+        }
+
+        #topBtn:hover {
+            background: #1e5a9c;
+            transform: translateY(-5px) scale(1.1);
+        }
+
+        /* ================= FOOTER ================= */
+        .site-footer {
+            background: #0a1a2a;
+            color: #a0b8cc;
+            padding: 60px 0 0;
+            margin-top: 60px;
+        }
+
+        .footer-container {
+            max-width: 1300px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+            padding: 0 30px;
+        }
+
+        .footer-col h3 {
+            color: white;
+            font-size: 18px;
+            margin-bottom: 25px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-col h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background: #4a90e2;
+        }
+
+        .footer-col p, .footer-col ul {
+            font-size: 14px;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 12px;
+        }
+
+        .footer-col ul li a {
+            color: #a0b8cc;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer-col ul li a:hover {
+            color: white;
+            padding-left: 8px;
+        }
+
+        /* Social icons */
+        .social-icons {
+            display: flex;
+            gap: 10px;
+            margin-top: 12px;
+        }
+
+        .social-icons a {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.12);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 14px;
+            transition: 0.3s ease;
+        }
+
+        .social-icons a.facebook {
+            background: linear-gradient(135deg, #1877f2);
+        }
+
+        .social-icons a.youtube {
+            background: linear-gradient(135deg, #ff0000);
+        }
+
+        .social-icons a.linkedin {
+            background: linear-gradient(#0937d1);
+        }
+
+        .social-icons a.instagram {
+            background: radial-gradient(circle at 30% 110%, 
+                #fdf497 0%, #fdf497 5%, #fd5949 45%, 
+                #d6249f 60%, #285AEB 90%);
+        }
+
+        .watch-live, .appointment {
+            display: inline-block;
+            padding: 12px 25px;
+            border-radius: 40px;
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            margin: 5px 10px 5px 0;
+            transition: all 0.3s ease;
+        }
+
+        .watch-live {
+            background: #e74c3c;
+        }
+
+        .watch-live:hover {
+            background: #c0392b;
+            transform: translateY(-3px);
+        }
+
+        .appointment {
+            background: #154977;
+        }
+
+        .appointment:hover {
+            background: #1e5a9c;
+            transform: translateY(-3px);
+        }
+
+        .store-buttons {
+            display: flex;
+            gap: 15px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .store-buttons a {
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+
+        .store-buttons a:hover {
+            transform: translateY(-5px);
+        }
+
+        .store-buttons img {
+            height: 45px;
+            width: auto;
+        }
+
+        .footer-bottom {
+            background: #05111f;
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+            color: #a0b8cc;
+            font-size: 14px;
+        }
+
+        /* ================= RESPONSIVE DESIGN ================= */
+        @media (max-width: 1200px) {
+            .footer-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 992px) {
+            .service-article-card {
+                grid-template-columns: 1fr;
+            }
+            .service-article-content {
+                padding: 30px;
+            }
+            .service-benefits ul {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            body { padding-top: 120px; }
+            
+            .top-nav {
+                height: auto;
+                padding: 15px 20px;
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .nav-right {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 10px;
+            }
+            
+            .nav-right a {
+                font-size: 14px;
+                padding: 6px 10px;
+            }
+            
+            .footer-container {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            
+            .footer-col h3::after {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+            
+            .service-details {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            #topBtn {
+                bottom: 20px;
+                right: 20px;
+                width: 45px;
+                height: 45px;
+                font-size: 20px;
+            }
+        }
+
+        /* ===== POPUP STYLES ===== */
+        .logout-popup {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(8px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            animation: fadeInPopup 0.3s ease;
+        }
+
+        .logout-popup.fade-out {
+            animation: fadeOutPopup 0.3s ease forwards;
+        }
+
+        .popup-content {
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+            padding: 35px 45px;
+            border-radius: 25px;
+            box-shadow: 0 20px 60px rgba(21, 73, 119, 0.3);
+            text-align: center;
+            max-width: 450px;
+            width: 90%;
+            transform: scale(0.9);
+            animation: scaleIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .popup-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #154977, #4CAF50, #154977);
+            background-size: 200% 100%;
+            animation: gradient 3s linear infinite;
+        }
+
+        .popup-content i {
+            font-size: 75px;
+            color: #4CAF50;
+            margin-bottom: 20px;
+            animation: bounceIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            background: rgba(76, 175, 80, 0.1);
+            padding: 20px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .popup-content h3 {
+            color: #154977;
+            font-size: 28px;
+            margin-bottom: 12px;
+            font-weight: 700;
+        }
+
+        .popup-content p {
+            color: #4a5568;
+            font-size: 16px;
+            margin: 8px 0;
+            line-height: 1.6;
+        }
+
+        .popup-content .popup-message {
+            font-size: 18px;
+            color: #2d3748;
+            font-weight: 500;
+            margin-top: 10px;
+        }
+
+        .popup-content .popup-redirect {
+            color: #718096;
+            font-size: 15px;
+            margin-top: 15px;
+            font-style: italic;
+        }
+
+        .popup-progress {
+            width: 100%;
+            height: 6px;
+            background: #e2e8f0;
+            border-radius: 10px;
+            margin-top: 25px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg, #154977, #4CAF50);
+            border-radius: 10px;
+            animation: progress 2s linear forwards;
+        }
+
+        @keyframes fadeInPopup { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes fadeOutPopup { from { opacity: 1; } to { opacity: 0; } }
+        @keyframes scaleIn { from { transform: scale(0.5); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        @keyframes bounceIn {
+            0% { transform: scale(0.3); opacity: 0; }
+            50% { transform: scale(1.2); opacity: 0.9; }
+            80% { transform: scale(0.9); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        @keyframes progress { from { width: 0%; } to { width: 100%; } }
+        @keyframes gradient { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+
+        /* Profile Icon */
+        .profile-icon {
+            display: flex !important;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #ff0d00, #ffb347) !important;
+            border-radius: 50% !important;
+            padding: 0 !important;
+            font-weight: bold !important;
+            font-size: 18px !important;
+            color: #154977 !important;
+            text-transform: uppercase;
+            border: 2px solid white !important;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2) !important;
+            transition: all 0.3s ease !important;
+            animation: profilePulse 2s infinite;
+        }
+
+        .profile-icon:hover {
+            transform: scale(1.1) rotate(5deg) !important;
+            background: linear-gradient(135deg, #ffb347, #ffd700) !important;
+            box-shadow: 0 6px 15px rgba(255,215,0,0.4) !important;
+        }
+
+        .profile-icon span {
+            display: block;
+            line-height: 1;
+        }
+
+        @keyframes profilePulse {
+            0%, 100% { box-shadow: 0 4px 10px rgba(255,215,0,0.3); }
+            50% { box-shadow: 0 6px 15px rgba(255,215,0,0.6); }
+        }
+    </style>
+</head>
+<body>
+    <!-- NAVBAR -->
+    <nav class="top-nav">
+        <div class="nav-left">
+            <div class="logo">
+                <img src="logoo.png" width="60" alt="Logo">
+                Dr. PK Clinic
+            </div>
+        </div>
+        <div class="nav-right">
+            <a href="index.html">Home</a>
+            <a href="appointment.html">Appointment</a>
+            <a href="about.html">About</a>
+            <a href="services.html">Services</a>
+            <a href="testimonials.html">Testimonials</a>
+            <a href="contact.html">Contact</a>
+            <a href="shopping.html">Shopping</a>
+            <a href="login.html" id="loginLink">Login</a>
+            <!-- Profile icon - hidden by default -->
+            <a href="profile.html" id="profileLink" style="display: none;" class="profile-icon">
+                <span id="profileInitial"></span>
+            </a>
+        </div>
+    </nav>
+
+    <!-- PAGE HEADER -->
+    <div class="page-header">
+        <h1>Our <span>Medical Services</span></h1>
+        <p>Comprehensive cardiac care with advanced technology and compassionate approach</p>
+        <div class="header-underline"></div>
+    </div>
+
+    <!-- SERVICE ARTICLES SECTION (All 10 services retained exactly as provided) -->
+    <section class="service-articles-section">
+        <div class="service-articles-header">
+            <h2>Detailed Service Information</h2>
+            <p>Comprehensive guides to understand our cardiology services and procedures</p>
+        </div>
+
+        <!-- Service 1: Echocardiography -->
+        <div class="service-article-card">
+            <div class="service-article-image">
+                <img src="Echocardiogram.jpg" alt="Echocardiography Procedure" onerror="this.src='https://via.placeholder.com/300x250?text=Echocardiography'">
+                <span class="service-badge">Diagnostic Imaging</span>
+            </div>
+            <div class="service-article-content">
+                <div class="service-meta">
+                    <span><i class="far fa-clock"></i> 30-45 mins</span>
+                    <span><i class="fas fa-user-md"></i> Dr. Praveen Kumar</span>
+                    <span><i class="fas fa-chart-line"></i> 98% Accuracy</span>
+                </div>
+                <h3>Echocardiography: Complete Heart Ultrasound</h3>
+                <p class="service-description">Echocardiography uses sound waves to create detailed images of your heart's structure and function. This non-invasive procedure helps detect heart abnormalities, valve problems, and fluid around the heart.</p>
+                <div class="service-details">
+                    <div class="service-detail-item"><i class="fas fa-hourglass-half"></i><h4>Duration</h4><p>30-45 minutes</p></div>
+                    <div class="service-detail-item"><i class="fas fa-shield-alt"></i><h4>Pain Level</h4><p>Painless</p></div>
+                    <div class="service-detail-item"><i class="fas fa-rupee-sign"></i><h4>Cost</h4><p>₹2,500 - ₹4,500</p></div>
+                </div>
+                <div class="service-benefits">
+                    <h4>Key Benefits:</h4>
+                    <ul><li><i class="fas fa-check-circle"></i> Non-invasive, no radiation</li><li><i class="fas fa-check-circle"></i> Real-time heart imaging</li><li><i class="fas fa-check-circle"></i> Detects valve problems</li><li><i class="fas fa-check-circle"></i> Assesses heart pumping strength</li><li><i class="fas fa-check-circle"></i> No preparation needed</li><li><i class="fas fa-check-circle"></i> Safe for all ages</li></ul>
+                </div>
+                <div class="service-faq">
+                    <h4>Frequently Asked Questions:</h4>
+                    <div class="faq-item"><h5><i class="fas fa-question-circle"></i> Do I need to prepare for this test?</h5><p>No special preparation is needed. You can eat and drink normally before the test.</p></div>
+                    <div class="faq-item"><h5><i class="fas fa-question-circle"></i> How long does it take?</h5><p>The test typically takes 30-45 minutes. You can return to normal activities immediately after.</p></div>
+                </div>
+                <a href="appointment.html" class="service-cta">Book This Service <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+
+        <!-- Service 2: Dobutamine Stress Test -->
+        <div class="service-article-card">
+            <div class="service-article-image">
+                <img src="dobutamine.jpg" alt="Dobutamine Stress Test" onerror="this.src='https://via.placeholder.com/300x250?text=Stress+Test'">
+                <span class="service-badge">Stress Testing</span>
+            </div>
+            <div class="service-article-content">
+                <div class="service-meta"><span><i class="far fa-clock"></i> 60-90 mins</span><span><i class="fas fa-user-md"></i> Dr. Praveen Kumar</span><span><i class="fas fa-heartbeat"></i> Cardiac Assessment</span></div>
+                <h3>Dobutamine Stress Test: Pharmacological Heart Evaluation</h3>
+                <p class="service-description">This test uses medication to simulate exercise and evaluate how your heart responds to stress. It's ideal for patients who cannot exercise on a treadmill due to physical limitations.</p>
+                <div class="service-details">
+                    <div class="service-detail-item"><i class="fas fa-hourglass-half"></i><h4>Duration</h4><p>60-90 minutes</p></div>
+                    <div class="service-detail-item"><i class="fas fa-heart"></i><h4>Monitoring</h4><p>Continuous ECG</p></div>
+                    <div class="service-detail-item"><i class="fas fa-rupee-sign"></i><h4>Cost</h4><p>₹4,500 - ₹7,000</p></div>
+                </div>
+                <div class="service-benefits">
+                    <h4>Key Benefits:</h4>
+                    <ul><li><i class="fas fa-check-circle"></i> For patients unable to exercise</li><li><i class="fas fa-check-circle"></i> Detects blocked arteries</li><li><i class="fas fa-check-circle"></i> Assesses heart function under stress</li><li><i class="fas fa-check-circle"></i> Safe and controlled environment</li><li><i class="fas fa-check-circle"></i> Continuous monitoring</li><li><i class="fas fa-check-circle"></i> Accurate results</li></ul>
+                </div>
+                <div class="service-faq">
+                    <h4>Frequently Asked Questions:</h4>
+                    <div class="faq-item"><h5><i class="fas fa-question-circle"></i> What does the medication feel like?</h5><p>You may feel your heart beating faster, similar to exercise. Some patients feel warm or flushed.</p></div>
+                    <div class="faq-item"><h5><i class="fas fa-question-circle"></i> Are there any side effects?</h5><p>Side effects are mild and temporary: slight headache, palpitations, or chest discomfort that resolves quickly.</p></div>
+                </div>
+                <a href="appointment.html" class="service-cta">Book This Service <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+
+        <!-- Service 3: Coronary Angioplasty / Bypass -->
+        <div class="service-article-card">
+            <div class="service-article-image">
+                <img src="angioplasty.jpg" alt="Coronary Angioplasty" onerror="this.src='https://via.placeholder.com/300x250?text=Angioplasty'">
+                <span class="service-badge">Interventional</span>
+            </div>
+            <div class="service-article-content">
+                <div class="service-meta"><span><i class="far fa-clock"></i> 1-4 hours</span><span><i class="fas fa-user-md"></i> Dr. Praveen Kumar</span><span><i class="fas fa-procedures"></i> Invasive Procedure</span></div>
+                <h3>Coronary Angioplasty & Bypass Surgery</h3>
+                <p class="service-description">Advanced procedures to treat blocked arteries. Angioplasty uses a balloon to open blocked arteries, while bypass surgery creates new pathways for blood flow.</p>
+                <div class="service-details">
+                    <div class="service-detail-item"><i class="fas fa-hourglass-half"></i><h4>Duration</h4><p>1-4 hours</p></div>
+                    <div class="service-detail-item"><i class="fas fa-hospital"></i><h4>Hospital Stay</h4><p>1-7 days</p></div>
+                    <div class="service-detail-item"><i class="fas fa-rupee-sign"></i><h4>Cost</h4><p>₹1.5L - ₹5L</p></div>
+                </div>
+                <div class="service-benefits">
+                    <h4>Key Benefits:</h4>
+                    <ul><li><i class="fas fa-check-circle"></i> Restores normal blood flow</li><li><i class="fas fa-check-circle"></i> Relieves chest pain</li><li><i class="fas fa-check-circle"></i> Prevents heart attack</li><li><i class="fas fa-check-circle"></i> Improves quality of life</li><li><i class="fas fa-check-circle"></i> Minimally invasive options</li><li><i class="fas fa-check-circle"></i> High success rate</li></ul>
+                </div>
+                <div class="service-faq">
+                    <h4>Frequently Asked Questions:</h4>
+                    <div class="faq-item"><h5><i class="fas fa-question-circle"></i> How long is recovery?</h5><p>Angioplasty: 1 week; Bypass: 6-12 weeks for full recovery.</p></div>
+                    <div class="faq-item"><h5><i class="fas fa-question-circle"></i> Will I need medication after?</h5><p>Yes, blood thinners and other medications are typically prescribed to prevent future blockages.</p></div>
+                </div>
+                <a href="appointment.html" class="service-cta">Consult for This Procedure <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+
+        <!-- Service 4: Heart Checkup -->
+        <div class="service-article-card">
+            <div class="service-article-image">
+                <img src="heart-checkup.jpg" alt="Heart Checkup" onerror="this.src='https://via.placeholder.com/300x250?text=Heart+Checkup'">
+                <span class="service-badge">Preventive</span>
+            </div>
+            <div class="service-article-content">
+                <div class="service-meta"><span><i class="far fa-clock"></i> 2-3 hours</span><span><i class="fas fa-user-md"></i> Dr. Praveen Kumar</span><span><i class="fas fa-stethoscope"></i> Comprehensive</span></div>
+                <h3>Comprehensive Heart Checkup Package</h3>
+                <p class="service-description">Complete cardiac evaluation including physical examination, ECG, echocardiogram, blood tests, and consultation with Dr. Praveen Kumar.</p>
+                <div class="service-details">
+                    <div class="service-detail-item"><i class="fas fa-flask"></i><h4>Tests Included</h4><p>25+ parameters</p></div>
+                    <div class="service-detail-item"><i class="fas fa-file-medical"></i><h4>Reports</h4><p>Same day</p></div>
+                    <div class="service-detail-item"><i class="fas fa-rupee-sign"></i><h4>Cost</h4><p>₹3,500 - ₹6,000</p></div>
+                </div>
+                <div class="service-benefits">
+                    <h4>Package Includes:</h4>
+                    <ul><li><i class="fas fa-check-circle"></i> ECG (Electrocardiogram)</li><li><i class="fas fa-check-circle"></i> 2D Echo with Doppler</li><li><i class="fas fa-check-circle"></i> Lipid Profile</li><li><i class="fas fa-check-circle"></i> Blood Sugar Tests</li><li><i class="fas fa-check-circle"></i> Kidney Function Tests</li><li><i class="fas fa-check-circle"></i> Doctor Consultation</li></ul>
+                </div>
+                <div class="service-faq">
+                    <h4>Frequently Asked Questions:</h4>
+                    <div class="faq-item"><h5><i class="fas fa-question-circle"></i> Do I need to fast?</h5><p>Yes, fasting for 10-12 hours is required for accurate blood test results.</p></div>
+                    <div class="faq-item"><h5><i class="fas fa-question-circle"></i> How often should I get checked?</h5><p>Annually for most adults, or as recommended by your doctor based on risk factors.</p></div>
+                </div>
+                <a href="appointment.html" class="service-cta">Book Heart Checkup <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+
+        <!-- Service 5: ECG & Stress Test -->
+        <div class="service-article-card">
+            <div class="service-article-image">
+                <img src="ecg.jpg" alt="ECG & Stress Test" onerror="this.src='https://via.placeholder.com/300x250?text=ECG+Stress'">
+                <span class="service-badge">Cardiac Monitoring</span>
+            </div>
+            <div class="service-article-content">
+                <div class="service-meta"><span><i class="far fa-clock"></i> 30-60 mins</span><span><i class="fas fa-user-md"></i> Dr. Praveen Kumar</span><span><i class="fas fa-chart-line"></i> Treadmill Test</span></div>
+                <h3>ECG & Treadmill Stress Test</h3>
+                <p class="service-description">Resting ECG records your heart's electrical activity. Stress test monitors heart function while you walk on a treadmill to detect exercise-induced abnormalities.</p>
+                <div class="service-details">
+                    <div class="service-detail-item"><i class="fas fa-hourglass-half"></i><h4>Duration</h4><p>30-60 minutes</p></div>
+                    <div class="service-detail-item"><i class="fas fa-walking"></i><h4>Exercise</h4><p>Treadmill walking</p></div>
+                    <div class="service-detail-item"><i class="fas fa-rupee-sign"></i><h4>Cost</h4><p>₹1,500 - ₹3,000</p></div>
+                </div>
+                <div class="service-benefits">
+                    <h4>Key Benefits:</h4>
+                    <ul><li><i class="fas fa-check-circle"></i> Detects irregular heartbeats</li><li><i class="fas fa-check-circle"></i> Identifies blocked arteries</li><li><i class="fas fa-check-circle"></i> Assesses exercise tolerance</li><li><i class="fas fa-check-circle"></i> Non-invasive</li><li><i class="fas fa-check-circle"></i> Quick results</li><li><i class="fas fa-check-circle"></i> Monitors treatment progress</li></ul>
+                </div>
+                <div class="service-faq">
+                    <h4>Frequently Asked Questions:</h4>
+                    <div class="faq-item"><h5><i class="fas fa-question-circle"></i> What should I wear?</h5><p>Comfortable clothes and walking shoes. Avoid heavy meals before the test.</p></div>
+                    <div class="faq-item"><h5><i class="fas fa-question-circle"></i> Can I take my medications?</h5><p>Consult your doctor - some heart medications may need to be paused before the test.</p></div>
+                </div>
+                <a href="appointment.html" class="service-cta">Book ECG/Stress Test <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+
+        <!-- Service 6: Interventional Procedures -->
+        <div class="service-article-card">
+            <div class="service-article-image">
+                <img src="interventional.jpg" alt="Interventional Procedures" onerror="this.src='https://via.placeholder.com/300x250?text=Interventional'">
+                <span class="service-badge">Cardiac Interventions</span>
+            </div>
+            <div class="service-article-content">
+                <div class="service-meta"><span><i class="far fa-clock"></i> 1-3 hours</span><span><i class="fas fa-user-md"></i> Dr. Praveen Kumar</span><span><i class="fas fa-tools"></i> Multiple Procedures</span></div>
+                <h3>Interventional Cardiology Procedures</h3>
+                <p class="service-description">Minimally invasive procedures including angiography, angioplasty, stenting, and other catheter-based treatments for various heart conditions.</p>
+                <div class="service-details">
+                    <div class="service-detail-item"><i class="fas fa-procedures"></i><h4>Procedures</h4><p>Angiography, Stenting</p></div>
+                    <div class="service-detail-item"><i class="fas fa-hourglass-half"></i><h4>Recovery</h4><p>24-48 hours</p></div>
+                    <div class="service-detail-item"><i class="fas fa-rupee-sign"></i><h4>Cost</h4><p>Varies by procedure</p></div>
+                </div>
+                <div class="service-benefits">
+                    <h4>Available Procedures:</h4>
+                    <ul><li><i class="fas fa-check-circle"></i> Coronary Angiography</li><li><i class="fas fa-check-circle"></i> Balloon Angioplasty</li><li><i class="fas fa-check-circle"></i> Stent Placement</li><li><i class="fas fa-check-circle"></i> Rotablation</li><li><i class="fas fa-check-circle"></i> IVUS (Intravascular Ultrasound)</li><li><i class="fas fa-check-circle"></i> FFR (Fractional Flow Reserve)</li></ul>
+                </div>
+                <div class="service-faq">
+                    <h4>Frequently Asked Questions:</h4>
+                    <div class="faq-item"><h5><i class="fas fa-question-circle"></i> Are these procedures painful?</h5><p>Local anesthesia is used; most patients feel minimal discomfort. You'll be awake but sedated.</p></div>
+                    <div class="faq-item"><h5><i class="fas fa-question-circle"></i> How long until I can return to work?</h5><p>Most patients return to normal activities within 1 week after the procedure.</p></div>
+                </div>
+                <a href="appointment.html" class="service-cta">Consult for Intervention <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+
+        <!-- Service 7: Blood Pressure Management -->
+        <div class="service-article-card">
+            <div class="service-article-image">
+                <img src="blood-pressure.jpg" alt="Blood Pressure Management" onerror="this.src='https://via.placeholder.com/300x250?text=BP+Management'">
+                <span class="service-badge">Hypertension Care</span>
+            </div>
+            <div class="service-article-content">
+                <div class="service-meta"><span><i class="far fa-clock"></i> Ongoing</span><span><i class="fas fa-user-md"></i> Dr. Praveen Kumar</span><span><i class="fas fa-heart"></i> Holistic Approach</span></div>
+                <h3>Blood Pressure Management Program</h3>
+                <p class="service-description">Comprehensive hypertension management combining medication, lifestyle modifications, diet planning, and regular monitoring to achieve optimal blood pressure control.</p>
+                <div class="service-details">
+                    <div class="service-detail-item"><i class="fas fa-calendar-alt"></i><h4>Program Duration</h4><p>3-6 months</p></div>
+                    <div class="service-detail-item"><i class="fas fa-apple-alt"></i><h4>Diet Plan</h4><p>Personalized DASH diet</p></div>
+                    <div class="service-detail-item"><i class="fas fa-rupee-sign"></i><h4>Cost</h4><p>₹1,000/session</p></div>
+                </div>
+                <div class="service-benefits">
+                    <h4>Program Includes:</h4>
+                    <ul><li><i class="fas fa-check-circle"></i> Initial comprehensive evaluation</li><li><i class="fas fa-check-circle"></i> Personalized medication plan</li><li><i class="fas fa-check-circle"></i> DASH diet counseling</li><li><i class="fas fa-check-circle"></i> Exercise prescription</li><li><i class="fas fa-check-circle"></i> Stress management techniques</li><li><i class="fas fa-check-circle"></i> Regular follow-ups</li></ul>
+                </div>
+                <div class="service-faq">
+                    <h4>Frequently Asked Questions:</h4>
+                    <div class="faq-item"><h5><i class="fas fa-question-circle"></i> Can hypertension be reversed?</h5><p>With lifestyle changes and proper management, many patients can reduce or eliminate medication.</p></div>
+                    <div class="faq-item"><h5><i class="fas fa-question-circle"></i> How often should I monitor BP?</h5><p>Daily monitoring at home is recommended, with professional checks every 2-4 weeks.</p></div>
+                </div>
+                <a href="appointment.html" class="service-cta">Join BP Management <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+
+        <!-- Service 8: Cholesterol Management -->
+        <div class="service-article-card">
+            <div class="service-article-image">
+                <img src="cholesterol.jpg" alt="Cholesterol Management" onerror="this.src='https://via.placeholder.com/300x250?text=Cholesterol'">
+                <span class="service-badge">Lipid Management</span>
+            </div>
+            <div class="service-article-content">
+                <div class="service-meta"><span><i class="far fa-clock"></i> Ongoing</span><span><i class="fas fa-user-md"></i> Dr. Praveen Kumar</span><span><i class="fas fa-oil-can"></i> Lipid Control</span></div>
+                <h3>Cholesterol Management Program</h3>
+                <p class="service-description">Evidence-based approach to managing cholesterol levels through dietary interventions, lifestyle modifications, and medication when necessary.</p>
+                <div class="service-details">
+                    <div class="service-detail-item"><i class="fas fa-utensils"></i><h4>Diet Focus</h4><p>Low saturated fat</p></div>
+                    <div class="service-detail-item"><i class="fas fa-flask"></i><h4>Lipid Profile</h4><p>Every 3 months</p></div>
+                    <div class="service-detail-item"><i class="fas fa-rupee-sign"></i><h4>Cost</h4><p>₹1,000/session</p></div>
+                </div>
+                <div class="service-benefits">
+                    <h4>Program Includes:</h4>
+                    <ul><li><i class="fas fa-check-circle"></i> Comprehensive lipid analysis</li><li><i class="fas fa-check-circle"></i> Personalized diet plan</li><li><i class="fas fa-check-circle"></i> Mediterranean diet guidance</li><li><i class="fas fa-check-circle"></i> Exercise recommendations</li><li><i class="fas fa-check-circle"></i> Medication management</li><li><i class="fas fa-check-circle"></i> Regular monitoring</li></ul>
+                </div>
+                <div class="service-faq">
+                    <h4>Frequently Asked Questions:</h4>
+                    <div class="faq-item"><h5><i class="fas fa-question-circle"></i> Can diet alone lower cholesterol?</h5><p>For some patients, yes. Others may need medication combined with lifestyle changes.</p></div>
+                    <div class="faq-item"><h5><i class="fas fa-question-circle"></i> What foods should I avoid?</h5><p>Foods high in saturated fats: red meat, full-fat dairy, fried foods, and processed foods.</p></div>
+                </div>
+                <a href="appointment.html" class="service-cta">Join Cholesterol Program <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+
+        <!-- Service 9: Diabetes & Heart Care -->
+        <div class="service-article-card">
+            <div class="service-article-image">
+                <img src="diabetes.jpg" alt="Diabetes & Heart Care" onerror="this.src='https://via.placeholder.com/300x250?text=Diabetes+Care'">
+                <span class="service-badge">Cardio-Diabetes</span>
+            </div>
+            <div class="service-article-content">
+                <div class="service-meta"><span><i class="far fa-clock"></i> Ongoing</span><span><i class="fas fa-user-md"></i> Dr. Praveen Kumar</span><span><i class="fas fa-tint"></i> Blood Sugar Control</span></div>
+                <h3>Integrated Diabetes & Heart Care</h3>
+                <p class="service-description">Specialized program for patients with diabetes who are at higher risk for heart disease. Combines blood sugar management with cardiovascular protection.</p>
+                <div class="service-details">
+                    <div class="service-detail-item"><i class="fas fa-tint"></i><h4>HbA1c Target</h4><p>< 7.0%</p></div>
+                    <div class="service-detail-item"><i class="fas fa-heartbeat"></i><h4>Heart Monitoring</h4><p>Regular ECG/Echo</p></div>
+                    <div class="service-detail-item"><i class="fas fa-rupee-sign"></i><h4>Cost</h4><p>₹1,500/session</p></div>
+                </div>
+                <div class="service-benefits">
+                    <h4>Program Includes:</h4>
+                    <ul><li><i class="fas fa-check-circle"></i> Blood sugar monitoring</li><li><i class="fas fa-check-circle"></i> Cardiac risk assessment</li><li><i class="fas fa-check-circle"></i> Diabetic diet planning</li><li><i class="fas fa-check-circle"></i> Medication optimization</li><li><i class="fas fa-check-circle"></i> Foot and eye checks</li><li><i class="fas fa-check-circle"></i> Cardiovascular screening</li></ul>
+                </div>
+                <div class="service-faq">
+                    <h4>Frequently Asked Questions:</h4>
+                    <div class="faq-item"><h5><i class="fas fa-question-circle"></i> How does diabetes affect the heart?</h5><p>High blood sugar damages blood vessels and nerves, increasing heart attack and stroke risk.</p></div>
+                    <div class="faq-item"><h5><i class="fas fa-question-circle"></i> How often should I see the doctor?</h5><p>Every 3-6 months for routine care, more frequently if blood sugar is uncontrolled.</p></div>
+                </div>
+                <a href="appointment.html" class="service-cta">Join Diabetes-Heart Program <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+
+        <!-- Service 10: Lifestyle Counseling -->
+        <div class="service-article-card">
+            <div class="service-article-image">
+                <img src="lifestyle-counseling.jpg" alt="Lifestyle Counseling" onerror="this.src='https://via.placeholder.com/300x250?text=Lifestyle+Counseling'">
+                <span class="service-badge">Preventive Medicine</span>
+            </div>
+            <div class="service-article-content">
+                <div class="service-meta"><span><i class="far fa-clock"></i> 60 mins</span><span><i class="fas fa-user-md"></i> Dr. Praveen Kumar</span><span><i class="fas fa-leaf"></i> Holistic Health</span></div>
+                <h3>Lifestyle Medicine & Wellness Counseling</h3>
+                <p class="service-description">Personalized guidance on diet, exercise, stress management, and sleep to prevent and reverse lifestyle diseases. Evidence-based approach to optimal health.</p>
+                <div class="service-details">
+                    <div class="service-detail-item"><i class="fas fa-apple-alt"></i><h4>Diet Planning</h4><p>Personalized</p></div>
+                    <div class="service-detail-item"><i class="fas fa-dumbbell"></i><h4>Exercise</h4><p>Custom prescription</p></div>
+                    <div class="service-detail-item"><i class="fas fa-rupee-sign"></i><h4>Cost</h4><p>₹1,200/session</p></div>
+                </div>
+                <div class="service-benefits">
+                    <h4>Counseling Areas:</h4>
+                    <ul><li><i class="fas fa-check-circle"></i> Nutrition and diet optimization</li><li><i class="fas fa-check-circle"></i> Exercise prescription</li><li><i class="fas fa-check-circle"></i> Stress reduction techniques</li><li><i class="fas fa-check-circle"></i> Sleep hygiene improvement</li><li><i class="fas fa-check-circle"></i> Weight management</li><li><i class="fas fa-check-circle"></i> Smoking cessation support</li></ul>
+                </div>
+                <div class="service-faq">
+                    <h4>Frequently Asked Questions:</h4>
+                    <div class="faq-item"><h5><i class="fas fa-question-circle"></i> How many sessions will I need?</h5><p>Initial consultation plus 3-6 follow-up sessions for sustainable lifestyle changes.</p></div>
+                    <div class="faq-item"><h5><i class="fas fa-question-circle"></i> Can lifestyle changes reverse disease?</h5><p>Yes, many conditions like prediabetes, hypertension, and early heart disease can be reversed.</p></div>
+                </div>
+                <div class="service-testimonials">
+                    <div class="testimonial-mini"><p>"Lost 15kg and reversed my diabetes in 6 months"</p><span>- Ramesh K.</span></div>
+                    <div class="testimonial-mini"><p>"BP normalized without medication"</p><span>- Sunita P.</span></div>
+                </div>
+                <a href="appointment.html" class="service-cta">Book Lifestyle Counseling <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <button id="topBtn" onclick="scrollToTop()">↑</button>
+
+    <!-- FOOTER -->
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-col">
+                <h3>About Us</h3>
+                <p>Dr Praveen Kumar A – Expert in lifestyle disease reversal, an acclaimed author, speaker, and specialist in <strong>natural health</strong>. He has helped a large number of patients of different diseases and reversed it through natural healing, researcher of medicine, launched own natural products for <strong>diabetes reversal</strong>, nutrition and <strong>drug-free healing</strong>.</p>
+                <a href="about.html" class="footer-link">For More Details</a>
+                <h4>Find Us On:</h4>
+                <div class="social-icons">
+                    <a href="https://www.facebook.com/profile.php?id=100053479690246" class="facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.youtube.com/@move_with_praveen" class="youtube"><i class="fab fa-youtube"></i></a>
+                    <a href="https://www.linkedin.com/in/praveen-kumar-792b8a395/" class="linkedin"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="https://www.instagram.com/praveeneyy19/" class="instagram"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h3>Quick Links</h3>
+                <ul><li><a href="#">Biswas E-Magazine</a></li><li><a href="#">Download Free Ebook</a></li><li><a href="#">Coronakaal.tv</a></li><li><a href="#">About Us</a></li><li><a href="#">Gallery</a></li><li><a href="#">Blogs</a></li><li><a href="#">Credentials</a></li><li><a href="#">Research Papers</a></li><li><a href="#">Refund & Cancellation Policy</a></li><li><a href="#">Privacy Policy</a></li><li><a href="#">Shipping Policy</a></li></ul>
+            </div>
+            <div class="footer-col">
+                <h3>Join Dr. PK Clinic</h3>
+                <p>To be a part of Dr. Praveen Kumar's next LIVE event</p>
+                <a href="https://youtu.be/28CYhgjrBLA?si=qzg48QoZ8obTjWdv" class="watch-live">CARDIOVASCULAR SYSTEM OVERVIEW</a>
+                <a href="appointment.html" class="appointment">Book Appointment</a>
+            </div>
+            <div class="footer-col">
+                <h3>Download App</h3>
+                <div class="store-buttons">
+                    <a href="https://play.google.com/store/apps/details?id=com.needstreet.health.hppatient"><img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Get it on Google Play"></a>
+                    <a href="https://apps.apple.com/in/app/continuouscare-health-app/id674531353"><img src="https://upload.wikimedia.org/wikipedia/commons/3/3c/Download_on_the_App_Store_Badge.svg" alt="Download on the App Store"></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom"><p>&copy; 2026 Dr. PK Clinic. All Rights Reserved.</p></div>
+    </footer>
+
+    <script>
+        function showLogoutPopup() {
+            const existingPopup = document.querySelector('.logout-popup');
+            if (existingPopup) existingPopup.remove();
+            const popup = document.createElement('div');
+            popup.className = 'logout-popup';
+            popup.innerHTML = `<div class="popup-content"><i class="fas fa-check-circle"></i><h3>Successfully Logged Out!</h3><p class="popup-message">You have been logged out of your account.</p><p class="popup-redirect">Redirecting to login page in 2 seconds...</p><div class="popup-progress"><div class="progress-bar"></div></div></div>`;
+            document.body.appendChild(popup);
+            document.body.style.overflow = 'hidden';
+            setTimeout(() => {
+                popup.classList.add('fade-out');
+                document.body.style.overflow = '';
+                setTimeout(() => { popup.remove(); window.location.href = "login.html"; }, 300);
+            }, 2000);
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            const loginLink = document.getElementById("loginLink");
+            if (loginLink) {
+                const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+                if (isLoggedIn) {
+                    loginLink.textContent = "Logout";
+                    loginLink.href = "#";
+                    const newLoginLink = loginLink.cloneNode(true);
+                    loginLink.parentNode.replaceChild(newLoginLink, loginLink);
+                    newLoginLink.addEventListener("click", function(e) {
+                        e.preventDefault();
+                        localStorage.removeItem("isLoggedIn");
+                        localStorage.removeItem("savedCart");
+                        localStorage.removeItem("currentUser");
+                        sessionStorage.removeItem("isLoggedIn");
+                        sessionStorage.removeItem("redirectAfterLogin");
+                        showLogoutPopup();
+                    });
+                } else {
+                    loginLink.textContent = "Login";
+                    loginLink.href = "login.html";
+                }
+            }
+            const navLinks = document.querySelectorAll(".nav-right a");
+            const currentPage = window.location.pathname.split("/").pop();
+            navLinks.forEach(link => { if (link.getAttribute("href") === currentPage) link.classList.add("active"); });
+            updateNavbarProfile();
+        });
+
+        let topButton = document.getElementById("topBtn");
+        window.onscroll = function() {
+            if (topButton) {
+                if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) topButton.style.display = "block";
+                else topButton.style.display = "none";
+            }
+        };
+        function scrollToTop() { window.scrollTo({ top: 0, behavior: "smooth" }); }
+
+        function updateNavbarProfile() {
+            const loginLink = document.getElementById("loginLink");
+            const profileLink = document.getElementById("profileLink");
+            const profileInitial = document.getElementById("profileInitial");
+            const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+            const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+            if (loginLink && profileLink && profileInitial) {
+                if (isLoggedIn && currentUser) {
+                    loginLink.style.display = "none";
+                    profileLink.style.display = "flex";
+                    profileInitial.textContent = (currentUser.name || "U").charAt(0).toUpperCase();
+                } else {
+                    loginLink.style.display = "inline-block";
+                    profileLink.style.display = "none";
+                }
+            }
+        }
+    </script>
+</body>
+</html>

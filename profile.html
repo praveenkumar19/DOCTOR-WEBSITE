@@ -1,0 +1,1432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>My Profile - Dr. PK Clinic</title>
+    <link rel="icon" href="logoo.png" type="image/png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e9ecf2 100%);
+            color: #2c3e50;
+            padding-top: 70px;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* ================= NAVBAR ================= */
+        .top-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 70px;
+            background: linear-gradient(135deg, #1e4b7a, #154977);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 5%;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            z-index: 1000;
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-left .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            color: white;
+            font-size: 22px;
+            font-weight: 700;
+        }
+
+        .nav-left img {
+            width: 50px;
+            height: 50px;
+            object-fit: contain;
+            filter: brightness(0) invert(1);
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .nav-right a {
+            color: rgba(255,255,255,0.9);
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 600;
+            padding: 8px 12px;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-right a:hover {
+            color: white;
+            background: rgba(255,255,255,0.1);
+            transform: translateY(-2px);
+        }
+
+        .nav-right a.active {
+            color: white;
+            background: rgba(255,255,255,0.2);
+        }
+
+        .nav-right a::after {
+            content: "";
+            position: absolute;
+            left: 50%;
+            bottom: -2px;
+            width: 0;
+            height: 3px;
+            background: #ffd700;
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        .nav-right a:hover::after,
+        .nav-right a.active::after {
+            width: 80%;
+        }
+
+        /* Profile icon in navbar */
+        .profile-icon {
+            display: flex !important;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #ffd700, #ffb347) !important;
+            border-radius: 50% !important;
+            padding: 0 !important;
+            font-weight: bold !important;
+            font-size: 18px !important;
+            color: #154977 !important;
+            text-transform: uppercase;
+            border: 2px solid white !important;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2) !important;
+            transition: all 0.3s ease !important;
+            animation: profilePulse 2s infinite;
+        }
+
+        .profile-icon:hover {
+            transform: scale(1.1) rotate(5deg) !important;
+            background: linear-gradient(135deg, #ffb347, #ffd700) !important;
+            box-shadow: 0 6px 15px rgba(255,215,0,0.4) !important;
+        }
+
+        .profile-icon span {
+            display: block;
+            line-height: 1;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+
+        @keyframes profilePulse {
+            0%, 100% { box-shadow: 0 4px 10px rgba(255,215,0,0.3); }
+            50% { box-shadow: 0 6px 15px rgba(255,215,0,0.6); }
+        }
+
+        /* ================= PAGE HEADER ================= */
+        .page-header {
+            text-align: center;
+            padding: 30px 20px 20px;
+            background: linear-gradient(135deg, #f5f8fb, #ffffff);
+        }
+
+        .page-header h1 {
+            font-size: 36px;
+            color: #154977;
+            margin-bottom: 10px;
+        }
+
+        .page-header h1 span {
+            color: #C83438;
+            position: relative;
+        }
+
+        .header-underline {
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, #154977, #C83438);
+            margin: 0 auto;
+            border-radius: 2px;
+        }
+
+        /* ================= PROFILE CONTAINER ================= */
+        .profile-container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 30px;
+        }
+
+        /* Welcome Banner */
+        .welcome-banner {
+            background: linear-gradient(135deg, #154977, #1a5a9c);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 15px 30px rgba(21,73,119,0.2);
+        }
+
+        .welcome-banner::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: rotate 30s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .welcome-content {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .welcome-avatar {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, #ffd700, #ffb347);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 4px solid white;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        .welcome-avatar span {
+            font-size: 48px;
+            color: #154977;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .welcome-text h2 {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .welcome-text p {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+
+        /* Profile Grid */
+        .profile-grid {
+            display: grid;
+            grid-template-columns: 350px 1fr;
+            gap: 30px;
+        }
+
+        /* Profile Card */
+        .profile-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            border: 1px solid #e0e7f0;
+            transition: all 0.3s ease;
+        }
+
+        .profile-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(21,73,119,0.15);
+        }
+
+        .profile-card-header {
+            background: linear-gradient(135deg, #154977, #1a5a9c);
+            padding: 30px 20px;
+            text-align: center;
+            color: white;
+        }
+
+        .profile-main-avatar {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, #ffd700, #ffb347);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            border: 4px solid white;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        .profile-main-avatar span {
+            font-size: 48px;
+            color: #154977;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .profile-card-header h3 {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+
+        .profile-card-header p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .profile-card-body {
+            padding: 25px;
+        }
+
+        .info-row {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 12px 0;
+            border-bottom: 1px solid #e0e7f0;
+        }
+
+        .info-row:last-child {
+            border-bottom: none;
+        }
+
+        .info-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #f0f7ff, #e6f0fa);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #154977;
+            font-size: 18px;
+        }
+
+        .info-content {
+            flex: 1;
+        }
+
+        .info-label {
+            color: #64748b;
+            font-size: 12px;
+            text-transform: uppercase;
+            margin-bottom: 2px;
+        }
+
+        .info-value {
+            color: #154977;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .profile-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+            padding: 20px 0;
+            border-top: 2px dashed #e0e7f0;
+            border-bottom: 2px dashed #e0e7f0;
+        }
+
+        .stat-item {
+            text-align: center;
+            background: linear-gradient(135deg, #f8fafc, #ffffff);
+            padding: 15px;
+            border-radius: 12px;
+            border: 1px solid #e0e7f0;
+        }
+
+        .stat-value {
+            font-size: 28px;
+            font-weight: 700;
+            color: #C83438;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Profile Details */
+        .profile-details {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            border: 1px solid #e0e7f0;
+        }
+
+        .section-title {
+            color: #154977;
+            font-size: 20px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e0e7f0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-title i {
+            color: #C83438;
+            font-size: 20px;
+        }
+
+        /* Orders Table */
+        .orders-table-container {
+            overflow-x: auto;
+            margin-bottom: 30px;
+        }
+
+        .orders-table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 600px;
+        }
+
+        .orders-table th {
+            background: linear-gradient(135deg, #154977, #1a5a9c);
+            color: white;
+            padding: 12px 15px;
+            font-size: 14px;
+            font-weight: 600;
+            text-align: left;
+        }
+
+        .orders-table th:first-child {
+            border-radius: 10px 0 0 0;
+        }
+
+        .orders-table th:last-child {
+            border-radius: 0 10px 0 0;
+        }
+
+        .orders-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #e0e7f0;
+            font-size: 14px;
+        }
+
+        .orders-table tbody tr {
+            transition: all 0.3s ease;
+        }
+
+        .orders-table tbody tr:hover {
+            background: #f8fafc;
+        }
+
+        .status-badge {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        .status-badge.completed {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .status-badge.pending {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeeba;
+        }
+
+        .status-badge.processing {
+            background: #cce5ff;
+            color: #004085;
+            border: 1px solid #b8daff;
+        }
+
+        /* Appointments List */
+        .appointments-list {
+            display: grid;
+            gap: 15px;
+        }
+
+        .appointment-item {
+            background: linear-gradient(135deg, #f8fafc, #ffffff);
+            border-radius: 12px;
+            padding: 20px;
+            border-left: 4px solid #154977;
+            transition: all 0.3s ease;
+            border: 1px solid #e0e7f0;
+        }
+
+        .appointment-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        .appointment-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .appointment-date {
+            color: #154977;
+            font-weight: 600;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .appointment-date i {
+            color: #C83438;
+        }
+
+        .appointment-doctor {
+            color: #C83438;
+            font-size: 14px;
+            font-weight: 600;
+            padding: 5px 12px;
+            background: #fff0f0;
+            border-radius: 20px;
+        }
+
+        .appointment-details {
+            display: flex;
+            gap: 20px;
+            color: #64748b;
+            font-size: 14px;
+            flex-wrap: wrap;
+        }
+
+        .appointment-details span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .appointment-details i {
+            color: #154977;
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 50px 20px;
+            background: #f8fafc;
+            border-radius: 15px;
+            color: #95a5a6;
+        }
+
+        .empty-state i {
+            font-size: 60px;
+            margin-bottom: 15px;
+            opacity: 0.3;
+        }
+
+        .empty-state h3 {
+            color: #64748b;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        .empty-state p {
+            margin-bottom: 20px;
+        }
+
+        .empty-state-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 25px;
+            background: linear-gradient(135deg, #154977, #1a5a9c);
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .empty-state-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(21,73,119,0.2);
+        }
+
+        /* Logout Button */
+        .logout-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #C83438, #a02a2d);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .logout-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(200,52,56,0.3);
+        }
+
+        .logout-btn i {
+            font-size: 18px;
+        }
+
+        /* ================= BACK TO TOP BUTTON ================= */
+        #topBtn {
+            position: fixed;
+            bottom: 40px;
+            right: 40px;
+            width: 55px;
+            height: 55px;
+            background: #154977;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            font-size: 24px;
+            cursor: pointer;
+            display: none;
+            box-shadow: 0 10px 25px rgba(21, 73, 119, 0.4);
+            transition: all 0.3s ease;
+            z-index: 99;
+        }
+
+        #topBtn:hover {
+            background: #1e5a9c;
+            transform: translateY(-5px) scale(1.1);
+        }
+
+        /* ================= FOOTER ================= */
+        .site-footer {
+            background: #0a1a2a;
+            color: #a0b8cc;
+            padding: 60px 0 0;
+            margin-top: 60px;
+        }
+
+        .footer-container {
+            max-width: 1300px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+            padding: 0 30px;
+        }
+
+        .footer-col h3 {
+            color: white;
+            font-size: 18px;
+            margin-bottom: 25px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-col h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background: #4a90e2;
+        }
+
+        .footer-col p, .footer-col ul {
+            font-size: 14px;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 12px;
+        }
+
+        .footer-col ul li a {
+            color: #a0b8cc;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer-col ul li a:hover {
+            color: white;
+            padding-left: 8px;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 10px;
+            margin-top: 12px;
+        }
+
+        .social-icons a {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.12);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 14px;
+            transition: 0.3s ease;
+        }
+
+        .social-icons a.facebook {
+            background: linear-gradient(135deg, #1877f2);
+        }
+
+        .social-icons a.youtube {
+            background: linear-gradient(135deg, #ff0000);
+        }
+
+        .social-icons a.linkedin {
+            background: linear-gradient(#0937d1);
+        }
+
+        .social-icons a.instagram {
+            background: radial-gradient(circle at 30% 110%, 
+                #fdf497 0%, #fdf497 5%, #fd5949 45%, 
+                #d6249f 60%, #285AEB 90%);
+        }
+
+        .watch-live, .appointment {
+            display: inline-block;
+            padding: 12px 25px;
+            border-radius: 40px;
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            margin: 5px 10px 5px 0;
+            transition: all 0.3s ease;
+        }
+
+        .watch-live {
+            background: #e74c3c;
+        }
+
+        .watch-live:hover {
+            background: #c0392b;
+            transform: translateY(-3px);
+        }
+
+        .appointment {
+            background: #154977;
+        }
+
+        .appointment:hover {
+            background: #1e5a9c;
+            transform: translateY(-3px);
+        }
+
+        .store-buttons {
+            display: flex;
+            gap: 15px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .store-buttons a {
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+
+        .store-buttons a:hover {
+            transform: translateY(-5px);
+        }
+
+        .store-buttons img {
+            height: 45px;
+            width: auto;
+        }
+
+        .footer-bottom {
+            background: #05111f;
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+            color: #a0b8cc;
+            font-size: 14px;
+        }
+
+        /* ================= RESPONSIVE DESIGN ================= */
+        @media (max-width: 1200px) {
+            .footer-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 992px) {
+            .profile-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .welcome-content {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 768px) {
+            body { padding-top: 120px; }
+            
+            .top-nav {
+                height: auto;
+                padding: 15px 20px;
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .nav-right {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 10px;
+            }
+            
+            .nav-right a {
+                font-size: 14px;
+                padding: 6px 10px;
+            }
+            
+            .footer-container {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            
+            .footer-col h3::after {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+            
+            .appointment-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            
+            .welcome-banner {
+                padding: 30px 20px;
+            }
+            
+            .welcome-avatar {
+                width: 80px;
+                height: 80px;
+            }
+            
+            .welcome-avatar span {
+                font-size: 38px;
+            }
+            
+            .welcome-text h2 {
+                font-size: 24px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .profile-card-header {
+                padding: 20px 15px;
+            }
+            
+            .profile-main-avatar {
+                width: 80px;
+                height: 80px;
+            }
+            
+            .profile-main-avatar span {
+                font-size: 38px;
+            }
+            
+            .profile-card-header h3 {
+                font-size: 20px;
+            }
+            
+            .info-row {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .appointment-details {
+                flex-direction: column;
+                gap: 8px;
+            }
+            
+            #topBtn {
+                bottom: 20px;
+                right: 20px;
+                width: 45px;
+                height: 45px;
+                font-size: 20px;
+            }
+        }
+
+        /* ================= ANIMATIONS ================= */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease;
+        }
+
+        /* Logout Popup */
+        .logout-popup {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(8px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .logout-popup.fade-out {
+            animation: fadeOut 0.3s ease forwards;
+        }
+
+        .popup-content {
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+            padding: 35px 45px;
+            border-radius: 25px;
+            box-shadow: 0 20px 60px rgba(21, 73, 119, 0.3);
+            text-align: center;
+            max-width: 450px;
+            width: 90%;
+            transform: scale(0.9);
+            animation: scaleIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .popup-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #154977, #4CAF50, #154977);
+            background-size: 200% 100%;
+            animation: gradient 3s linear infinite;
+        }
+
+        .popup-content i {
+            font-size: 75px;
+            color: #4CAF50;
+            margin-bottom: 20px;
+            animation: bounceIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .popup-content h3 {
+            color: #154977;
+            font-size: 28px;
+            margin-bottom: 12px;
+            font-weight: 700;
+        }
+
+        .popup-content p {
+            color: #4a5568;
+            font-size: 16px;
+            margin: 8px 0;
+            line-height: 1.6;
+        }
+
+        .popup-progress {
+            width: 100%;
+            height: 6px;
+            background: #e2e8f0;
+            border-radius: 10px;
+            margin-top: 25px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg, #154977, #4CAF50);
+            border-radius: 10px;
+            animation: progress 2s linear forwards;
+        }
+
+        @keyframes fadeOut {
+            from { opacity: 1; }
+            to { opacity: 0; }
+        }
+
+        @keyframes scaleIn {
+            from {
+                transform: scale(0.5);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        @keyframes bounceIn {
+            0% {
+                transform: scale(0.3);
+                opacity: 0;
+            }
+            50% {
+                transform: scale(1.2);
+                opacity: 0.9;
+            }
+            80% {
+                transform: scale(0.9);
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        @keyframes progress {
+            from { width: 0%; }
+            to { width: 100%; }
+        }
+
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="top-nav">
+        <div class="nav-left">
+            <div class="logo">
+                <img src="logoo.png" width="60" alt="logo">
+                Dr. PK Clinic
+            </div>
+        </div>
+        <div class="nav-right">
+            <a href="index.html">Home</a>
+            <a href="appointment.html">Appointment</a>
+            <a href="about.html">About</a>
+            <a href="services.html">Services</a>
+            <a href="testimonials.html">Testimonials</a>
+            <a href="contact.html">Contact</a>
+            <a href="shopping.html">Shopping</a>
+            <a href="login.html" id="loginLink">Login</a>
+            <a href="profile.html" id="profileLink" style="display: none;" class="profile-icon">
+                <span id="profileInitial"></span>
+            </a>
+        </div>
+    </nav>
+
+    <div class="page-header">
+        <h1>My <span>Profile</span></h1>
+        <div class="header-underline"></div>
+    </div>
+
+    <div class="profile-container">
+        <div class="welcome-banner fade-in">
+            <div class="welcome-content">
+                <div class="welcome-avatar">
+                    <span id="welcomeInitial"></span>
+                </div>
+                <div class="welcome-text">
+                    <h2>Welcome back, <span id="welcomeName">User</span>! 👋</h2>
+                    <p>Manage your profile, track orders, and view appointments</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="profile-grid">
+            <div class="profile-card fade-in">
+                <div class="profile-card-header">
+                    <div class="profile-main-avatar">
+                        <span id="profileAvatarInitial"></span>
+                    </div>
+                    <h3 id="profileFullName">Loading...</h3>
+                    <p id="profileMemberSince">Member since 2026</p>
+                </div>
+                <div class="profile-card-body">
+                    <div class="info-row">
+                        <div class="info-icon"><i class="fas fa-envelope"></i></div>
+                        <div class="info-content">
+                            <div class="info-label">Email Address</div>
+                            <div class="info-value" id="profileEmail">Loading...</div>
+                        </div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-icon"><i class="fas fa-phone"></i></div>
+                        <div class="info-content">
+                            <div class="info-label">Phone Number</div>
+                            <div class="info-value" id="profilePhone">Loading...</div>
+                        </div>
+                    </div>
+                    <div class="profile-stats">
+                        <div class="stat-item">
+                            <div class="stat-value" id="orderCount">0</div>
+                            <div class="stat-label">Orders</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value" id="appointmentCount">0</div>
+                            <div class="stat-label">Appointments</div>
+                        </div>
+                    </div>
+                    <button class="logout-btn" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</button>
+                </div>
+            </div>
+
+            <div class="profile-details fade-in">
+                <div class="section-title"><i class="fas fa-shopping-bag"></i> Recent Orders</div>
+                <div id="recentOrders"></div>
+                <div class="section-title" style="margin-top: 30px;"><i class="fas fa-calendar-check"></i> Recent Appointments</div>
+                <div id="recentAppointments"></div>
+            </div>
+        </div>
+    </div>
+
+    <button id="topBtn" onclick="scrollToTop()">↑</button>
+
+    <footer class="site-footer">
+    <div class="footer-container">
+
+        <!-- About -->
+        <div class="footer-col">
+            <h3>About Us</h3>
+            <p>Dr Praveen Kumar A – Expert in lifestyle disease reversal, an acclaimed author, speaker, and specialist in natural health. He has helped a large number of patients reverse diseases through natural healing.</p>
+            <a href="about.html" class="footer-link">For More Details →</a>
+
+            <h4>Find Us On:</h4>
+            <div class="social-icons">
+                    <a href="https://www.facebook.com/profile.php?id=100053479690246" class="facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.youtube.com/@move_with_praveen" class="youtube"><i class="fab fa-youtube"></i></a>
+                    <a href="https://www.linkedin.com/in/praveen-kumar-792b8a395/" class="linkedin"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="https://www.instagram.com/praveeneyy19/" class="instagram"><i class="fab fa-instagram"></i></a>
+                </div>
+        </div>
+
+        <!-- Quick Links -->
+        <div class="footer-col">
+            <h3>Quick Links</h3>
+            <ul>
+                <li><a href="#">Biswas E-Magazine →</a></li>
+                <li><a href="#">Download Free Ebook →</a></li>
+                <li><a href="#">Coronakaal.tv →</a></li>
+                <li><a href="#">About Us →</a></li>
+                <li><a href="#">Gallery →</a></li>
+                <li><a href="#">Blogs →</a></li>
+                <li><a href="#">Credentials →</a></li>
+                <li><a href="#">Research Papers →</a></li>
+                <li><a href="#">Refund & Cancellation Policy →</a></li>
+                <li><a href="#">Privacy Policy →</a></li>
+                <li><a href="#">Shipping Policy →</a></li>
+            </ul>
+        </div>
+
+        <!-- Live -->
+        <div class="footer-col">
+            <h3>Join Dr. PK Clinic</h3>
+            <p>To be a part of Dr. Praveen Kumar's next LIVE event</p>
+            <a href="https://youtu.be/28CYhgjrBLA?si=qzg48QoZ8obTjWdv" class="watch-live">CARDIOVASCULAR SYSTEM OVERVIEW →</a>
+            <a href="appointment.html" class="appointment">Book Appointment →</a>
+        </div>
+
+        <!-- Download App -->
+        <div class="footer-col">
+            <h3>Download App</h3>
+            <div class="store-buttons">
+                <a href="https://play.google.com/store/apps/details?id=com.needstreet.health.hppatient">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Get it on Google Play">
+                </a>
+                <a href="https://apps.apple.com/in/app/continuouscare-health-app/id674531353">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/3/3c/Download_on_the_App_Store_Badge.svg" alt="Download on the App Store">
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-bottom">
+        <p class="text-white">&copy; 2026 Dr. PK Clinic. All Rights Reserved.</p>
+    </div>
+</footer>
+
+<script>
+    (function() {
+        // Ensure orders and appointments are linked to current user
+        function initUserData() {
+            const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+            if (!currentUser) return;
+
+            let orders = JSON.parse(localStorage.getItem("orders")) || [];
+            let appointments = JSON.parse(localStorage.getItem("appointments")) || [];
+
+            // --- AUTO-CREATE DEMO ORDERS IF NONE EXIST FOR THIS USER ---
+            const userOrdersExist = orders.some(order => order.customerEmail === currentUser.email);
+            if (!userOrdersExist) {
+                const demoOrders = [
+                    {
+                        orderId: "ORD" + Date.now() + "A",
+                        orderDate: new Date().toLocaleDateString(),
+                        customerEmail: currentUser.email,
+                        customerName: currentUser.name,
+                        items: [{ name: "Vitamin C Complex", price: 499, quantity: 2 }],
+                        total: 998,
+                        status: "Delivered"
+                    },
+                    {
+                        orderId: "ORD" + Date.now() + "B",
+                        orderDate: new Date().toLocaleDateString(),
+                        customerEmail: currentUser.email,
+                        customerName: currentUser.name,
+                        items: [{ name: "Diabetes Reversal Kit", price: 2499, quantity: 1 }],
+                        total: 2499,
+                        status: "Processing"
+                    },
+                    {
+                        orderId: "ORD" + Date.now() + "C",
+                        orderDate: new Date(Date.now() - 3*86400000).toLocaleDateString(),
+                        customerEmail: currentUser.email,
+                        customerName: currentUser.name,
+                        items: [{ name: "Herbal Immunity Pack", price: 799, quantity: 1 }],
+                        total: 799,
+                        status: "Pending"
+                    }
+                ];
+                orders.push(...demoOrders);
+                localStorage.setItem("orders", JSON.stringify(orders));
+            }
+
+            // --- AUTO-CREATE DEMO APPOINTMENTS IF NONE EXIST ---
+            const userAppointmentsExist = appointments.some(apt => apt.email === currentUser.email);
+            if (!userAppointmentsExist) {
+                const demoAppointments = [
+                    {
+                        appointmentId: "APT" + Date.now() + "X1",
+                        name: currentUser.name,
+                        email: currentUser.email,
+                        phone: currentUser.phone,
+                        age: "42",
+                        date: new Date(Date.now() + 5*86400000).toISOString().split('T')[0],
+                        time: "11:00 AM",
+                        doctor: "Dr. Praveen Kumar",
+                        problem: "Cardiac Wellness",
+                        payment: "Online",
+                        status: "Confirmed",
+                        created: new Date().toLocaleString()
+                    },
+                    {
+                        appointmentId: "APT" + Date.now() + "X2",
+                        name: currentUser.name,
+                        email: currentUser.email,
+                        phone: currentUser.phone,
+                        age: "42",
+                        date: new Date(Date.now() - 2*86400000).toISOString().split('T')[0],
+                        time: "03:30 PM",
+                        doctor: "Dr. Meera Nair",
+                        problem: "Follow-up Consultation",
+                        payment: "COD",
+                        status: "Completed",
+                        created: new Date().toLocaleString()
+                    }
+                ];
+                appointments.push(...demoAppointments);
+                localStorage.setItem("appointments", JSON.stringify(appointments));
+            }
+        }
+
+        function checkLoginStatus() {
+            const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+            const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+            if (!isLoggedIn || !currentUser) {
+                showLogoutPopup("Please login to view profile", "warning", "login.html");
+                return false;
+            }
+            return true;
+        }
+
+        function loadUserProfile() {
+            const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+            if (!currentUser) return;
+            const initial = (currentUser.name || "U").charAt(0).toUpperCase();
+            document.getElementById("welcomeInitial").textContent = initial;
+            document.getElementById("welcomeName").textContent = currentUser.name || "User";
+            document.getElementById("profileAvatarInitial").textContent = initial;
+            document.getElementById("profileFullName").textContent = currentUser.name || "User";
+            document.getElementById("profileEmail").textContent = currentUser.email || "No email";
+            document.getElementById("profilePhone").textContent = currentUser.phone || "No phone";
+            
+            const users = JSON.parse(localStorage.getItem("users")) || [];
+            const user = users.find(u => u.email === currentUser.email);
+            if (user && user.registeredOn) {
+                document.getElementById("profileMemberSince").textContent = `Member since ${user.registeredOn}`;
+            } else {
+                document.getElementById("profileMemberSince").textContent = `Member since ${new Date().toLocaleDateString()}`;
+            }
+
+            loadUserOrders(currentUser.email);
+            loadUserAppointments(currentUser.email);
+        }
+
+        function loadUserOrders(userEmail) {
+            const orders = JSON.parse(localStorage.getItem("orders")) || [];
+            const userOrders = orders.filter(order => order.customerEmail === userEmail);
+            document.getElementById("orderCount").textContent = userOrders.length;
+            const ordersContainer = document.getElementById("recentOrders");
+            
+            if (userOrders.length === 0) {
+                ordersContainer.innerHTML = `<div class="empty-state"><i class="fas fa-box-open"></i><h3>No Orders Yet</h3><p>Start shopping for medical products</p><a href="shopping.html" class="empty-state-btn"><i class="fas fa-shopping-cart"></i> Shop Now</a></div>`;
+                return;
+            }
+
+            let html = '<div class="orders-table-container"><table class="orders-table"><tr><th>Order ID</th><th>Date</th><th>Items</th><th>Total</th><th>Status</th></tr>';
+            userOrders.slice(0, 5).forEach(order => {
+                const statusClass = order.status === "Delivered" ? "completed" : (order.status === "Pending" ? "pending" : "processing");
+                html += `<tr><td><strong>${order.orderId || 'N/A'}</strong></td><td>${order.orderDate || new Date().toLocaleDateString()}</td><td>${order.items ? order.items.length : 0} items</td><td><strong>₹${order.total || 0}</strong></td><td><span class="status-badge ${statusClass}">${order.status || 'Processing'}</span></td></tr>`;
+            });
+            html += '</table></div>';
+            if (userOrders.length > 5) html += `<p style="text-align:right; margin-top:10px;"><a href="shopping.html" style="color:#154977;">View all ${userOrders.length} orders →</a></p>`;
+            ordersContainer.innerHTML = html;
+        }
+
+        function loadUserAppointments(userEmail) {
+            const appointments = JSON.parse(localStorage.getItem("appointments")) || [];
+            const userAppointments = appointments.filter(apt => apt.email && apt.email.toLowerCase() === userEmail.toLowerCase());
+            userAppointments.sort((a,b) => new Date(b.date + ' ' + b.time) - new Date(a.date + ' ' + a.time));
+            document.getElementById("appointmentCount").textContent = userAppointments.length;
+            const appointmentsContainer = document.getElementById("recentAppointments");
+            
+            if (userAppointments.length === 0) {
+                appointmentsContainer.innerHTML = `<div class="empty-state"><i class="fas fa-calendar-times"></i><h3>No Appointments Yet</h3><p>Book your first consultation with our expert doctors</p><a href="appointment.html" class="empty-state-btn"><i class="fas fa-calendar-check"></i> Book Now</a></div>`;
+                return;
+            }
+
+            let html = '<div class="appointments-list">';
+            userAppointments.slice(0, 5).forEach(apt => {
+                const aptDate = new Date(apt.date);
+                const formattedDate = aptDate.toLocaleDateString('en-US', { weekday:'short', year:'numeric', month:'short', day:'numeric' });
+                const statusColor = apt.status === "Confirmed" ? "#28a745" : (apt.status === "Pending" ? "#ffc107" : "#17a2b8");
+                html += `<div class="appointment-item">
+                            <div class="appointment-header">
+                                <span class="appointment-date"><i class="fas fa-calendar-alt"></i> ${formattedDate} at ${apt.time}</span>
+                                <span class="appointment-doctor" style="background:${statusColor}20; color:${statusColor};">${apt.doctor || apt.problem || 'Consultation'}</span>
+                            </div>
+                            <div class="appointment-details">
+                                <span><i class="fas fa-user-md"></i> ${apt.doctor || 'Dr. Praveen Kumar'}</span>
+                                <span><i class="fas fa-credit-card"></i> ${apt.payment || 'COD'}</span>
+                                <span><i class="fas fa-clock"></i> Status: <span style="color:${statusColor}; font-weight:600;">${apt.status || 'Pending'}</span></span>
+                            </div>
+                            <div style="margin-top:10px; font-size:13px; color:#64748b;"><i class="fas fa-hashtag"></i> ID: ${apt.appointmentId || 'N/A'}</div>
+                        </div>`;
+            });
+            if (userAppointments.length > 5) html += `<p style="text-align:right; margin-top:15px;"><a href="appointment.html" style="color:#154977;">View all ${userAppointments.length} appointments →</a></p>`;
+            html += '</div>';
+            appointmentsContainer.innerHTML = html;
+        }
+
+        function updateNavbarProfile() {
+            const loginLink = document.getElementById("loginLink");
+            const profileLink = document.getElementById("profileLink");
+            const profileInitialSpan = document.getElementById("profileInitial");
+            const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+            const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+            if (isLoggedIn && currentUser) {
+                loginLink.style.display = "none";
+                profileLink.style.display = "flex";
+                profileInitialSpan.textContent = (currentUser.name || "U").charAt(0).toUpperCase();
+            } else {
+                loginLink.style.display = "inline-block";
+                profileLink.style.display = "none";
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem("isLoggedIn");
+            localStorage.removeItem("currentUser");
+            const popup = document.createElement('div');
+            popup.className = 'logout-popup';
+            popup.innerHTML = `<div class="popup-content"><i class="fas fa-check-circle"></i><h3>Logged Out!</h3><p class="popup-message">You have been logged out successfully.</p><p class="popup-redirect">Redirecting to home...</p><div class="popup-progress"><div class="progress-bar"></div></div></div>`;
+            document.body.appendChild(popup);
+            document.body.style.overflow = 'hidden';
+            setTimeout(() => {
+                popup.classList.add('fade-out');
+                setTimeout(() => {
+                    popup.remove();
+                    document.body.style.overflow = '';
+                    window.location.href = "homepage.html";
+                }, 300);
+            }, 2000);
+        }
+
+        function showLogoutPopup(message, type, redirectUrl) {
+            const popup = document.createElement('div');
+            popup.className = 'logout-popup';
+            popup.innerHTML = `<div class="popup-content"><i class="fas fa-exclamation-triangle" style="color:#dc3545;"></i><h3>${type === 'warning' ? 'Warning!' : 'Information'}</h3><p class="popup-message">${message}</p><p class="popup-redirect">Redirecting in 2 seconds...</p><div class="popup-progress"><div class="progress-bar"></div></div></div>`;
+            document.body.appendChild(popup);
+            document.body.style.overflow = 'hidden';
+            setTimeout(() => {
+                popup.classList.add('fade-out');
+                document.body.style.overflow = '';
+                setTimeout(() => { popup.remove(); window.location.href = redirectUrl; }, 300);
+            }, 2000);
+        }
+
+        function scrollToTop() { window.scrollTo({ top: 0, behavior: "smooth" }); }
+
+        window.onscroll = function() {
+            let btn = document.getElementById("topBtn");
+            if (btn) btn.style.display = (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) ? "block" : "none";
+        };
+        window.scrollToTop = scrollToTop;
+        window.logout = logout;
+
+        // Execution
+        if (checkLoginStatus()) {
+            initUserData();       // ensures demo orders + appointments exist for logged user
+            loadUserProfile();
+        }
+        updateNavbarProfile();
+    })();
+</script>
+</body>
+</html>

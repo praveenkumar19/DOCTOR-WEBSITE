@@ -1,0 +1,1850 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Dr. PK Clinic - Appointment</title>
+    <link rel="icon" href="logoo.png" type="image/png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background-color: #f5f7fa;
+            color: #2c3e50;
+            padding-top: 70px;
+            line-height: 1.6;
+        }
+
+        /* ================= NAVBAR ================= */
+        .top-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 70px;
+            background: linear-gradient(135deg, #1e4b7a, #154977);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 5%;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            z-index: 1000;
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-left .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            color: white;
+            font-size: 22px;
+            font-weight: 700;
+        }
+
+        .nav-left img {
+            width: 50px;
+            height: 50px;
+            object-fit: contain;
+            filter: brightness(0) invert(1);
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .nav-right a {
+            color: rgba(255,255,255,0.9);
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 600;
+            padding: 8px 12px;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-right a:hover {
+            color: white;
+            background: rgba(255,255,255,0.1);
+            transform: translateY(-2px);
+        }
+
+        .nav-right a.active {
+            color: white;
+            background: rgba(255,255,255,0.2);
+        }
+
+        .nav-right a::after {
+            content: "";
+            position: absolute;
+            left: 50%;
+            bottom: -2px;
+            width: 0;
+            height: 3px;
+            background: #ffd700;
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        .nav-right a:hover::after,
+        .nav-right a.active::after {
+            width: 80%;
+        }
+
+        /* ================= MAIN CONTAINER ================= */
+        .appointment-container {
+            max-width: 1300px;
+            margin: 30px auto;
+            padding: 0 30px;
+        }
+
+        /* ================= TIMINGS SECTION ================= */
+        .timings-section {
+            background: white;
+            border-radius: 20px;
+            padding: 35px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+        }
+
+        .timings-section h2 {
+            color: #154977;
+            font-size: 28px;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        .timings-section h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, #154977, #4a90e2);
+            border-radius: 2px;
+        }
+
+        .timings-section h2 i {
+            color: #154977;
+            font-size: 28px;
+        }
+
+        .timings-table {
+            width: 100%;
+            border-collapse: collapse;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+        }
+
+        .timings-table thead {
+            background: linear-gradient(135deg, #154977, #1e5a9c);
+        }
+
+        .timings-table th {
+            padding: 18px 20px;
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-align: center;
+        }
+
+        .timings-table td {
+            padding: 15px 20px;
+            text-align: center;
+            border-bottom: 1px solid #ecf0f1;
+            color: #2c3e50;
+        }
+
+        .timings-table tbody tr {
+            transition: all 0.3s ease;
+        }
+
+        .timings-table tbody tr:hover {
+            background: #f8faff;
+            transform: scale(1.01);
+        }
+
+        .timings-table tbody tr td:first-child {
+            font-weight: 700;
+            color: #154977;
+        }
+
+        .timings-table tbody tr.current-day {
+            background: #e3f2fd;
+            border-left: 4px solid #154977;
+        }
+
+        .timings-table tbody tr:last-child td {
+            background: #fff8e7;
+            color: #b45f06;
+            font-weight: 600;
+        }
+
+        .closed-day {
+            color: #e74c3c !important;
+            font-weight: 600;
+        }
+
+        .clinic-status {
+            margin-top: 25px;
+            padding: 20px;
+            background: linear-gradient(135deg, #f8faff, #ffffff);
+            border-radius: 15px;
+            border-left: 4px solid #154977;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .clinic-status i {
+            font-size: 14px;
+        }
+
+        .clinic-status span {
+            font-weight: 600;
+        }
+
+        /* ================= APPOINTMENT FORM SECTION ================= */
+        .appointment-form-section {
+            background: white;
+            border-radius: 25px;
+            padding: 40px;
+            box-shadow: 0 15px 50px rgba(21, 73, 119, 0.12);
+        }
+
+        .appointment-form-section h2 {
+            color: #154977;
+            font-size: 32px;
+            margin-bottom: 35px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        .appointment-form-section h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, #154977, #4a90e2);
+            border-radius: 2px;
+        }
+
+        .appointment-form {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+        }
+
+        .form-group {
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #154977;
+            font-weight: 600;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .input-icon-wrapper {
+            position: relative;
+        }
+
+        .input-icon-wrapper i {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #154977;
+            font-size: 18px;
+            z-index: 1;
+        }
+
+        .input-icon-wrapper input {
+            width: 100%;
+            padding: 16px 20px 16px 50px;
+            border: 2px solid #e0e7f0;
+            border-radius: 12px;
+            font-size: 15px;
+            transition: all 0.3s ease;
+            background: #fafbfc;
+        }
+
+        .input-icon-wrapper input:hover {
+            border-color: #154977;
+            background: white;
+        }
+
+        .input-icon-wrapper input:focus {
+            outline: none;
+            border-color: #154977;
+            box-shadow: 0 0 0 4px rgba(21, 73, 119, 0.15);
+            background: white;
+        }
+
+        .input-icon-wrapper input.valid {
+            border-color: #2ecc71;
+            background: #f0fff4;
+        }
+
+        .input-icon-wrapper input.invalid {
+            border-color: #e74c3c;
+            background: #fff5f5;
+        }
+
+        .error-message {
+            color: #e74c3c;
+            font-size: 13px;
+            margin-top: 6px;
+            display: none;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .error-message.show {
+            display: flex;
+        }
+
+        /* ================= FORMSECTIONS (FIELDSETS) ================= */
+        .form-section {
+            grid-column: span 2;
+            border: 2px solid #e0e7f0;
+            border-radius: 20px;
+            padding: 25px 30px;
+            background: #fafbfc;
+            margin: 10px 0;
+        }
+
+        .form-section legend {
+            font-size: 18px;
+            font-weight: 700;
+            color: #154977;
+            padding: 0 20px;
+            background: white;
+            border-radius: 30px;
+            border: 2px solid #154977;
+            margin-left: 10px;
+        }
+
+        .checkbox-group, .radio-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .checkbox-group label, .radio-group label {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 15px 20px;
+            background: white;
+            border: 1px solid #e0e7f0;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 0;
+        }
+
+        .checkbox-group label:hover, .radio-group label:hover {
+            border-color: #154977;
+            background: #f0f7ff;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(21, 73, 119, 0.1);
+        }
+
+        .checkbox-group input[type="checkbox"]:checked + span,
+        .radio-group input[type="radio"]:checked + span {
+            background: #154977;
+            color: white;
+        }
+
+        /* ================= CUSTOM SELECT ================= */
+        .select-wrapper {
+            grid-column: span 2;
+            margin: 15px 0 5px;
+        }
+
+        .select-label {
+            display: block;
+            margin-bottom: 10px;
+            color: #154977;
+            font-weight: 700;
+            font-size: 15px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .custom-select {
+            width: 100%;
+            padding: 18px 25px;
+            border: 2px solid #e0e7f0;
+            border-radius: 15px;
+            font-size: 16px;
+            background: white;
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23154977' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 20px center;
+            background-size: 20px;
+        }
+
+        .custom-select:focus {
+            outline: none;
+            border-color: #154977;
+            box-shadow: 0 0 0 4px rgba(21, 73, 119, 0.15);
+        }
+
+        .custom-select.valid {
+            border-color: #2ecc71;
+        }
+
+        .custom-select.invalid {
+            border-color: #e74c3c;
+        }
+
+        .select-error, .select-success {
+            font-size: 14px;
+            margin-top: 8px;
+            display: none;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .select-error.show {
+            display: flex;
+            color: #e74c3c;
+        }
+
+        .select-success.show {
+            display: flex;
+            color: #2ecc71;
+        }
+
+        .selected-service {
+            background: #f0f7ff;
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 15px;
+            display: none;
+            border-left: 4px solid #154977;
+        }
+
+        .selected-service.show {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+
+        .selected-service h4 {
+            color: #154977;
+            margin-bottom: 12px;
+            font-size: 16px;
+        }
+
+        .selected-service p {
+            color: #2c3e50;
+            line-height: 1.7;
+        }
+
+        /* ================= GENDER FIELDSET ================= */
+        .gender-fieldset {
+            grid-column: span 2;
+            border: 2px solid #e0e7f0;
+            border-radius: 20px;
+            padding: 25px 30px;
+            background: #fafbfc;
+            margin: 10px 0;
+        }
+
+        .gender-fieldset legend {
+            font-size: 18px;
+            font-weight: 700;
+            color: #154977;
+            padding: 0 20px;
+            background: white;
+            border-radius: 30px;
+            border: 2px solid #154977;
+            margin-left: 10px;
+        }
+
+        .gender-options {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+
+        .gender-fieldset label {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 15px 30px;
+            background: white;
+            border: 1px solid #e0e7f0;
+            border-radius: 40px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .gender-fieldset label:hover {
+            border-color: #154977;
+            background: #f0f7ff;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(21, 73, 119, 0.1);
+        }
+
+        .gender-fieldset input[type="radio"] {
+            width: 20px;
+            height: 20px;
+            accent-color: #154977;
+            margin: 0;
+        }
+
+        .gender-summary {
+            background: #e3f2fd;
+            border-radius: 40px;
+            padding: 15px 25px;
+            margin-top: 20px;
+            display: none;
+            align-items: center;
+            gap: 12px;
+            border-left: 4px solid #154977;
+        }
+
+        .gender-summary.show {
+            display: flex;
+        }
+
+        /* ================= PAYMENT SECTION ================= */
+        .payment-section {
+            grid-column: span 2;
+            margin-top: 20px;
+        }
+
+        .payment-container {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;
+            gap: 30px;
+            background: #fafbfc;
+            border-radius: 20px;
+            padding: 30px;
+        }
+
+        .payment-left h2 {
+            font-size: 22px;
+            color: #154977;
+            margin-bottom: 25px;
+        }
+
+        .payment-option {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 18px 20px;
+            background: white;
+            border: 1px solid #e0e7f0;
+            border-radius: 15px;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .payment-option:hover {
+            border-color: #154977;
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(21, 73, 119, 0.1);
+        }
+
+        .checkbox-wrapper-12 {
+            position: relative;
+        }
+
+        .cbx {
+            position: relative;
+            width: 24px;
+            height: 24px;
+        }
+
+        .cbx input[type="checkbox"] {
+            position: absolute;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+            z-index: 2;
+        }
+
+        .cbx label {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 24px;
+            height: 24px;
+            background: white;
+            border: 2px solid #154977;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .cbx input[type="checkbox"]:checked + label {
+            background: #154977;
+        }
+
+        .cbx svg {
+            position: absolute;
+            top: 5px;
+            left: 4px;
+            width: 16px;
+            height: 16px;
+            stroke: white;
+            stroke-width: 3;
+            stroke-dasharray: 20;
+            stroke-dashoffset: 20;
+            transition: stroke-dashoffset 0.3s ease;
+            pointer-events: none;
+        }
+
+        .cbx input[type="checkbox"]:checked ~ svg {
+            stroke-dashoffset: 0;
+        }
+
+        .payment-text h4 {
+            color: #154977;
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+
+        .payment-text p {
+            color: #7f8c8d;
+            font-size: 14px;
+        }
+
+        .payment-right {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+        }
+
+        .payment-right h3 {
+            color: #154977;
+            font-size: 20px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px dashed #e0e7f0;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin: 15px 0;
+            font-size: 16px;
+        }
+
+        .summary-row.total {
+            font-size: 20px;
+            font-weight: 700;
+            color: #154977;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px solid #e0e7f0;
+        }
+
+        .pay-btn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #154977, #1e5a9c);
+            color: white;
+            border: none;
+            border-radius: 40px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .pay-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(21, 73, 119, 0.3);
+        }
+
+        /* ================= MODAL STYLES ================= */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 24px;
+            width: 90%;
+            max-width: 400px;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
+            animation: slideUp 0.4s ease;
+            overflow: hidden;
+        }
+
+        .modal-header {
+            padding: 20px 24px;
+            border-bottom: 2px solid #eef2f6;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(135deg, #f8fafc, #ffffff);
+        }
+
+        .modal-header h3 {
+            color: #154977;
+            font-size: 20px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .modal-header h3 i {
+            color: #ffd700;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #64748b;
+            transition: all 0.3s ease;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-close:hover {
+            background: #f1f5f9;
+            color: #dc3545;
+            transform: rotate(90deg);
+        }
+
+        .modal-body {
+            padding: 24px;
+            text-align: center;
+        }
+
+        .modal-icon {
+            font-size: 48px;
+            color: #ffd700;
+            margin-bottom: 15px;
+            animation: pulse 1s infinite;
+        }
+
+        .modal-body p {
+            color: #2c3e50;
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .modal-footer {
+            padding: 20px 24px;
+            border-top: 2px solid #eef2f6;
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            background: #f8fafc;
+        }
+
+        .modal-btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .modal-btn-primary {
+            background: linear-gradient(135deg, #154977, #1a3a68);
+            color: white;
+        }
+
+        .modal-btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px -8px #154977;
+        }
+
+        .modal-btn-success {
+            background: linear-gradient(135deg, #28a745, #218838);
+            color: white;
+        }
+
+        .modal-btn-success:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px -8px #28a745;
+        }
+
+        .modal-btn-warning {
+            background: linear-gradient(135deg, #dc3545, #c82333);
+            color: white;
+        }
+
+        .modal-btn-warning:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px -8px #dc3545;
+        }
+
+        /* ================= SUCCESS POPUP ================= */
+        .success-popup {
+            position: fixed;
+            top: 100px;
+            left: 50%;
+            transform: translateX(-50%) scale(0);
+            padding: 20px 40px;
+            border-radius: 50px;
+            color: white;
+            font-weight: 600;
+            font-size: 16px;
+            z-index: 9999;
+            opacity: 0;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
+
+        .success-popup.show {
+            opacity: 1;
+            transform: translateX(-50%) scale(1);
+            animation: popEffect 0.5s ease;
+        }
+
+        @keyframes popEffect {
+            0% { transform: translateX(-50%) scale(0); }
+            50% { transform: translateX(-50%) scale(1.1); }
+            100% { transform: translateX(-50%) scale(1); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ================= BACK TO TOP BUTTON ================= */
+        #topBtn {
+            position: fixed;
+            bottom: 40px;
+            right: 40px;
+            width: 55px;
+            height: 55px;
+            background: #154977;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            font-size: 24px;
+            cursor: pointer;
+            display: none;
+            box-shadow: 0 10px 25px rgba(21, 73, 119, 0.4);
+            transition: all 0.3s ease;
+            z-index: 99;
+        }
+
+        #topBtn:hover {
+            background: #1e5a9c;
+            transform: translateY(-5px) scale(1.1);
+        }
+
+        /* ================= FOOTER ================= */
+        .site-footer {
+            background: #0a1a2a;
+            color: #a0b8cc;
+            padding: 60px 0 0;
+            margin-top: 60px;
+        }
+
+        .footer-container {
+            max-width: 1300px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+            padding: 0 30px;
+        }
+
+        .footer-col h3 {
+            color: white;
+            font-size: 18px;
+            margin-bottom: 25px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-col h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background: #4a90e2;
+        }
+
+        .footer-col p, .footer-col ul {
+            font-size: 14px;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 12px;
+        }
+
+        .footer-col ul li a {
+            color: #a0b8cc;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer-col ul li a:hover {
+            color: white;
+            padding-left: 8px;
+        }
+
+        /* Social icons */
+        .social-icons {
+            display: flex;
+            gap: 10px;
+            margin-top: 12px;
+        }
+
+        .social-icons a {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.12);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 14px;
+            transition: 0.3s ease;
+        }
+
+        .social-icons a.facebook {
+            background: linear-gradient(135deg, #1877f2);
+        }
+
+        .social-icons a.youtube {
+            background: linear-gradient(135deg, #ff0000);
+        }
+
+        .social-icons a.linkedin {
+            background: linear-gradient(#0937d1);
+        }
+
+        .social-icons a.instagram {
+            background: radial-gradient(circle at 30% 110%, 
+                #fdf497 0%, #fdf497 5%, #fd5949 45%, 
+                #d6249f 60%, #285AEB 90%);
+        }
+
+        .watch-live, .appointment {
+            display: inline-block;
+            padding: 12px 25px;
+            border-radius: 40px;
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            margin: 5px 10px 5px 0;
+            transition: all 0.3s ease;
+        }
+
+        .watch-live {
+            background: #e74c3c;
+        }
+
+        .watch-live:hover {
+            background: #c0392b;
+            transform: translateY(-3px);
+        }
+
+        .appointment {
+            background: #154977;
+        }
+
+        .appointment:hover {
+            background: #1e5a9c;
+            transform: translateY(-3px);
+        }
+
+        .store-buttons {
+            display: flex;
+            gap: 15px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .store-buttons a {
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+
+        .store-buttons a:hover {
+            transform: translateY(-5px);
+        }
+
+        .store-buttons img {
+            height: 45px;
+            width: auto;
+        }
+
+        .footer-bottom {
+            background: #05111f;
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+            color: #a0b8cc;
+            font-size: 14px;
+        }
+
+        /* ================= RESPONSIVE DESIGN ================= */
+        @media (max-width: 1200px) {
+            .footer-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 992px) {
+            .appointment-form {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-section,
+            .gender-fieldset,
+            .select-wrapper,
+            .payment-section {
+                grid-column: span 1;
+            }
+            
+            .payment-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            body { padding-top: 120px; }
+            
+            .top-nav {
+                height: auto;
+                padding: 15px 20px;
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .nav-right {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 10px;
+            }
+            
+            .nav-right a {
+                font-size: 14px;
+                padding: 6px 10px;
+            }
+            
+            .appointment-container {
+                padding: 0 20px;
+            }
+            
+            .timings-section,
+            .appointment-form-section {
+                padding: 25px;
+            }
+            
+            .footer-container {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            
+            .footer-col h3::after {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+            
+            .gender-options {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .gender-fieldset label {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .timings-table {
+                display: block;
+                overflow-x: auto;
+            }
+            
+            .checkbox-group,
+            .radio-group {
+                grid-template-columns: 1fr;
+            }
+            
+            .payment-option {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            #topBtn {
+                bottom: 20px;
+                right: 20px;
+                width: 45px;
+                height: 45px;
+                font-size: 20px;
+            }
+        }
+
+        /* ================= ANIMATIONS ================= */
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .profile-icon {
+            display: flex !important;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #ff0d00, #ffb347) !important;
+            border-radius: 50% !important;
+            padding: 0 !important;
+            font-weight: bold !important;
+            font-size: 18px !important;
+            color: #154977 !important;
+            text-transform: uppercase;
+            border: 2px solid white !important;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2) !important;
+            transition: all 0.3s ease !important;
+            animation: profilePulse 2s infinite;
+        }
+
+        .profile-icon:hover {
+            transform: scale(1.1) rotate(5deg) !important;
+            background: linear-gradient(135deg, #ffb347, #ffd700) !important;
+            box-shadow: 0 6px 15px rgba(255,215,0,0.4) !important;
+        }
+
+        .profile-icon span {
+            display: block;
+            line-height: 1;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+
+        @keyframes profilePulse {
+            0%, 100% { box-shadow: 0 4px 10px rgba(255,215,0,0.3); }
+            50% { box-shadow: 0 6px 15px rgba(255,215,0,0.6); }
+        }
+    </style>
+</head>
+<body>
+    <!-- NAVBAR -->
+    <nav class="top-nav">
+        <div class="nav-left">
+            <div class="logo">
+                <img src="logoo.png" width="60">
+                Dr. PK Clinic
+            </div>
+        </div>
+        <div class="nav-right">
+            <a href="index.html">Home</a>
+            <a href="appointment.html">Appointment</a>
+            <a href="about.html">About</a>
+            <a href="services.html">Services</a>
+            <a href="testimonials.html">Testimonials</a>
+            <a href="contact.html">Contact</a>
+            <a href="shopping.html">Shopping</a>
+            <a href="login.html" id="loginLink">Login</a>
+            <!-- Profile icon - hidden by default -->
+            <a href="profile.html" id="profileLink" style="display: none;" class="profile-icon">
+                <span id="profileInitial"></span>
+            </a>
+        </div>
+    </nav>
+
+    <!-- MODAL FOR MESSAGES -->
+    <div id="messageModal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-info-circle"></i> Notification</h3>
+                <button class="modal-close" onclick="closeMessageModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-icon" id="modalIcon">
+                    <i class="fas fa-check-circle" style="color: #28a745;"></i>
+                </div>
+                <p id="modalMessage">Your message here</p>
+            </div>
+            <div class="modal-footer">
+                <button class="modal-btn modal-btn-primary" id="modalOkBtn" onclick="closeMessageModal()">OK</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- TIMINGS TABLE -->
+    <div class="appointment-container">
+        <!-- TIMINGS SECTION -->
+        <section class="timings-section fade-in">
+            <h2><i class="fas fa-clock"></i> Clinic Timings</h2>
+            <table class="timings-table" id="timingsTable">
+                <thead>
+                    <tr>
+                        <th>Day</th>
+                        <th>Morning</th>
+                        <th>Evening</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>MONDAY</td><td>9:00 AM - 1:00 PM</td><td>4:00 PM - 10:30 PM</td></tr>
+                    <tr><td>TUESDAY</td><td>9:00 AM - 1:00 PM</td><td>4:00 PM - 10:30 PM</td></tr>
+                    <tr><td>WEDNESDAY</td><td>9:00 AM - 1:00 PM</td><td>4:00 PM - 10:30 PM</td></tr>
+                    <tr><td>THURSDAY</td><td>9:00 AM - 1:00 PM</td><td>4:00 PM - 10:30 PM</td></tr>
+                    <tr><td>FRIDAY</td><td>9:00 AM - 1:00 PM</td><td>4:00 PM - 10:30 PM</td></tr>
+                    <tr><td>SATURDAY</td><td>9:00 AM - 1:00 PM</td><td>4:00 PM - 10:30 PM</td></tr>
+                    <tr><td>SUNDAY</td><td>9:00 AM - 12:00 PM</td><td class="closed-day">CLOSED</td></tr>
+                    <tr><td colspan="3"><i class="fas fa-exclamation-circle"></i> Government Holidays will be Holiday</td></tr>
+                </tbody>
+             </table>
+            
+            <!-- Live Status -->
+            <div class="clinic-status">
+                <i class="fas fa-circle" style="color: #2ecc71; font-size: 12px;"></i>
+                <strong>Current Status:</strong>
+                <span id="clinicStatus">Checking clinic status...</span>
+            </div>
+        </section>
+
+        <!-- APPOINTMENT FORM SECTION -->
+        <section class="appointment-form-section fade-in">
+            <h2><i class="fas fa-calendar-check"></i> Book an Appointment</h2>
+            
+            <form id="appointmentForm" class="appointment-form">
+                <!-- Personal Details -->
+                <div class="form-group">
+                    <label><i class="fas fa-user"></i> Full Name *</label>
+                    <div class="input-icon-wrapper">
+                        <i class="fas fa-user"></i>
+                        <input type="text" id="name" placeholder="Enter your full name" required>
+                    </div>
+                    <div class="error-message" id="nameError">Please enter your name</div>
+                </div>
+
+                <div class="form-group">
+                    <label><i class="fas fa-envelope"></i> Email *</label>
+                    <div class="input-icon-wrapper">
+                        <i class="fas fa-envelope"></i>
+                        <input type="email" id="email" placeholder="your@email.com" required>
+                    </div>
+                    <div class="error-message" id="emailError">Please enter a valid email</div>
+                </div>
+
+                <div class="form-group">
+                    <label><i class="fas fa-phone"></i> Phone *</label>
+                    <div class="input-icon-wrapper">
+                        <i class="fas fa-phone"></i>
+                        <input type="tel" id="phone" pattern="[0-9]{10}" placeholder="10 digit mobile number" required>
+                    </div>
+                    <div class="error-message" id="phoneError">Please enter a valid 10-digit phone number</div>
+                </div>
+
+                <div class="form-group">
+                    <label><i class="fas fa-calendar-alt"></i> Age *</label>
+                    <div class="input-icon-wrapper">
+                        <i class="fas fa-calendar-alt"></i>
+                        <input type="number" id="age" placeholder="Your age" min="1" max="120" required>
+                    </div>
+                    <div class="error-message" id="ageError">Please enter a valid age</div>
+                </div>
+
+                <div class="form-group">
+                    <label><i class="fas fa-calendar-day"></i> Appointment Date *</label>
+                    <div class="input-icon-wrapper">
+                        <i class="fas fa-calendar-day"></i>
+                        <input type="date" id="date" required>
+                    </div>
+                    <div class="error-message" id="dateError">Please select a valid date</div>
+                </div>
+
+                <div class="form-group">
+                    <label><i class="fas fa-clock"></i> Appointment Time *</label>
+                    <div class="input-icon-wrapper">
+                        <i class="fas fa-clock"></i>
+                        <input type="time" id="time" required>
+                    </div>
+                    <div class="error-message" id="timeError">Please select a valid time</div>
+                </div>
+
+                <!-- Health Questions -->
+                <fieldset class="form-section">
+                    <legend>🤔 How Are You Feeling Today?</legend>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" name="feeling" value="Feeling Good"> 😊 Feeling Good</label>
+                        <label><input type="checkbox" name="feeling" value="Just Okay"> 😐 Just Okay</label>
+                        <label><input type="checkbox" name="feeling" value="Not Well"> 😷 Not Well</label>
+                        <label><input type="checkbox" name="feeling" value="Body Pain"> 🥲 Body Pain</label>
+                        <label><input type="checkbox" name="feeling" value="Tiredness"> 🛌🏻 Tiredness</label>
+                    </div>
+                </fieldset>
+
+                <fieldset class="form-section">
+                    <legend>🕒 How Long Have You Been Sick?</legend>
+                    <div class="radio-group">
+                        <label><input type="radio" name="duration" value="Today"> 😇 Today</label>
+                        <label><input type="radio" name="duration" value="1 Week"> 🤒 1 Week</label>
+                        <label><input type="radio" name="duration" value="1 Month"> 😬 1 Month</label>
+                        <label><input type="radio" name="duration" value="Long Time"> 😅 From long time</label>
+                    </div>
+                </fieldset>
+
+                <!-- Service Select -->
+                <div class="select-wrapper">
+                    <label class="select-label"><i class="fas fa-heartbeat"></i> Select Cardiology Service *</label>
+                    <select class="custom-select" id="serviceSelect" required>
+                        <option value="">— SELECT A SERVICE —</option>
+                        <option value="echocardiography"> ECHOCARDIOGRAPHY (2D ECHO)</option>
+                        <option value="ecg"> ECG (ELECTROCARDIOGRAM)</option>
+                        <option value="tmt"> TMT (TREADMILL STRESS TEST)</option>
+                        <option value="dobutamine"> DOBUTAMINE STRESS TEST</option>
+                        <option value="holter"> HOLTER MONITORING</option>
+                        <option value="angiography"> CORONARY ANGIOGRAPHY</option>
+                        <option value="angioplasty"> ANGIOPLASTY & STENTING</option>
+                        <option value="bypass"> BYPASS SURGERY CONSULT</option>
+                        <option value="bp"> BLOOD PRESSURE MANAGEMENT</option>
+                        <option value="cholesterol"> CHOLESTEROL MANAGEMENT</option>
+                        <option value="diabetes"> DIABETES & HEART CARE</option>
+                        <option value="heartfailure"> HEART FAILURE MANAGEMENT</option>
+                        <option value="checkup"> COMPREHENSIVE HEART CHECKUP</option>
+                        <option value="lifestyle"> LIFESTYLE & DIET COUNSELING</option>
+                        <option value="stress"> STRESS MANAGEMENT</option>
+                        <option value="valve"> VALVE DISEASE TREATMENT</option>
+                        <option value="congenital"> CONGENITAL HEART DISEASE</option>
+                        <option value="rehab"> CARDIAC REHABILITATION</option>
+                        <option value="medication"> MEDICATION REVIEW</option>
+                        <option value="sleep"> SLEEP APNEA & HEART</option>
+                        <option value="postattack"> POST-HEART ATTACK CARE</option>
+                        <option value="palpitation"> PALPITATION EVALUATION</option>
+                    </select>
+                    <div class="select-error" id="serviceError">Please select a service</div>
+                    <div class="select-success" id="serviceSuccess">Service selected successfully</div>
+                    <div class="selected-service" id="selectedService">
+                        <h4><i class="fas fa-heart"></i> Selected Service Details</h4>
+                        <p id="serviceDescription"></p>
+                    </div>
+                </div>
+
+                <!-- Gender -->
+                <fieldset class="gender-fieldset">
+                    <legend>GENDER *</legend>
+                    <div class="gender-options">
+                        <label><input type="radio" name="gender" value="Male" required> 🤵🏻‍♂️ MALE</label>
+                        <label><input type="radio" name="gender" value="Female"> 👩🏻‍⚕️ FEMALE</label>
+                        <label><input type="radio" name="gender" value="Other"> OTHERS</label>
+                    </div>
+                    <div class="gender-summary" id="genderSummary">
+                        <i class="fas fa-user"></i> Selected: <span id="genderDisplay">Not selected</span>
+                    </div>
+                </fieldset>
+
+                <!-- PAYMENT SECTION -->
+                <div class="payment-section">
+                    <div class="payment-container">
+                        <div class="payment-left">
+                            <h2><i class="fas fa-credit-card"></i> Select Payment Method *</h2>
+
+                            <div class="payment-option">
+                                <div class="checkbox-wrapper-12">
+                                    <div class="cbx">
+                                        <input type="checkbox" name="payment" value="UPI" id="upi">
+                                        <label for="upi"></label>
+                                        <svg viewBox="0 0 15 14" width="15" height="14">
+                                            <path d="M2 8.36364L6.23077 12L13 2"></path>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div class="payment-text">
+                                    <h4>UPI</h4>
+                                    <p>Google Pay / PhonePe / Paytm</p>
+                                </div>
+                            </div>
+
+                            <div class="payment-option">
+                                <div class="checkbox-wrapper-12">
+                                    <div class="cbx">
+                                        <input type="checkbox" name="payment" value="Card" id="card">
+                                        <label for="card"></label>
+                                        <svg viewBox="0 0 15 14" width="15" height="14">
+                                            <path d="M2 8.36364L6.23077 12L13 2"></path>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div class="payment-text">
+                                    <h4>Credit / Debit Card</h4>
+                                    <p>Visa / MasterCard / RuPay</p>
+                                </div>
+                            </div>
+
+                            <div class="payment-option">
+                                <div class="checkbox-wrapper-12">
+                                    <div class="cbx">
+                                        <input type="checkbox" name="payment" value="COD" id="cod">
+                                        <label for="cod"></label>
+                                        <svg viewBox="0 0 15 14" width="15" height="14">
+                                            <path d="M2 8.36364L6.23077 12L13 2"></path>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div class="payment-text">
+                                    <h4>Pay at Clinic</h4>
+                                    <p>Cash / Card at Clinic</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="payment-right">
+                            <h3>Appointment Summary</h3>
+                            <div class="summary-row"><span>Consultation Fee</span><span>₹200</span></div>
+                            <div class="summary-row total"><span>Total Amount</span><span>₹200</span></div>
+                            <button type="button" class="pay-btn" id="payBtn">
+                                <i class="fas fa-check-circle"></i> Confirm Payment
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </section>
+    </div>
+
+    <!-- BACK TO TOP BUTTON -->
+    <button id="topBtn" onclick="scrollToTop()">↑</button>
+    
+    <!-- FOOTER -->
+    <footer class="site-footer">
+        <div class="footer-container">
+            <!-- About -->
+            <div class="footer-col">
+                <h3>About Us</h3>
+                <p>Dr Praveen Kumar A – Expert in lifestyle disease reversal, an acclaimed author, speaker, and specialist in <strong>natural health</strong>. He has helped a large number of patients of different diseases and reversed it through natural healing, researcher of medicine, launched own natural products for <strong>diabetes reversal</strong>, nutrition and <strong>drug-free healing</strong>.</p>
+                <a href="about.html" class="footer-link">For More Details</a>
+
+                <h4>Find Us On:</h4>
+                <div class="social-icons">
+                    <a href="https://www.facebook.com/profile.php?id=100053479690246" class="facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.youtube.com/@move_with_praveen" class="youtube"><i class="fab fa-youtube"></i></a>
+                    <a href="https://www.linkedin.com/in/praveen-kumar-792b8a395/" class="linkedin"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="https://www.instagram.com/praveeneyy19/" class="instagram"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+
+            <!-- Quick Links -->
+            <div class="footer-col">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#">Biswas E-Magazine</a></li>
+                    <li><a href="#">Download Free Ebook</a></li>
+                    <li><a href="#">Coronakaal.tv</a></li>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Gallery</a></li>
+                    <li><a href="#">Blogs</a></li>
+                    <li><a href="#">Credentials</a></li>
+                    <li><a href="#">Research Papers</a></li>
+                    <li><a href="#">Refund & Cancellation Policy</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Shipping Policy</a></li>
+                </ul>
+            </div>
+
+            <!-- Live -->
+            <div class="footer-col">
+                <h3>Join Dr. PK Clinic</h3>
+                <p>To be a part of Dr. Praveen Kumar's next LIVE event</p>
+                <a href="https://youtu.be/28CYhgjrBLA?si=qzg48QoZ8obTjWdv" class="watch-live">CARDIOVASCULAR SYSTEM OVERVIEW</a>
+                <a href="appointment.html" class="appointment">Book Appointment</a>
+            </div>
+
+            <div class="footer">
+                <h3>Download App</h3>
+                <div class="store-buttons">
+                    <a href="https://play.google.com/store/apps/details?id=com.needstreet.health.hppatient">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Get it on Google Play">
+                    </a>
+                    <a href="https://apps.apple.com/in/app/continuouscare-health-app/id674531353">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/3/3c/Download_on_the_App_Store_Badge.svg" alt="Download on the App Store">
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p class="text-white">&copy; 2026 Dr. PK Clinic. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <!-- SCRIPT -->
+    <script>
+        // ========== EXISTING APPOINTMENT FUNCTIONS (UNCHANGED) ==========
+        document.addEventListener("DOMContentLoaded", function() {
+            initializeApp();
+        });
+
+        function initializeApp() {
+            initializeNavigation();
+            initializePaymentOptions();
+            initializeServiceSelect();
+            initializeGenderSelector();
+            initializeAppointmentSystem();
+        }
+
+        // ===== STYLED POPUP FUNCTION =====
+        function showStyledPopup(message, type = 'success', redirectUrl = null) {
+            const existingPopup = document.querySelector('.logout-popup');
+            if (existingPopup) existingPopup.remove();
+            const popup = document.createElement('div');
+            popup.className = 'logout-popup';
+            let icon = type === 'success' ? '<i class="fas fa-check-circle"></i>' : (type === 'warning' ? '<i class="fas fa-exclamation-triangle"></i>' : '<i class="fas fa-info-circle"></i>');
+            let iconClass = type === 'warning' ? 'warning' : (type === 'info' ? 'info' : '');
+            popup.innerHTML = `<div class="popup-content"><div class="popup-icon ${iconClass}">${icon}</div><h2>${type === 'success' ? 'Success!' : type === 'warning' ? 'Warning!' : 'Information'}</h2><p>${message}</p>${redirectUrl ? '<p class="redirect-text">Redirecting in <span id="countdown">2</span> seconds...</p>' : ''}<div class="popup-progress"><div class="progress-bar"></div></div></div>`;
+            document.body.appendChild(popup);
+            document.body.style.overflow = 'hidden';
+            if (redirectUrl) {
+                let seconds = 2;
+                const countdownInterval = setInterval(() => { seconds--; const cd = document.getElementById('countdown'); if (cd) cd.textContent = seconds; if (seconds <= 0) clearInterval(countdownInterval); }, 1000);
+                setTimeout(() => { popup.classList.add('fade-out'); document.body.style.overflow = ''; setTimeout(() => { popup.remove(); window.location.href = redirectUrl; }, 300); }, 2000);
+            } else {
+                setTimeout(() => { popup.classList.add('fade-out'); document.body.style.overflow = ''; setTimeout(() => popup.remove(), 300); }, 2000);
+            }
+        }
+
+        function closeMessageModal() {}
+        function showMessageModal(message, isSuccess) { showStyledPopup(message, isSuccess ? 'success' : 'warning'); }
+
+        // ================= NAVIGATION =================
+        function initializeNavigation() {
+            const navLinks = document.querySelectorAll(".nav-right a");
+            const currentPage = window.location.pathname.split("/").pop();
+            navLinks.forEach(link => { if(link.getAttribute("href") === currentPage) link.classList.add("active"); });
+            const loginLink = document.getElementById("loginLink");
+            const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+            if(isLoggedIn) {
+                loginLink.textContent = "Logout";
+                loginLink.href = "#";
+                loginLink.addEventListener("click", function(e) {
+                    e.preventDefault();
+                    localStorage.removeItem("isLoggedIn");
+                    localStorage.removeItem("currentUser");
+                    showStyledPopup("Logged Out Successfully", 'success', "login.html");
+                });
+            }
+        }
+
+        // ================= PAYMENT OPTIONS =================
+        function initializePaymentOptions() {
+            const paymentCheckboxes = document.querySelectorAll('input[name="payment"]');
+            const payBtn = document.getElementById("payBtn");
+            if (!payBtn) return;
+            paymentCheckboxes.forEach(box => {
+                box.addEventListener("change", function() { paymentCheckboxes.forEach(cb => { if (cb !== this) cb.checked = false; }); });
+            });
+            payBtn.addEventListener("click", function(e) { e.preventDefault(); processAppointment(); });
+        }
+
+        // ================= APPOINTMENT PROCESSING =================
+        function processAppointment() {
+            const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+            const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+            if(!isLoggedIn || !currentUser) {
+                showStyledPopup("Please login to book appointment!", 'warning');
+                sessionStorage.setItem("redirectAfterLogin", "appointment.html");
+                setTimeout(() => { window.location.href = "login.html"; }, 1500);
+                return;
+            }
+            const name = document.getElementById("name")?.value.trim();
+            const email = currentUser.email;
+            const phone = currentUser.phone;
+            const age = document.getElementById("age")?.value.trim();
+            const date = document.getElementById("date")?.value;
+            const time = document.getElementById("time")?.value;
+            const genderElement = document.querySelector('input[name="gender"]:checked');
+            const gender = genderElement ? genderElement.value : '';
+            const serviceElement = document.querySelector(".custom-select");
+            const service = serviceElement ? serviceElement.value : '';
+            const serviceText = serviceElement ? serviceElement.options[serviceElement.selectedIndex]?.text : '';
+            const paymentElement = document.querySelector('input[name="payment"]:checked');
+            const payment = paymentElement ? paymentElement.value : '';
+            const feelings = Array.from(document.querySelectorAll('input[name="feeling"]:checked')).map(f => f.value);
+            const durationElement = document.querySelector('input[name="duration"]:checked');
+            const duration = durationElement ? durationElement.value : '';
+            if(!name || !email || !phone || !age || !date || !time || !gender || !service || !payment || !duration) {
+                showStyledPopup("Please fill all required fields!", 'warning');
+                return;
+            }
+            if(!/^[0-9]{10}$/.test(phone)) { showStyledPopup("Please enter a valid 10-digit phone number", 'warning'); return; }
+            if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showStyledPopup("Please enter a valid email address", 'warning'); return; }
+            const appointmentData = {
+                appointmentId: "APT" + Date.now() + Math.floor(Math.random() * 1000),
+                name, email, phone, age, date, time, gender: gender.toLowerCase(),
+                doctor: serviceText || service, service, payment,
+                feelings: feelings.join(', '), duration,
+                status: payment === "COD" ? "Pending" : "Confirmed",
+                paymentStatus: payment === "COD" ? "Pending" : "Paid",
+                created: new Date().toLocaleString(), timestamp: new Date().toISOString()
+            };
+            let appointments = JSON.parse(localStorage.getItem("appointments")) || [];
+            if (!Array.isArray(appointments)) appointments = [];
+            appointments.push(appointmentData);
+            localStorage.setItem("appointments", JSON.stringify(appointments));
+            localStorage.setItem("appointmentReceipt", JSON.stringify(appointmentData));
+            if(payment === "UPI" || payment === "Card") {
+                showStyledPopup("🎉 Payment Successful! Appointment Confirmed.", 'success', "AppointmentReceipt.html");
+            } else {
+                showStyledPopup("⚠️ Appointment Booked! Pay at Clinic.", 'info', "AppointmentReceipt.html");
+            }
+        }
+
+        // ================= SERVICE SELECT =================
+        function initializeServiceSelect() {
+            const select = document.getElementById('serviceSelect');
+            if (!select) return;
+            const serviceDesc = document.getElementById('serviceDescription');
+            const selectedService = document.getElementById('selectedService');
+            const serviceSuccess = document.getElementById('serviceSuccess');
+            const serviceError = document.getElementById('serviceError');
+            select.addEventListener('change', function() {
+                const value = this.value;
+                const selectedText = this.options[this.selectedIndex]?.text || '';
+                if (value) {
+                    this.classList.add('valid'); this.classList.remove('invalid');
+                    if (serviceDesc && selectedService) { serviceDesc.innerHTML = getServiceDescription(value, selectedText); selectedService.classList.add('show'); }
+                    if (serviceSuccess) { serviceSuccess.classList.add('show'); setTimeout(() => serviceSuccess.classList.remove('show'), 2000); }
+                    if (serviceError) serviceError.classList.remove('show');
+                } else {
+                    this.classList.remove('valid'); this.classList.add('invalid');
+                    if (serviceError) serviceError.classList.add('show');
+                    if (selectedService) selectedService.classList.remove('show');
+                }
+            });
+            select.addEventListener('blur', function() { if (!this.value) { this.classList.add('invalid'); if (serviceError) serviceError.classList.add('show'); } });
+        }
+
+        function getServiceDescription(value, selectedText) {
+            const descriptions = {
+                'echocardiography': '🫀 <strong>Echocardiography (2D ECHO)</strong> - Non-invasive ultrasound test. Duration: 30-45 mins.',
+                'ecg': '📈 <strong>ECG (Electrocardiogram)</strong> - Quick heart electrical recording. Duration: 10-15 mins.',
+                'tmt': '🏃 <strong>TMT (Treadmill Stress Test)</strong> - Exercise heart monitoring. Duration: 45-60 mins.',
+                'dobutamine': '💓 <strong>Dobutamine Stress Test</strong> - Pharmacological stress test.',
+                'holter': '📊 <strong>Holter Monitoring</strong> - 24-hour continuous ECG recording.',
+                'angiography': '🔧 <strong>Coronary Angiography</strong> - X-ray imaging of heart blood vessels.',
+                'angioplasty': '🔗 <strong>Angioplasty & Stenting</strong> - Procedure to open blocked arteries.',
+                'bypass': '🫀 <strong>Bypass Surgery Consult</strong> - Surgical consultation.',
+                'bp': '💉 <strong>Blood Pressure Management</strong> - Hypertension management.',
+                'cholesterol': '🧪 <strong>Cholesterol Management</strong> - Lipid profile analysis.',
+                'diabetes': '🍬 <strong>Diabetes & Heart Care</strong> - Integrated management.',
+                'heartfailure': '❤️ <strong>Heart Failure Management</strong> - Comprehensive care.',
+                'checkup': '🫀 <strong>Comprehensive Heart Checkup</strong> - Complete cardiac evaluation.',
+                'lifestyle': '🥗 <strong>Lifestyle & Diet Counseling</strong> - Personalized guidance.',
+                'stress': '🧘 <strong>Stress Management</strong> - Techniques for stress reduction.',
+                'valve': '🫀 <strong>Valve Disease Treatment</strong> - Evaluation and management.',
+                'congenital': '🫀 <strong>Congenital Heart Disease</strong> - Specialized care.',
+                'rehab': '❤️ <strong>Cardiac Rehabilitation</strong> - Post-treatment recovery.',
+                'medication': '💊 <strong>Medication Review</strong> - Comprehensive review.',
+                'sleep': '😴 <strong>Sleep Apnea & Heart</strong> - Sleep disorder evaluation.',
+                'postattack': '🫀 <strong>Post-Heart Attack Care</strong> - Follow-up care.',
+                'palpitation': '💓 <strong>Palpitation Evaluation</strong> - Irregular heartbeat assessment.'
+            };
+            return descriptions[value] || `📞 ${selectedText || 'Selected service'} - Contact clinic for more information.`;
+        }
+
+        // ================= GENDER SELECTOR =================
+        function initializeGenderSelector() {
+            const genderRadios = document.querySelectorAll('input[name="gender"]');
+            const genderDisplay = document.getElementById('genderDisplay');
+            const genderSummary = document.querySelector('.gender-summary');
+            genderRadios.forEach(radio => {
+                radio.addEventListener('change', function() {
+                    if (this.checked && genderDisplay && genderSummary) {
+                        const emoji = this.value === 'Male' ? '🤵🏻‍♂️' : this.value === 'Female' ? '👩🏻‍⚕️' : '🧑';
+                        genderDisplay.innerHTML = `${emoji} ${this.value}`;
+                        genderSummary.classList.add('show');
+                    }
+                });
+            });
+        }
+
+        // ================= APPOINTMENT SYSTEM =================
+        function initializeAppointmentSystem() {
+            highlightCurrentDay();
+            setupClinicStatus();
+            setupFormValidation();
+            setupDateRestrictions();
+            setInterval(setupClinicStatus, 60000);
+        }
+
+        function highlightCurrentDay() {
+            const days = ['SUNDAY', 'MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY'];
+            const today = new Date().getDay();
+            const currentDay = days[today];
+            const rows = document.querySelectorAll('#timingsTable tbody tr');
+            rows.forEach(row => { const dayCell = row.querySelector('td:first-child'); if (dayCell && dayCell.textContent.trim() === currentDay) row.classList.add('current-day'); });
+        }
+
+        function setupClinicStatus() {
+            const statusEl = document.getElementById('clinicStatus');
+            if (!statusEl) return;
+            const now = new Date();
+            const day = now.getDay();
+            const currentTime = now.getHours() * 60 + now.getMinutes();
+            let isOpen = false, statusText = '';
+            if (day === 0) {
+                if (currentTime >= 540 && currentTime <= 720) { isOpen = true; statusText = 'OPEN (Sunday Special: 9:00 AM - 12:00 PM)'; }
+                else { statusText = 'CLOSED (Sunday Evening Closed)'; }
+            } else {
+                const morningStart = 540, morningEnd = 780, eveningStart = 960, eveningEnd = 1350;
+                if ((currentTime >= morningStart && currentTime <= morningEnd) || (currentTime >= eveningStart && currentTime <= eveningEnd)) { isOpen = true; statusText = 'OPEN (Consultation hours)'; }
+                else { statusText = 'CLOSED (Check timings above)'; }
+            }
+            statusEl.innerHTML = isOpen ? '<span style="color: #28a745;">● ' + statusText + '</span>' : '<span style="color: #dc3545;">○ ' + statusText + '</span>';
+        }
+
+        function setupFormValidation() {
+            const form = document.getElementById('appointmentForm');
+            if (!form) return;
+            const inputs = form.querySelectorAll('input[required]');
+            inputs.forEach(input => { input.addEventListener('input', function() { validateInput(this); }); input.addEventListener('blur', function() { validateInput(this, true); }); });
+        }
+
+        function validateInput(input, showError = false) {
+            const errorElement = document.getElementById(input.id + 'Error');
+            if (!errorElement) return true;
+            let isValid = true, errorMessage = '';
+            if (input.id === 'name') { isValid = input.value.trim().length >= 2; errorMessage = 'Please enter a valid name (minimum 2 characters)'; }
+            else if (input.id === 'email') { isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input.value); errorMessage = 'Please enter a valid email address'; }
+            else if (input.id === 'phone') { isValid = /^[0-9]{10}$/.test(input.value); errorMessage = 'Please enter a valid 10-digit phone number'; }
+            else if (input.id === 'age') { const age = parseInt(input.value); isValid = age >= 1 && age <= 120; errorMessage = 'Please enter a valid age between 1 and 120'; }
+            else if (input.id === 'date') { isValid = input.value !== ''; if (isValid) { isValid = validateAppointmentDate(input.value); errorMessage = 'Appointments only available from tomorrow onwards'; } }
+            else if (input.id === 'time') { isValid = input.value !== ''; if (isValid) { isValid = validateAppointmentTime(input.value, document.getElementById('date')?.value); errorMessage = 'Please select a time within clinic hours'; } }
+            if (isValid) { input.classList.add('valid'); input.classList.remove('invalid'); if (errorElement) errorElement.classList.remove('show'); }
+            else { input.classList.remove('valid'); if (showError && errorElement) { input.classList.add('invalid'); errorElement.textContent = errorMessage; errorElement.classList.add('show'); } }
+            return isValid;
+        }
+
+        function validateAppointmentDate(dateString) { const selectedDate = new Date(dateString); const today = new Date(); today.setHours(0, 0, 0, 0); return selectedDate > today; }
+        function validateAppointmentTime(timeString, dateString) { if (!dateString) return false; const selectedDate = new Date(dateString); const day = selectedDate.getDay(); const [hours, minutes] = timeString.split(':').map(Number); const timeInMinutes = hours * 60 + minutes; if (day === 0) return timeInMinutes >= 540 && timeInMinutes <= 720; const morningStart = 540, morningEnd = 780, eveningStart = 960, eveningEnd = 1350; return (timeInMinutes >= morningStart && timeInMinutes <= morningEnd) || (timeInMinutes >= eveningStart && timeInMinutes <= eveningEnd); }
+        function setupDateRestrictions() { const dateInput = document.getElementById('date'); if (!dateInput) return; const tomorrow = new Date(); tomorrow.setDate(tomorrow.getDate() + 1); dateInput.min = `${tomorrow.getFullYear()}-${String(tomorrow.getMonth() + 1).padStart(2, '0')}-${String(tomorrow.getDate()).padStart(2, '0')}`; }
+
+        let topButton = document.getElementById("topBtn");
+        window.onscroll = function() { if (topButton) { if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) topButton.style.display = "block"; else topButton.style.display = "none"; } };
+        function scrollToTop() { window.scrollTo({ top: 0, behavior: "smooth" }); }
+        
+        function updateNavbarProfile() {
+            const loginLink = document.getElementById("loginLink");
+            const profileLink = document.getElementById("profileLink");
+            const profileInitial = document.getElementById("profileInitial");
+            const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+            const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+            if (loginLink && profileLink && profileInitial) {
+                if (isLoggedIn && currentUser) { loginLink.style.display = "none"; profileLink.style.display = "flex"; profileInitial.textContent = (currentUser.name || "U").charAt(0).toUpperCase(); }
+                else { loginLink.style.display = "inline-block"; profileLink.style.display = "none"; }
+            }
+        }
+        updateNavbarProfile();
+    </script>
+</body>
+</html>

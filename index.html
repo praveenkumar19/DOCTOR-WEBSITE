@@ -1,0 +1,1430 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Dr. PK Clinic - Find Doctors Online | Health Centers</title>
+    <link rel="icon" href="logoo.png" type="image/png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<style>
+    * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background-color: #ffffff;
+    color: #2c3e50;
+    padding-top: 70px;
+    line-height: 1.6;
+}
+
+/* ================= NAVBAR ================= */
+.top-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 70px;
+    background: linear-gradient(135deg, #1e4b7a, #154977);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 5%;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    z-index: 1000;
+}
+
+.nav-left {
+    display: flex;
+    align-items: center;
+}
+
+.nav-left .logo {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    color: white;
+    font-size: 22px;
+    font-weight: 700;
+}
+
+.nav-left img {
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+    filter: brightness(0) invert(1);
+}
+
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+
+.nav-right a {
+    color: rgba(255,255,255,0.9);
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 8px 12px;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.nav-right a:hover {
+    color: white;
+    background: rgba(255,255,255,0.1);
+    transform: translateY(-2px);
+}
+
+.nav-right a.active {
+    color: white;
+    background: rgba(255,255,255,0.2);
+}
+
+.nav-right a::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: -2px;
+    width: 0;
+    height: 3px;
+    background: #ffd700;
+    transition: all 0.3s ease;
+    transform: translateX(-50%);
+}
+
+.nav-right a:hover::after,
+.nav-right a.active::after {
+    width: 80%;
+}
+
+/* ================= PROFILE ICON ================= */
+.profile-icon {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, #ff0d00, #ffb347) !important;
+    border-radius: 50% !important;
+    padding: 0 !important;
+    font-weight: bold !important;
+    font-size: 18px !important;
+    color: #154977 !important;
+    text-transform: uppercase;
+    border: 2px solid white !important;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2) !important;
+    transition: all 0.3s ease !important;
+    animation: profilePulse 2s infinite;
+}
+
+.profile-icon:hover {
+    transform: scale(1.1) rotate(5deg) !important;
+    background: linear-gradient(135deg, #ffb347, #ffd700) !important;
+    box-shadow: 0 6px 15px rgba(255,215,0,0.4) !important;
+}
+
+.profile-icon span {
+    display: block;
+    line-height: 1;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+}
+
+@keyframes profilePulse {
+    0%, 100% { box-shadow: 0 4px 10px rgba(255,215,0,0.3); }
+    50% { box-shadow: 0 6px 15px rgba(255,215,0,0.6); }
+}
+
+/* ================= BUTTON STYLES ================= */
+.button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 40px auto;
+    --primary: #ff5569;
+    --radius: 80px;
+    cursor: pointer;
+    border-radius: var(--radius);
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
+    border: none;
+    box-shadow: 0 0.5px 0.5px 1px rgba(255, 255, 255, 0.2),
+        0 8px 16px rgba(0, 0, 0, 0.2), 0 3px 4px 0px rgba(0, 0, 0, 0.05);
+    position: relative;
+    transition: all 0.3s ease;
+    width: 240px;
+    padding: 16px;
+    height: 54px;
+    font-family: "Galano Grotesque", Poppins, Montserrat, sans-serif;
+    font-style: normal;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.button:hover {
+    transform: scale(1.02);
+    box-shadow: 0 0 1px 2px rgba(255, 255, 255, 0.3),
+        0 12px 24px rgba(0, 0, 0, 0.3), 0 8px 3px -3px rgba(0, 0, 0, 0.04);
+}
+
+.button:active {
+    transform: scale(1);
+    box-shadow: 0 0 1px 2px rgba(255, 255, 255, 0.3),
+        0 8px 3px -3px rgba(0, 0, 0, 0.2);
+}
+
+.button:after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: var(--radius);
+    border: 2px solid transparent;
+    background: linear-gradient(var(--neutral-1), var(--neutral-2)) padding-box,
+        linear-gradient(to bottom, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.45)) border-box;
+    z-index: 0;
+    transition: all 0.4s ease;
+}
+
+.button:hover::after {
+    transform: scale(1.05, 1.1);
+    box-shadow: inset 0 -1px 2px 0 rgba(255, 255, 255, 1);
+}
+
+.button::before {
+    content: "";
+    inset: 5px 5px 5px 5px;
+    position: absolute;
+    background: linear-gradient(to top, var(--neutral-1), var(--neutral-2));
+    border-radius: 24px;
+    filter: blur(0.5px);
+    z-index: 2;
+}
+
+.outline {
+    position: absolute;
+    border-radius: inherit;
+    overflow: hidden;
+    z-index: 1;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    inset: -2px -3px;
+}
+
+.outline::before {
+    content: "";
+    position: absolute;
+    inset: -100%;
+    background: conic-gradient(
+        from 180deg,
+        transparent 60%,
+        white 80%,
+        transparent 100%
+    );
+    animation: spin 2s linear infinite;
+    animation-play-state: paused;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.button:hover .outline {
+    opacity: 1;
+}
+
+.button:hover .outline::before {
+    animation-play-state: running;
+}
+
+.state {
+    padding-left: 23px;
+    z-index: 2;
+    display: flex;
+    position: relative;
+}
+
+.state p {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.state p span {
+    display: block;
+    opacity: 0;
+    animation: slideDown 0.8s ease forwards calc(var(--i) * 0.03s);
+}
+
+.button:hover p span {
+    opacity: 1;
+    animation: wave 0.5s ease forwards calc(var(--i) * 0.02s);
+}
+
+.state .icon {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    transform: scale(1.1);
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.state--default span:nth-child(4) {
+    margin-right: 4px;
+}
+
+.state--sent {
+    display: none;
+}
+
+.button:focus .state--default {
+    position: absolute;
+}
+
+.button:focus .state--sent {
+    display: flex;
+}
+
+@keyframes wave {
+    30% {
+        opacity: 1;
+        transform: translateY(3px) translateX(0) rotate(0);
+    }
+    50% {
+        opacity: 1;
+        transform: translateY(-2px) translateX(0) rotate(0);
+        color: var(--primary);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) translateX(0) rotate(0);
+    }
+}
+
+@keyframes slideDown {
+    0% {
+        opacity: 0;
+        transform: translateY(-16px) translateX(4px) rotate(-90deg);
+        color: var(--primary);
+        filter: blur(5px);
+    }
+    30% {
+        opacity: 1;
+        transform: translateY(3px) translateX(0) rotate(0);
+        filter: blur(0);
+    }
+    50% {
+        opacity: 1;
+        transform: translateY(-2px) translateX(0) rotate(0);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) translateX(0) rotate(0);
+    }
+}
+
+/* ================= CONTENT ================= */
+.content {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.content img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 160px;
+}
+
+/* ================= SERVICES SECTION ================= */
+.services-section {
+    min-height: auto;
+    background: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+}
+
+.services-container {
+    display: flex;
+    gap: 20px;
+    max-width: 1000px;
+    width: 100%;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.service-card {
+    background: rgba(255, 255, 255, 0.814);
+    width: 220px;
+    padding: 28px 20px;
+    border-radius: 24px;
+    text-align: center;
+    box-shadow: 0 5px 12px rgba(0,0,0,0.12);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.service-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 18px rgba(0,0,0,0.15);
+}
+
+.service-icon {
+    width: 120px;
+    margin-bottom: 16px;
+    transition: transform 0.4s ease;
+    animation: heartbeat 1s infinite;
+}
+
+@keyframes heartbeat {
+    0% { transform: scale(1); }
+    15% { transform: scale(1.15); }
+    30% { transform: scale(1); }
+    45% { transform: scale(1.15); }
+    60% { transform: scale(1); }
+    100% { transform: scale(1); }
+}
+
+.service-card h3 {
+    background: linear-gradient(135deg, #fffb13, #ffffff);
+    font-size: 1.1rem;
+    margin-bottom: 12px;
+}
+
+.service-card p {
+    font-size: 0.9rem;
+    color: #000000;
+    line-height: 1.5;
+    margin-bottom: 20px;
+}
+
+/* ================= QUICK SERVICES ================= */
+.quick-services {
+    padding: 40px 20px;
+    background: linear-gradient(135deg, #f5f8fb, #ffffff);
+}
+
+.quick-services-container {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    max-width: 1000px;
+    margin: 0 auto;
+    flex-wrap: wrap;
+}
+
+.quick-service-card {
+    background: white;
+    padding: 25px 20px;
+    border-radius: 12px;
+    text-align: center;
+    flex: 1;
+    min-width: 200px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+    transition: transform 0.3s;
+}
+
+.quick-service-card:hover {
+    transform: translateY(-5px);
+}
+
+.quick-service-card i {
+    font-size: 32px;
+    color: #154977;
+    margin-bottom: 15px;
+}
+
+.quick-service-card h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.quick-service-card p {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 10px;
+}
+
+.quick-service-card strong {
+    color: #C83438;
+    font-size: 14px;
+}
+
+/* ================= CONSULT SECTION ================= */
+.consult-section {
+    padding: 50px 20px;
+    text-align: center;
+    background: white;
+}
+
+.consult-section h2 {
+    font-size: 28px;
+    color: #154977;
+    margin-bottom: 10px;
+}
+
+.consult-subtitle {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 30px;
+}
+
+.specialties-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    max-width: 1000px;
+    margin: 0 auto 30px;
+}
+
+.specialty-item {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 10px;
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.3s, box-shadow 0.3s;
+    border: 1px solid #eee;
+    text-align: center;
+}
+
+.specialty-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    border-color: #154977;
+}
+
+.specialty-item i {
+    font-size: 30px;
+    color: #154977;
+    margin-bottom: 10px;
+}
+
+.specialty-item span {
+    display: block;
+    font-size: 14px;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+.specialty-item small {
+    color: #C83438;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.view-all-btn {
+    display: inline-block;
+    padding: 10px 25px;
+    background: transparent;
+    border: 2px solid #154977;
+    color: #154977;
+    text-decoration: none;
+    border-radius: 25px;
+    font-weight: bold;
+    transition: all 0.3s;
+}
+
+.view-all-btn:hover {
+    background: #154977;
+    color: white;
+}
+
+/* ================= APPOINTMENT SECTION ================= */
+.appointment-section {
+    padding: 50px 20px;
+    background: #f5f8fb;
+    text-align: center;
+}
+
+.appointment-section h2 {
+    font-size: 28px;
+    color: #154977;
+    margin-bottom: 10px;
+}
+
+.appointment-section p {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 30px;
+}
+
+.specialties-grid {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    max-width: 1000px;
+    margin: 0 auto;
+    flex-wrap: wrap;
+}
+
+.specialty-card {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    text-align: center;
+    flex: 1;
+    min-width: 200px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+}
+
+.specialty-card i {
+    font-size: 36px;
+    color: #154977;
+    margin-bottom: 15px;
+}
+
+.specialty-card h3 {
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.specialty-card p {
+    font-size: 14px;
+    color: #666;
+    line-height: 1.5;
+}
+
+/* ================= ARTICLES SECTION ================= */
+.articles-section {
+    padding: 50px 20px;
+    text-align: center;
+    background: white;
+}
+
+.articles-section h2 {
+    font-size: 28px;
+    color: #154977;
+    margin-bottom: 10px;
+}
+
+.articles-section p {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 30px;
+}
+
+.articles-container {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    max-width: 800px;
+    margin: 0 auto 30px;
+    flex-wrap: wrap;
+}
+
+.article-card {
+    background: #f8f9fa;
+    padding: 25px;
+    border-radius: 12px;
+    text-align: left;
+    flex: 1;
+    min-width: 300px;
+    border-left: 4px solid #154977;
+}
+
+.article-category {
+    font-size: 12px;
+    color: #C83438;
+    font-weight: bold;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+}
+
+.article-card h3 {
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 10px;
+    line-height: 1.4;
+}
+
+.article-author {
+    font-size: 14px;
+    color: #666;
+}
+
+/* ================= BACK TO TOP BUTTON ================= */
+#topBtn {
+    position: fixed;
+    bottom: 40px;
+    right: 40px;
+    width: 55px;
+    height: 55px;
+    background: #154977;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    font-size: 24px;
+    cursor: pointer;
+    display: none;
+    box-shadow: 0 10px 25px rgba(21, 73, 119, 0.4);
+    transition: all 0.3s ease;
+    z-index: 99;
+}
+
+#topBtn:hover {
+    background: #1e5a9c;
+    transform: translateY(-5px) scale(1.1);
+}
+
+/* ================= FOOTER ================= */
+.site-footer {
+    background: #0a1a2a;
+    color: #a0b8cc;
+    padding: 60px 0 0;
+    margin-top: 60px;
+}
+
+.footer-container {
+    max-width: 1300px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 40px;
+    padding: 0 30px;
+}
+
+.footer-col h3 {
+    color: white;
+    font-size: 18px;
+    margin-bottom: 25px;
+    position: relative;
+    padding-bottom: 10px;
+}
+
+.footer-col h3::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 40px;
+    height: 3px;
+    background: #4a90e2;
+}
+
+.footer-col p, .footer-col ul {
+    font-size: 14px;
+    line-height: 1.8;
+    margin-bottom: 20px;
+}
+
+.footer-col ul {
+    list-style: none;
+}
+
+.footer-col ul li {
+    margin-bottom: 12px;
+}
+
+.footer-col ul li a {
+    color: #a0b8cc;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.footer-col ul li a:hover {
+    color: white;
+    padding-left: 8px;
+}
+
+.social-icons {
+    display: flex;
+    gap: 10px;
+    margin-top: 12px;
+}
+
+.social-icons a {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.12);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 14px;
+    transition: 0.3s ease;
+}
+
+.social-icons a.facebook { background: linear-gradient(135deg, #1877f2); }
+.social-icons a.youtube { background: linear-gradient(135deg, #ff0000); }
+.social-icons a.linkedin { background: linear-gradient(#0937d1); }
+.social-icons a.instagram { background: radial-gradient(circle at 30% 110%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%); }
+
+.watch-live, .appointment {
+    display: inline-block;
+    padding: 12px 25px;
+    border-radius: 40px;
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    margin: 5px 10px 5px 0;
+    transition: all 0.3s ease;
+}
+
+.watch-live { background: #e74c3c; }
+.watch-live:hover { background: #c0392b; transform: translateY(-3px); }
+
+.appointment { background: #154977; }
+.appointment:hover { background: #1e5a9c; transform: translateY(-3px); }
+
+.store-buttons {
+    display: flex;
+    gap: 15px;
+    margin: 20px 0;
+    flex-wrap: wrap;
+}
+
+.store-buttons a {
+    display: inline-block;
+    transition: all 0.3s ease;
+}
+
+.store-buttons a:hover { transform: translateY(-5px); }
+.store-buttons img { height: 45px; width: auto; }
+
+.footer-bottom {
+    background: #05111f;
+    text-align: center;
+    padding: 20px;
+    margin-top: 40px;
+    color: #a0b8cc;
+    font-size: 14px;
+}
+
+/* ================= LOGOUT POPUP ================= */
+.logout-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(10px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 99999;
+    animation: fadeIn 0.3s ease;
+}
+
+.logout-popup.fade-out {
+    animation: fadeOut 0.3s ease forwards;
+}
+
+.popup-content {
+    background: linear-gradient(135deg, #ffffff, #f5f7fa);
+    padding: 40px 50px;
+    border-radius: 30px;
+    box-shadow: 0 30px 60px rgba(21, 73, 119, 0.3);
+    text-align: center;
+    max-width: 450px;
+    width: 90%;
+    transform: scale(0.9);
+    animation: scaleIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.popup-content::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 6px;
+    background: linear-gradient(90deg, #154977, #4CAF50, #2196F3, #154977);
+    background-size: 300% 100%;
+    animation: gradientMove 3s linear infinite;
+}
+
+.popup-icon {
+    background: linear-gradient(135deg, #4CAF50, #45a049);
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 25px;
+    animation: bounceIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-shadow: 0 10px 20px rgba(76, 175, 80, 0.3);
+}
+
+.popup-icon i { font-size: 50px; color: white; }
+
+.popup-content h2 {
+    color: #154977;
+    font-size: 28px;
+    margin-bottom: 15px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    animation: slideUp 0.5s ease;
+}
+
+.popup-content p {
+    color: #4a5568;
+    font-size: 18px;
+    margin: 10px 0;
+    line-height: 1.6;
+    animation: slideUp 0.5s ease 0.1s both;
+}
+
+.popup-content .redirect-text {
+    color: #718096;
+    font-size: 16px;
+    margin-top: 20px;
+    font-weight: 500;
+}
+
+.popup-content .redirect-text span {
+    color: #154977;
+    font-weight: 700;
+    font-size: 20px;
+    display: inline-block;
+    min-width: 30px;
+}
+
+.popup-progress {
+    width: 100%;
+    height: 8px;
+    background: #e2e8f0;
+    border-radius: 10px;
+    margin-top: 25px;
+    overflow: hidden;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+    animation: slideUp 0.5s ease 0.2s both;
+}
+
+.progress-bar {
+    width: 0%;
+    height: 100%;
+    background: linear-gradient(90deg, #154977, #4CAF50);
+    border-radius: 10px;
+    animation: progress 2s linear forwards;
+    box-shadow: 0 0 10px rgba(76, 175, 80, 0.5);
+}
+
+/* ================= ANIMATIONS ================= */
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-3px); }
+}
+
+@keyframes slideIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes typing {
+    0%, 60%, 100% { opacity: 0.4; transform: translateY(0); }
+    30% { opacity: 1; transform: translateY(-3px); }
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes fadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+
+@keyframes scaleIn {
+    from { transform: scale(0.5); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+@keyframes bounceIn {
+    0% { transform: scale(0.3); opacity: 0; }
+    50% { transform: scale(1.2); }
+    80% { transform: scale(0.9); }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes slideUp {
+    from { transform: translateY(20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes progress {
+    from { width: 0%; }
+    to { width: 100%; }
+}
+
+@keyframes gradientMove {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* ================= WOW ANIMATIONS ================= */
+.wow { visibility: hidden; }
+
+.fadeInUp {
+    animation-name: fadeInUp;
+    animation-duration: 1s;
+    animation-fill-mode: both;
+}
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translate3d(0, 30px, 0); }
+    to { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+
+.zoomIn {
+    animation-name: zoomIn;
+    animation-duration: 1s;
+    animation-fill-mode: both;
+}
+
+@keyframes zoomIn {
+    from { opacity: 0; transform: scale3d(0.3, 0.3, 0.3); }
+    50% { opacity: 1; }
+}
+
+/* ================= RESPONSIVE DESIGN ================= */
+@media (max-width: 1200px) {
+    .footer-container { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 768px) {
+    body { padding-top: 120px; }
+    
+    .top-nav {
+        height: auto;
+        padding: 15px 20px;
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .nav-right {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+    }
+    
+    .nav-right a {
+        font-size: 14px;
+        padding: 6px 10px;
+    }
+    
+    .footer-container { grid-template-columns: 1fr; text-align: center; }
+    .footer-col h3::after { left: 50%; transform: translateX(-50%); }
+    
+    .specialties-container { grid-template-columns: repeat(2, 1fr) !important; }
+    .quick-service-card { min-width: 150px; }
+    .specialty-card { min-width: 150px; }
+}
+
+@media (max-width: 480px) {
+    #topBtn { bottom: 20px; right: 20px; width: 45px; height: 45px; font-size: 20px; }
+    .quick-service-card { min-width: 100%; }
+    .specialties-container { grid-template-columns: 1fr !important; }
+    
+    .popup-content { padding: 25px 25px; }
+    .popup-icon { width: 60px; height: 60px; margin-bottom: 20px; }
+    .popup-icon i { font-size: 35px; }
+    .popup-content h2 { font-size: 22px; }
+    .popup-content p { font-size: 15px; }
+}
+</style>
+<body>
+    <!-- NAVBAR -->
+    <nav class="top-nav">
+        <div class="nav-left">
+            <div class="logo">
+                <img src="logoo.png" width="60">
+                Dr. PK Clinic
+            </div>
+        </div>
+        <div class="nav-right">
+            <a href="index.html">Home</a>
+            <a href="appointment.html">Appointment</a>
+            <a href="about.html">About</a>
+            <a href="services.html">Services</a>
+            <a href="testimonials.html">Testimonials</a>
+            <a href="contact.html">Contact</a>
+            <a href="shopping.html">Shopping</a>
+            <a href="login.html" id="loginLink">Login</a>
+            <a href="profile.html" id="profileLink" style="display: none;" class="profile-icon">
+                <span id="profileInitial"></span>
+            </a>
+        </div>
+    </nav>
+
+    <br><br><br>
+
+    <!-- HERO SECTION -->
+    <div class="content">
+        <img src="logoo.png" alt="Clinic Logo" width="200">
+        
+        <h1>Dr. Praveen Kumar Heart Cardiology Clinic</h1>
+        <p style="color: #154977; font-size: 18px; margin-bottom: 10px;">Find Doctors Online | Health Centers | Surgeries</p>
+        <p style="color: #666; margin-bottom: 20px;">Search doctors, clinics, hospitals, etc.</p>
+
+        <a href="appointment.html" class="button">
+            <div class="outline"></div>
+            <div class="state state--default">
+                <div class="icon">
+                    <svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <g style="filter: url(#shadow)">
+                            <path d="M14.2199 21.63C13.0399 21.63 11.3699 20.8 10.0499 16.83L9.32988 14.67L7.16988 13.95C3.20988 12.63 2.37988 10.96 2.37988 9.78001C2.37988 8.61001 3.20988 6.93001 7.16988 5.60001L15.6599 2.77001C17.7799 2.06001 19.5499 2.27001 20.6399 3.35001C21.7299 4.43001 21.9399 6.21001 21.2299 8.33001L18.3999 16.82C17.0699 20.8 15.3999 21.63 14.2199 21.63ZM7.63988 7.03001C4.85988 7.96001 3.86988 9.06001 3.86988 9.78001C3.86988 10.5 4.85988 11.6 7.63988 12.52L10.1599 13.36C10.3799 13.43 10.5599 13.61 10.6299 13.83L11.4699 16.35C12.3899 19.13 13.4999 20.12 14.2199 20.12C14.9399 20.12 16.0399 19.13 16.9699 16.35L19.7999 7.86001C20.3099 6.32001 20.2199 5.06001 19.5699 4.41001C18.9199 3.76001 17.6599 3.68001 16.1299 4.19001L7.63988 7.03001Z" fill="currentColor"/>
+                        </g>
+                        <defs>
+                            <filter id="shadow">
+                                <fedropshadow dx="0" dy="1" stdDeviation="0.6" flood-opacity="0.5"></fedropshadow>
+                            </filter>
+                        </defs>
+                    </svg>
+                </div>
+                <p>
+                    <span style="--i:0">B</span><span style="--i:1">o</span><span style="--i:2">o</span><span style="--i:3">k</span>
+                    <span style="--i:4">&nbsp;</span>
+                    <span style="--i:5">A</span><span style="--i:6">p</span><span style="--i:7">p</span><span style="--i:8">o</span>
+                    <span style="--i:9">i</span><span style="--i:10">n</span><span style="--i:11">t</span><span style="--i:12">m</span>
+                    <span style="--i:13">e</span><span style="--i:14">n</span><span style="--i:15">t</span>
+                </p>
+            </div>
+            <div class="state state--sent">
+                <div class="icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" height="1em" width="1em" stroke-width="0.5px" stroke="black">
+                        <path fill="currentColor" d="M10.5795 15.5801C10.3795 15.5801 10.1895 15.5001 10.0495 15.3601L7.21945 12.5301C6.92945 12.2401 6.92945 11.7601 7.21945 11.4701C7.50945 11.1801 7.98945 11.1801 8.27945 11.4701L10.5795 13.7701L15.7195 8.6301C16.0095 8.3401 16.4895 8.3401 16.7795 8.6301C17.0695 8.9201 17.0695 9.4001 16.7795 9.6901L11.1095 15.3601C10.9695 15.5001 10.7795 15.5801 10.5795 15.5801Z"/>
+                    </svg>
+                </div>
+                <p>
+                    <span style="--i:0">S</span><span style="--i:1">e</span><span style="--i:2">n</span><span style="--i:3">t</span>
+                </p>
+            </div>
+        </a>
+    </div>
+
+    <!-- QUICK SERVICE CARDS -->
+    <section class="quick-services wow fadeInUp" data-wow-delay="0.1s">
+        <div class="quick-services-container">
+            <div class="quick-service-card">
+                <i class="fas fa-video"></i>
+                <h3>Instant Video Consultation</h3>
+                <p>Connect with a doctor online</p>
+                <strong>Contact: 9876543210</strong>
+            </div>
+
+            <div class="quick-service-card">
+                <i class="fas fa-map-marker-alt"></i>
+                <h3>Find Doctors Near You</h3>
+                <p>Confident appointments</p>
+            </div>
+
+            <div class="quick-service-card">
+                <i class="fas fa-flask"></i>
+                <h3>Lab Tests</h3>
+                <p>Sell and visit local labs</p>
+            </div>
+
+            <div class="quick-service-card">
+                <i class="fas fa-syringe"></i>
+                <h3>Surgeries</h3>
+                <p>Sell and visit surgery centers</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONSULT TOP DOCTORS SECTION -->
+    <section class="consult-section wow fadeInUp" data-wow-delay="0.2s">
+        <h2>Consult top doctors online for any health concern</h2>
+        <p class="consult-subtitle">Private online consultations with verified doctors in all specialties</p>
+        
+        <div class="specialties-container" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; max-width: 1000px; margin: 0 auto 30px;">
+            <a href="appointment.html" class="specialty-item">
+                <i class="fas fa-venus"></i>
+                <span>Period Doubts or Pregnancy?</span>
+                <small>CONSULT NOW</small>
+            </a>
+            <a href="appointment.html" class="specialty-item">
+                <i class="fas fa-head-side-cough"></i>
+                <span>Acute, simple or short illness?</span>
+                <small>CONSULT NOW</small>
+            </a>
+            <a href="appointment.html" class="specialty-item">
+                <i class="fas fa-male"></i>
+                <span>Performance Issues in bed</span>
+                <small>CONSULT NOW</small>
+            </a>
+            <a href="appointment.html" class="specialty-item">
+                <i class="fas fa-thermometer"></i>
+                <span>Cold, cough or fever?</span>
+                <small>CONSULT NOW</small>
+            </a>
+            <a href="appointment.html" class="specialty-item">
+                <i class="fas fa-child"></i>
+                <span>Child not feeling well?</span>
+                <small>CONSULT NOW</small>
+            </a>
+            <a href="appointment.html" class="specialty-item">
+                <i class="fas fa-brain"></i>
+                <span>Depression or anxiety?</span>
+                <small>CONSULT NOW</small>
+            </a>
+        </div>
+
+        <a href="services.html" class="view-all-btn">View All Specialties</a>
+    </section>
+
+    <!-- BOOK APPOINTMENT SECTION -->
+    <section class="appointment-section wow fadeInUp" data-wow-delay="0.3s">
+        <h2>Book an appointment for an in-clinic consultation</h2>
+        <p>Find experienced doctors across all specialties</p>
+        
+        <div class="specialties-grid">
+            <div class="specialty-card">
+                <i class="fas fa-tooth"></i>
+                <h3>Dentist</h3>
+                <p>Touching tooth? Schedule a dental checkup</p>
+            </div>
+            <div class="specialty-card">
+                <i class="fas fa-female"></i>
+                <h3>Gynecologist</h3>
+                <p>Examine for women's health, pregnancy and other illnesses</p>
+            </div>
+            <div class="specialty-card">
+                <i class="fas fa-utensils"></i>
+                <h3>Dietician/Nutritionist</h3>
+                <p>Get guidance on eating right, weight management</p>
+            </div>
+            <div class="specialty-card">
+                <i class="fas fa-bone"></i>
+                <h3>Physiotherapist</h3>
+                <p>Guide a muscle? Get treatment by a trained professional</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ARTICLES SECTION -->
+    <section class="articles-section wow fadeInUp" data-wow-delay="0.4s">
+        <h2>Read top articles from health experts</h2>
+        <p>Health articles that help you understand your health needs</p>
+        
+        <div class="articles-container">
+            <div class="article-card">
+                <span class="article-category">CONVENIENTS</span>
+                <h3>12 Coronavirus Myths and Facts That You Should Be Aware Of</h3>
+                <p class="article-author">Dr. Dinesh Bhag</p>
+            </div>
+            <div class="article-card">
+                <span class="article-category">VITAMINS AND SUPPLEMENTS</span>
+                <h3>Eating Right to Build Immunity Against Cold and Viral Infections</h3>
+                <p class="article-author">Dr. Harsha Singh</p>
+            </div>
+        </div>
+        
+        <a href="artical.html" class="view-all-btn">See all articles</a>
+    </section>
+
+    <button id="topBtn" onclick="scrollToTop()">⬆</button>
+
+    <!-- SERVICES SECTION -->
+    <section class="services-section wow fadeInUp" data-wow-delay="0.6s">
+        <div class="services-container">
+            <div class="service-card">
+                <img src="1st.png" class="service-icon" alt="Saaol Natural Bypass">
+                <h3>Saaol Natural Bypass (EECP)</h3>
+                <p>This non-invasive therapy improves heart blood flow, enhances oxygen delivery, reduces chest pain and breathlessness, and improves heart function naturally.</p>
+            </div>
+            <div class="service-card">
+                <img src="2nd.png" class="service-icon" alt="Detox Therapy">
+                <h3>Detox Therapy</h3>
+                <p>Detox therapy cleanses toxins, improves circulation, reduces inflammation, and boosts heart vitality, supporting overall cardiovascular health naturally.</p>
+            </div>
+            <div class="service-card">
+                <img src="3rd.png" class="service-icon" alt="Lifestyle Modification">
+                <h3>Lifestyle Modification</h3>
+                <p>We help you adopt healthy habits like stress management, exercise, and sleep to prevent and reverse heart disease and improve life quality.</p>
+            </div>
+            <div class="service-card">
+                <img src="4th.png" class="service-icon" alt="Zero Oil Cooking">
+                <h3>Zero Oil Cooking</h3>
+                <p>Enjoy delicious oil-free meals that support heart health, control cholesterol, manage weight, and maintain wellness naturally.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-col">
+                <h3>About Us</h3>
+                <p>Dr Praveen Kumar A – Expert in lifestyle disease reversal, an acclaimed author, speaker, and specialist in <strong>natural health</strong>. He has helped a large number of patients of different diseases and reversed it through natural healing, researcher of medicine, launched own natural products for <strong>diabetes reversal</strong>, nutrition and <strong>drug-free healing</strong>.</p>
+                <a href="about.html" class="footer-link">For More Details</a>
+                <h4>Find Us On:</h4>
+                <div class="social-icons">
+                    <a href="https://www.facebook.com/profile.php?id=100053479690246" class="facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.youtube.com/@move_with_praveen" class="youtube"><i class="fab fa-youtube"></i></a>
+                    <a href="https://www.linkedin.com/in/praveen-kumar-792b8a395/" class="linkedin"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="https://www.instagram.com/praveeneyy19/" class="instagram"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#">Biswas E-Magazine</a></li>
+                    <li><a href="#">Download Free Ebook</a></li>
+                    <li><a href="#">Coronakaal.tv</a></li>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Gallery</a></li>
+                    <li><a href="#">Blogs</a></li>
+                    <li><a href="#">Credentials</a></li>
+                    <li><a href="#">Research Papers</a></li>
+                    <li><a href="#">Refund & Cancellation Policy</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Shipping Policy</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Join Dr. PK Clinic</h3>
+                <p>To be a part of Dr. Praveen Kumar's next LIVE event</p>
+                <a href="https://youtu.be/28CYhgjrBLA?si=qzg48QoZ8obTjWdv" class="watch-live">CARDIOVASCULAR SYSTEM OVERVIEW</a>
+                <a href="appointment.html" class="appointment">Book Appointment</a>
+            </div>
+            <div class="footer">
+                <h3>Download App</h3>
+                <div class="store-buttons">
+                    <a href="https://play.google.com/store/apps/details?id=com.needstreet.health.hppatient">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Get it on Google Play">
+                    </a>
+                    <a href="https://apps.apple.com/in/app/continuouscare-health-app/id674531353">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/3/3c/Download_on_the_App_Store_Badge.svg" alt="Download on the App Store">
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p class="text-white">&copy; 2026 Dr. PK Clinic. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // ========== BASIC FUNCTIONS ==========
+        
+        function scrollToTop() { window.scrollTo({ top: 0, behavior: "smooth" }); }
+        function goToAppointmentPage() { window.location.href = 'appointment.html'; }
+        
+        // Make functions global
+        window.scrollToTop = scrollToTop;
+        window.goToAppointmentPage = goToAppointmentPage;
+        
+        // Logout Popup
+        function showLogoutPopup() {
+            const existingPopup = document.querySelector('.logout-popup');
+            if (existingPopup) existingPopup.remove();
+            const popup = document.createElement('div');
+            popup.className = 'logout-popup';
+            popup.innerHTML = `<div class="popup-content"><div class="popup-icon"><i class="fas fa-check-circle"></i></div><h2>Successfully Logged Out!</h2><p>You have been logged out of your account.</p><p class="redirect-text">Redirecting to login page in <span id="countdown">2</span> seconds...</p><div class="popup-progress"><div class="progress-bar"></div></div></div>`;
+            document.body.appendChild(popup);
+            document.body.style.overflow = 'hidden';
+            let seconds = 2;
+            const countdownElement = document.getElementById('countdown');
+            const countdownInterval = setInterval(() => { seconds--; if (countdownElement) countdownElement.textContent = seconds; if (seconds <= 0) clearInterval(countdownInterval); }, 1000);
+            setTimeout(() => {
+                popup.classList.add('fade-out');
+                document.body.style.overflow = '';
+                setTimeout(() => { popup.remove(); window.location.href = "login.html"; }, 300);
+            }, 2000);
+        }
+        
+        // DOM Ready
+        document.addEventListener("DOMContentLoaded", function() {
+            // Login/Logout
+            const loginLink = document.getElementById("loginLink");
+            if (loginLink) {
+                const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+                if (isLoggedIn) {
+                    loginLink.textContent = "Logout";
+                    loginLink.href = "#";
+                    const newLoginLink = loginLink.cloneNode(true);
+                    loginLink.parentNode.replaceChild(newLoginLink, loginLink);
+                    newLoginLink.addEventListener("click", function(e) {
+                        e.preventDefault();
+                        localStorage.removeItem("isLoggedIn");
+                        localStorage.removeItem("savedCart");
+                        sessionStorage.removeItem("isLoggedIn");
+                        sessionStorage.removeItem("redirectAfterLogin");
+                        showLogoutPopup();
+                    });
+                } else {
+                    loginLink.textContent = "Login";
+                    loginLink.href = "login.html";
+                }
+            }
+            
+            // Active page highlighting
+            const navLinks = document.querySelectorAll(".nav-right a");
+            const currentPage = window.location.pathname.split("/").pop();
+            navLinks.forEach(link => {
+                const linkPage = link.getAttribute("href");
+                if (linkPage === currentPage) link.classList.add("active");
+            });
+            
+            // Back to top
+            const topButton = document.getElementById("topBtn");
+            window.onscroll = function() {
+                if (topButton) {
+                    if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+                        topButton.style.display = "block";
+                    } else {
+                        topButton.style.display = "none";
+                    }
+                }
+            };
+            
+            if (typeof WOW !== 'undefined') new WOW().init();
+            updateNavbarProfile();
+        });
+        
+        function updateNavbarProfile() {
+            const loginLink = document.getElementById("loginLink");
+            const profileLink = document.getElementById("profileLink");
+            const profileInitial = document.getElementById("profileInitial");
+            const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+            const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+            if (loginLink && profileLink && profileInitial) {
+                if (isLoggedIn && currentUser) {
+                    loginLink.style.display = "none";
+                    profileLink.style.display = "flex";
+                    const initial = (currentUser.name || "U").charAt(0).toUpperCase();
+                    profileInitial.textContent = initial;
+                } else {
+                    loginLink.style.display = "inline-block";
+                    profileLink.style.display = "none";
+                }
+            }
+        }
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js"></script>
+</body>
+</html>
+
+
+

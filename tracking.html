@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Order Tracking - Dr. PK Clinic</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(135deg, #154977, #1a5a9c);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            width: 850px;
+            max-width: 100%;
+            background: white;
+            padding: 45px 40px;
+            border-radius: 25px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.2);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            animation: slideUp 0.5s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 8px;
+            background: linear-gradient(90deg, #154977, #C83438, #154977);
+        }
+
+        h2 {
+            color: #154977;
+            font-size: 32px;
+            margin-bottom: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: #C83438;
+            border-radius: 2px;
+        }
+
+        h2 i {
+            color: #C83438;
+            font-size: 32px;
+        }
+
+        /* Steps Container */
+        .steps-container {
+            margin: 40px 0 20px;
+            padding: 0 10px;
+        }
+
+        .steps {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+            margin-bottom: 50px;
+        }
+
+        .steps::before {
+            content: "";
+            position: absolute;
+            top: 25px;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: #e0e7f0;
+            border-radius: 4px;
+            z-index: 1;
+        }
+
+        .progress {
+            position: absolute;
+            top: 25px;
+            left: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #27ae60, #2ecc71);
+            border-radius: 4px;
+            width: 0%;
+            transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 2;
+            box-shadow: 0 2px 8px rgba(39, 174, 96, 0.3);
+        }
+
+        .step-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            z-index: 3;
+            flex: 1;
+        }
+
+        .step {
+            width: 54px;
+            height: 54px;
+            background: #e0e7f0;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 3;
+            color: white;
+            font-weight: bold;
+            font-size: 22px;
+            transition: all 0.3s ease;
+            border: 4px solid white;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            margin-bottom: 12px;
+        }
+
+        .step.active {
+            background: linear-gradient(135deg, #27ae60, #2ecc71);
+            transform: scale(1.1);
+            box-shadow: 0 8px 20px rgba(39, 174, 96, 0.4);
+            animation: pulse 1s ease;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1.1); }
+            50% { transform: scale(1.15); }
+        }
+
+        .label {
+            font-size: 14px;
+            font-weight: 600;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: color 0.3s ease;
+        }
+
+        .step.active + .label {
+            color: #27ae60;
+            font-weight: 700;
+        }
+
+        /* Message Box */
+        .message-box {
+            background: linear-gradient(135deg, #f8fafc, #ffffff);
+            padding: 25px;
+            border-radius: 15px;
+            margin: 30px 0 20px;
+            border-left: 6px solid #154977;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+        }
+
+        .message {
+            font-size: 22px;
+            color: #154977;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .message i {
+            color: #C83438;
+            font-size: 28px;
+        }
+
+        /* Order Info Card */
+        .order-info {
+            background: #f8fafc;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .order-id {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #154977;
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        .order-id i {
+            color: #C83438;
+            font-size: 18px;
+        }
+
+        .estimated-time {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #27ae60;
+            font-weight: 600;
+            font-size: 16px;
+            padding: 8px 15px;
+            background: #e8f5e9;
+            border-radius: 30px;
+        }
+
+        .estimated-time i {
+            font-size: 18px;
+        }
+
+        /* POPUP */
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(5px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 999;
+        }
+
+        .popup-overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .popup-box {
+            background: #fff;
+            padding: 45px;
+            border-radius: 25px;
+            text-align: center;
+            width: 400px;
+            max-width: 90%;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.3);
+            transform: scale(0.8);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .popup-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 8px;
+            background: linear-gradient(90deg, #27ae60, #2ecc71, #27ae60);
+        }
+
+        .popup-overlay.show .popup-box {
+            transform: scale(1);
+        }
+
+        .popup-box h2 {
+            margin: 0 0 15px;
+            color: #27ae60;
+            font-size: 28px;
+            border: none;
+            padding: 0;
+        }
+
+        .popup-box h2::after {
+            display: none;
+        }
+
+        .popup-box p {
+            margin-bottom: 25px;
+            color: #64748b;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        .popup-box button {
+            padding: 14px 35px;
+            border: none;
+            background: linear-gradient(135deg, #27ae60, #2ecc71);
+            color: white;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(39, 174, 96, 0.3);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .popup-box button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(39, 174, 96, 0.4);
+        }
+
+        .popup-box button i {
+            font-size: 18px;
+        }
+
+        .success-icon {
+            font-size: 70px;
+            color: #27ae60;
+            margin-bottom: 20px;
+            animation: bounceIn 0.5s ease;
+        }
+
+        @keyframes bounceIn {
+            0% {
+                transform: scale(0);
+                opacity: 0;
+            }
+            50% {
+                transform: scale(1.2);
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        /* Back to Home Button */
+        .back-home {
+            margin-top: 25px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #154977;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 15px;
+            padding: 10px 20px;
+            border-radius: 40px;
+            background: #f0f7ff;
+            transition: all 0.3s ease;
+        }
+
+        .back-home:hover {
+            background: #154977;
+            color: white;
+            transform: translateX(-5px);
+        }
+
+        .back-home i {
+            font-size: 16px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 30px 20px;
+            }
+
+            h2 {
+                font-size: 26px;
+            }
+
+            .step {
+                width: 44px;
+                height: 44px;
+                font-size: 18px;
+            }
+
+            .steps::before,
+            .progress {
+                top: 20px;
+            }
+
+            .label {
+                font-size: 11px;
+            }
+
+            .message {
+                font-size: 18px;
+            }
+
+            .order-info {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .step {
+                width: 36px;
+                height: 36px;
+                font-size: 16px;
+            }
+
+            .steps::before,
+            .progress {
+                top: 16px;
+            }
+
+            .label {
+                font-size: 10px;
+            }
+
+            .popup-box {
+                padding: 30px 20px;
+            }
+
+            .success-icon {
+                font-size: 50px;
+            }
+
+            .popup-box h2 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h2>
+        <i class="fas fa-truck"></i>
+        Order Tracking
+        <i class="fas fa-box"></i>
+    </h2>
+
+    <!-- Order Info Card -->
+    <div class="order-info" id="orderInfo">
+        <div class="order-id">
+            <i class="fas fa-hashtag"></i>
+            <span>Order ID: <span id="orderIdDisplay">ORD-2026-001</span></span>
+        </div>
+        <div class="estimated-time" id="estimatedTime">
+            <i class="fas fa-clock"></i>
+            <span>Estimated: 30 mins</span>
+        </div>
+    </div>
+
+    <div class="steps-container">
+        <div class="steps">
+            <div class="progress" id="progress"></div>
+
+            <div class="step-box">
+                <div class="step active">1</div>
+                <div class="label">Order Placed</div>
+            </div>
+
+            <div class="step-box">
+                <div class="step">2</div>
+                <div class="label">Payment</div>
+            </div>
+
+            <div class="step-box">
+                <div class="step">3</div>
+                <div class="label">Preparing</div>
+            </div>
+
+            <div class="step-box">
+                <div class="step">4</div>
+                <div class="label">Shipping</div>
+            </div>
+
+            <div class="step-box">
+                <div class="step">5</div>
+                <div class="label">Delivered</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="message-box">
+        <div class="message" id="message">
+            <i class="fas fa-check-circle"></i>
+            Order Received
+        </div>
+    </div>
+
+    <!-- Back to Home Link -->
+    <a href="index.html" class="back-home">
+        <i class="fas fa-arrow-left"></i>
+        Back to Home
+    </a>
+
+</div>
+
+<!-- POPUP -->
+<div class="popup-overlay" id="popup">
+    <div class="popup-box">
+        <div class="success-icon">
+            <i class="fas fa-check-circle"></i>
+        </div>
+        <h2>Order Delivered!</h2>
+        <p>Your order has been delivered successfully.<br>Thank you for choosing Dr. PK Clinic.</p>
+        <button onclick="continueShopping()">
+            <i class="fas fa-shopping-cart"></i>
+            Continue Shopping
+        </button>
+    </div>
+</div>
+
+<script>
+    // ===== YOUR AUDIO FILES - UPDATE THESE PATHS =====
+    // Place your audio files in a folder like /sounds/ or /audio/
+    // Then update the paths below
+    
+    const soundPayment = new Audio('audio.mp3');      // Payment confirmed sound
+    const soundPreparing = new Audio('audio.mp3');          // Preparing order sound
+    const soundShipping = new Audio('audio.mp3');            // Out for delivery sound
+    const soundDelivered = new Audio('audio.mp3');          // Delivered sound
+    
+    // If you have only one sound file for all steps, use this:
+    // const soundPayment = new Audio('audio.mp3');
+    // const soundPreparing = new Audio('audio.mp3');
+    // const soundShipping = new Audio('audio.mp3');
+    // const soundDelivered = new Audio('audio.mp3');
+
+    // Function to play sound with error handling
+    function playSound(sound) {
+        // Reset the sound to start from beginning
+        sound.currentTime = 0;
+        
+        // Play the sound
+        sound.play().catch(e => {
+            console.log("Sound play failed:", e);
+            // If autoplay is blocked, show a message
+            if (e.name === "NotAllowedError") {
+                console.log("Click on page to enable sounds");
+            }
+        });
+    }
+
+    const steps = document.querySelectorAll(".step");
+    const progress = document.getElementById("progress");
+    const popup = document.getElementById("popup");
+    const message = document.getElementById("message");
+    const orderIdDisplay = document.getElementById("orderIdDisplay");
+    const estimatedTime = document.getElementById("estimatedTime");
+
+    // Get order ID from localStorage
+    const receiptData = JSON.parse(localStorage.getItem("receiptData")) || {};
+    if (receiptData.orderId) {
+        orderIdDisplay.textContent = receiptData.orderId;
+    }
+
+    function activateStep(index, text, width, time, sound) {
+        steps[index].classList.add("active");
+        progress.style.width = width;
+        
+        // Play sound for this step
+        playSound(sound);
+        
+        // Update message with icon
+        message.innerHTML = `<i class="fas ${getIconClass(index)}"></i> ${text}`;
+        
+        // Update estimated time
+        if (index < 4) {
+            estimatedTime.innerHTML = `<i class="fas fa-clock"></i> <span>Estimated: ${time} mins</span>`;
+        } else {
+            estimatedTime.innerHTML = `<i class="fas fa-check-circle"></i> <span>Delivered</span>`;
+        }
+        
+        // Add visual flash effect
+        const messageBox = document.querySelector('.message-box');
+        messageBox.style.backgroundColor = '#e8f5e9';
+        messageBox.style.transition = 'background-color 0.5s ease';
+        setTimeout(() => {
+            messageBox.style.backgroundColor = '';
+        }, 500);
+        
+        // Add animation to the step
+        steps[index].style.animation = 'pulse 0.5s ease';
+        setTimeout(() => {
+            steps[index].style.animation = '';
+        }, 500);
+    }
+
+    function getIconClass(index) {
+        const icons = ['fa-check-circle', 'fa-credit-card', 'fa-cog', 'fa-truck', 'fa-check-double'];
+        return icons[index] || 'fa-circle';
+    }
+
+    // Clear any existing timeouts
+    let timeouts = [];
+    
+    function setTimeoutWithCleanup(fn, delay) {
+        timeouts.push(setTimeout(fn, delay));
+    }
+
+    // Step 1 → 2 (5s) - Payment Confirmed
+    setTimeoutWithCleanup(() => {
+        activateStep(1, "Payment Confirmed ✅", "25%", 25, soundPayment);
+    }, 5000);
+
+    // Step 2 → 3 (7s) - Preparing Order
+    setTimeoutWithCleanup(() => {
+        activateStep(2, "Preparing Your Order 🔧", "50%", 20, soundPreparing);
+    }, 12000);
+
+    // Step 3 → 4 (10s) - Out For Delivery
+    setTimeoutWithCleanup(() => {
+        activateStep(3, "Out For Delivery 🚚", "75%", 15, soundShipping);
+    }, 22000);
+
+    // Step 4 → 5 (10s) - Delivered
+    setTimeoutWithCleanup(() => {
+        activateStep(4, "Delivered Successfully 🎉", "100%", 0, soundDelivered);
+        popup.classList.add("show");
+    }, 32000);
+
+    // Cleanup timeouts on page unload
+    window.addEventListener('beforeunload', () => {
+        timeouts.forEach(clearTimeout);
+    });
+
+    // Continue Shopping function - redirects to shopping page
+    function continueShopping() {
+        // Optional: Clear current order data if you want fresh start
+        // localStorage.removeItem("receiptData");
+        // localStorage.removeItem("cartItems");
+        // localStorage.removeItem("savedCart");
+        
+        // Redirect to shopping page
+        window.location.href = "shopping.html";
+    }
+
+    // Make function global
+    window.continueShopping = continueShopping;
+
+    // Enable audio on first user interaction (for browsers that block autoplay)
+    document.body.addEventListener('click', function enableAudio() {
+        // Try to play and immediately pause a silent sound to enable audio
+        const silentSound = new Audio('data:audio/wav;base64,UklGRlwAAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YVgAAABhYmNkZWZnaGlqa2xtbm9wcXJzdHV2d3h5ent8fX5/gIGCg4SFhoeIiYqLjI2Oj5CRkpOUlZaXmJmam5ydnp+goaKjpKWmp6ipqqusra6vsLGys7S1tre4ubq7vL2+v8DBwsPExcbHyMnKy8zNzs/Q0dLT1NXW19jZ2tvc3d7f4OHi4+Tl5ufo6err7O3u7/Dx8vP09fb3+Pn6+/z9/v8AAOF6AA==');
+        silentSound.play().then(() => {
+            silentSound.pause();
+        }).catch(e => {});
+        document.body.removeEventListener('click', enableAudio);
+    }, { once: true });
+    
+</script>
+</body>
+</html>

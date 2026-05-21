@@ -1,0 +1,1185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dr. PK Clinic - Contact</title>
+    <link rel="icon" href="logoo.png" type="image/png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background-color: #f5f7fa;
+            color: #2c3e50;
+            padding-top: 70px;
+            line-height: 1.6;
+        }
+
+        /* ================= NAVBAR ================= */
+        .top-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 70px;
+            background: linear-gradient(135deg, #1e4b7a, #154977);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 5%;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            z-index: 1000;
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-left .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            color: white;
+            font-size: 22px;
+            font-weight: 700;
+        }
+
+        .nav-left img {
+            width: 50px;
+            height: 50px;
+            object-fit: contain;
+            filter: brightness(0) invert(1);
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .nav-right a {
+            color: rgba(255,255,255,0.9);
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 600;
+            padding: 8px 12px;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-right a:hover {
+            color: white;
+            background: rgba(255,255,255,0.1);
+            transform: translateY(-2px);
+        }
+
+        .nav-right a.active {
+            color: white;
+            background: rgba(255,255,255,0.2);
+        }
+
+        .nav-right a::after {
+            content: "";
+            position: absolute;
+            left: 50%;
+            bottom: -2px;
+            width: 0;
+            height: 3px;
+            background: #ffd700;
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        .nav-right a:hover::after,
+        .nav-right a.active::after {
+            width: 80%;
+        }
+
+        /* ================= CONTACT HERO ================= */
+        .contact-hero {
+            position: relative;
+            width: 100%;
+            height: 400px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero-video {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 1;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(21,73,119,0.8), rgba(0,0,0,0.6));
+            z-index: 2;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 3;
+            text-align: center;
+            color: white;
+            padding: 0 20px;
+        }
+
+        .hero-content h1 {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            animation: fadeInUp 1s ease;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .hero-content p {
+            font-size: 20px;
+            opacity: 0.95;
+            animation: fadeInUp 1s ease 0.2s both;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ================= CONTACT MAIN LAYOUT ================= */
+        .contact-main {
+            max-width: 1300px;
+            margin: 60px auto;
+            padding: 0 30px;
+            display: grid;
+            grid-template-columns: 1.2fr 1fr 1.3fr;
+            gap: 30px;
+        }
+
+        /* ================= SECTION TITLES ================= */
+        .section-title {
+            color: #154977;
+            font-size: 24px;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: #C83438;
+        }
+
+        .section-title i {
+            color: #C83438;
+            font-size: 24px;
+        }
+
+        /* ================= LEFT COLUMN - ADDRESS ================= */
+        .contact-left {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+        }
+
+        .address-card {
+            margin-bottom: 30px;
+        }
+
+        .address-item {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 25px;
+            padding-bottom: 25px;
+            border-bottom: 1px solid #e0e7f0;
+        }
+
+        .address-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .icon-circle {
+            width: 45px;
+            height: 45px;
+            background: #e6f0fa;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .icon-circle i {
+            color: #154977;
+            font-size: 20px;
+        }
+
+        .address-text {
+            flex: 1;
+        }
+
+        .address-text strong {
+            display: block;
+            color: #154977;
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+
+        .address-text p {
+            color: #2c3e50;
+            line-height: 1.6;
+            font-size: 15px;
+        }
+
+        .phone-secondary {
+            margin-top: 5px;
+            color: #64748b !important;
+        }
+
+        /* Hours Card */
+        .hours-card {
+            background: #f8fafc;
+            border-radius: 15px;
+            padding: 25px;
+            margin-top: 20px;
+        }
+
+        .hours-card h3 {
+            color: #154977;
+            font-size: 18px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .hours-card h3 i {
+            color: #C83438;
+        }
+
+        .hours-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px dashed #e0e7f0;
+        }
+
+        .hours-item:last-child {
+            border-bottom: none;
+        }
+
+        .hours-item span:first-child {
+            color: #2c3e50;
+            font-weight: 500;
+        }
+
+        .hours-item span:last-child {
+            color: #154977;
+            font-weight: 600;
+        }
+
+        .hours-item.holiday span:last-child {
+            color: #C83438;
+        }
+
+        /* ================= MIDDLE COLUMN - CONTACT CARDS ================= */
+        .contact-middle {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+        }
+
+        .contact-cards-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .contact-card {
+            background: linear-gradient(135deg, #f8fafc, #ffffff);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid #e0e7f0;
+        }
+
+        .contact-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(21,73,119,0.15);
+        }
+
+        .contact-card.email:hover {
+            border-color: #4facfe;
+        }
+
+        .contact-card.phone:hover {
+            border-color: #43e97b;
+        }
+
+        .card-icon {
+            width: 70px;
+            height: 70px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+        }
+
+        .card-icon .icon {
+            font-size: 32px;
+        }
+
+        .contact-card h3 {
+            color: #154977;
+            font-size: 20px;
+            margin-bottom: 8px;
+        }
+
+        .contact-card p {
+            color: #64748b;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        .contact-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 25px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .email .contact-btn {
+            background: #154977;
+            color: white;
+        }
+
+        .email .contact-btn:hover {
+            background: #1a5a9c;
+            gap: 12px;
+            transform: translateY(-2px);
+        }
+
+        .phone .contact-btn {
+            background: #C83438;
+            color: white;
+        }
+
+        .phone .contact-btn:hover {
+            background: #a02a2d;
+            gap: 12px;
+            transform: translateY(-2px);
+        }
+
+        /* ================= RIGHT COLUMN - MAP ================= */
+        .contact-right {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+        }
+
+        .map-card {
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        .map-container {
+            width: 100%;
+            height: 280px;
+            border-radius: 15px;
+            overflow: hidden;
+            border: 2px solid #e0e7f0;
+        }
+
+        .map-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .map-actions {
+            margin-top: 20px;
+        }
+
+        .direction-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 25px;
+            background: #154977;
+            color: white;
+            text-decoration: none;
+            border-radius: 40px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            width: 100%;
+            justify-content: center;
+        }
+
+        .direction-btn:hover {
+            background: #1a5a9c;
+            gap: 15px;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(21,73,119,0.2);
+        }
+
+        /* ================= BACK TO TOP BUTTON ================= */
+        #topBtn {
+            position: fixed;
+            bottom: 40px;
+            right: 40px;
+            width: 55px;
+            height: 55px;
+            background: #154977;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            font-size: 24px;
+            cursor: pointer;
+            display: none;
+            box-shadow: 0 10px 25px rgba(21, 73, 119, 0.4);
+            transition: all 0.3s ease;
+            z-index: 99;
+        }
+
+        #topBtn:hover {
+            background: #1e5a9c;
+            transform: translateY(-5px) scale(1.1);
+        }
+
+        /* ================= FOOTER ================= */
+        .site-footer {
+            background: #0a1a2a;
+            color: #a0b8cc;
+            padding: 60px 0 0;
+            margin-top: 60px;
+        }
+
+        .footer-container {
+            max-width: 1300px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+            padding: 0 30px;
+        }
+
+        .footer-col h3 {
+            color: white;
+            font-size: 18px;
+            margin-bottom: 25px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-col h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background: #4a90e2;
+        }
+
+        .footer-col p, .footer-col ul {
+            font-size: 14px;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 12px;
+        }
+
+        .footer-col ul li a {
+            color: #a0b8cc;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer-col ul li a:hover {
+            color: white;
+            padding-left: 8px;
+        }
+
+        /* Social icons */
+        .social-icons {
+            display: flex;
+            gap: 10px;
+            margin-top: 12px;
+        }
+
+        .social-icons a {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.12);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 14px;
+            transition: 0.3s ease;
+        }
+
+        .social-icons a.facebook {
+            background: linear-gradient(135deg, #1877f2);
+        }
+
+        .social-icons a.youtube {
+            background: linear-gradient(135deg, #ff0000);
+        }
+
+        .social-icons a.linkedin {
+            background: linear-gradient(#0937d1);
+        }
+
+        .social-icons a.instagram {
+            background: radial-gradient(circle at 30% 110%, 
+                #fdf497 0%, #fdf497 5%, #fd5949 45%, 
+                #d6249f 60%, #285AEB 90%);
+        }
+
+        .watch-live, .appointment {
+            display: inline-block;
+            padding: 12px 25px;
+            border-radius: 40px;
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            margin: 5px 10px 5px 0;
+            transition: all 0.3s ease;
+        }
+
+        .watch-live {
+            background: #e74c3c;
+        }
+
+        .watch-live:hover {
+            background: #c0392b;
+            transform: translateY(-3px);
+        }
+
+        .appointment {
+            background: #154977;
+        }
+
+        .appointment:hover {
+            background: #1e5a9c;
+            transform: translateY(-3px);
+        }
+
+        .store-buttons {
+            display: flex;
+            gap: 15px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .store-buttons a {
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+
+        .store-buttons a:hover {
+            transform: translateY(-5px);
+        }
+
+        .store-buttons img {
+            height: 45px;
+            width: auto;
+        }
+
+        .footer-bottom {
+            background: #05111f;
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+            color: #a0b8cc;
+            font-size: 14px;
+        }
+
+        /* ================= RESPONSIVE DESIGN ================= */
+        @media (max-width: 1200px) {
+            .footer-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 992px) {
+            .contact-main {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            body { padding-top: 120px; }
+            
+            .top-nav {
+                height: auto;
+                padding: 15px 20px;
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .nav-right {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 10px;
+            }
+            
+            .nav-right a {
+                font-size: 14px;
+                padding: 6px 10px;
+            }
+            
+            .footer-container {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            
+            .footer-col h3::after {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+            
+            .hero-content h1 {
+                font-size: 32px;
+            }
+            
+            .hero-content p {
+                font-size: 16px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            #topBtn {
+                bottom: 20px;
+                right: 20px;
+                width: 45px;
+                height: 45px;
+                font-size: 20px;
+            }
+        }
+
+        /* ================= POPUP STYLES ================= */
+        .logout-popup {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(8px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            animation: fadeInPopup 0.3s ease;
+        }
+
+        .logout-popup.fade-out {
+            animation: fadeOutPopup 0.3s ease forwards;
+        }
+
+        .popup-content {
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+            padding: 35px 45px;
+            border-radius: 25px;
+            box-shadow: 0 20px 60px rgba(21, 73, 119, 0.3);
+            text-align: center;
+            max-width: 450px;
+            width: 90%;
+            transform: scale(0.9);
+            animation: scaleIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .popup-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #154977, #4CAF50, #154977);
+            background-size: 200% 100%;
+            animation: gradient 3s linear infinite;
+        }
+
+        .popup-content i {
+            font-size: 75px;
+            color: #4CAF50;
+            margin-bottom: 20px;
+            animation: bounceIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            background: rgba(76, 175, 80, 0.1);
+            padding: 20px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .popup-content h3 {
+            color: #154977;
+            font-size: 28px;
+            margin-bottom: 12px;
+            font-weight: 700;
+        }
+
+        .popup-content p {
+            color: #4a5568;
+            font-size: 16px;
+            margin: 8px 0;
+            line-height: 1.6;
+        }
+
+        .popup-content .popup-message {
+            font-size: 18px;
+            color: #2d3748;
+            font-weight: 500;
+            margin-top: 10px;
+        }
+
+        .popup-content .popup-redirect {
+            color: #718096;
+            font-size: 15px;
+            margin-top: 15px;
+            font-style: italic;
+        }
+
+        .popup-progress {
+            width: 100%;
+            height: 6px;
+            background: #e2e8f0;
+            border-radius: 10px;
+            margin-top: 25px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg, #154977, #4CAF50);
+            border-radius: 10px;
+            animation: progress 2s linear forwards;
+        }
+
+        @keyframes fadeInPopup { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes fadeOutPopup { from { opacity: 1; } to { opacity: 0; } }
+        @keyframes scaleIn { from { transform: scale(0.5); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        @keyframes bounceIn {
+            0% { transform: scale(0.3); opacity: 0; }
+            50% { transform: scale(1.2); opacity: 0.9; }
+            80% { transform: scale(0.9); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        @keyframes progress { from { width: 0%; } to { width: 100%; } }
+        @keyframes gradient { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+
+        /* Profile Icon */
+        .profile-icon {
+            display: flex !important;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #ff0d00, #ffb347) !important;
+            border-radius: 50% !important;
+            padding: 0 !important;
+            font-weight: bold !important;
+            font-size: 18px !important;
+            color: #154977 !important;
+            text-transform: uppercase;
+            border: 2px solid white !important;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2) !important;
+            transition: all 0.3s ease !important;
+            animation: profilePulse 2s infinite;
+        }
+
+        .profile-icon:hover {
+            transform: scale(1.1) rotate(5deg) !important;
+            background: linear-gradient(135deg, #ffb347, #ffd700) !important;
+            box-shadow: 0 6px 15px rgba(255,215,0,0.4) !important;
+        }
+
+        .profile-icon span {
+            display: block;
+            line-height: 1;
+        }
+
+        @keyframes profilePulse {
+            0%, 100% { box-shadow: 0 4px 10px rgba(255,215,0,0.3); }
+            50% { box-shadow: 0 6px 15px rgba(255,215,0,0.6); }
+        }
+    </style>
+</head>
+<body>
+    <!-- NAVBAR -->
+    <nav class="top-nav">
+        <div class="nav-left">
+            <div class="logo">
+                <img src="logoo.png" width="60" alt="Logo">
+                Dr. PK Clinic
+            </div>
+        </div>
+        <div class="nav-right">
+            <a href="index.html">Home</a>
+            <a href="appointment.html">Appointment</a>
+            <a href="about.html">About</a>
+            <a href="services.html">Services</a>
+            <a href="testimonials.html">Testimonials</a>
+            <a href="contact.html">Contact</a>
+            <a href="shopping.html">Shopping</a>
+            <a href="login.html" id="loginLink">Login</a>
+            <!-- Profile icon - hidden by default -->
+            <a href="profile.html" id="profileLink" style="display: none;" class="profile-icon">
+                <span id="profileInitial"></span>
+            </a>
+        </div>
+    </nav>
+
+    <!-- CONTACT HERO -->
+    <div class="contact-hero">
+        <video autoplay muted loop playsinline class="hero-video">
+            <source src="Heartbeat_Video_Generation.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1>Contact Us</h1>
+            <p>We're here to help you with your heart health</p>
+        </div>
+    </div>
+
+    <!-- CONTACT INFORMATION -->
+    <section class="contact-main">
+        <!-- LEFT : ADDRESS SECTION -->
+        <div class="contact-left">
+            <h2 class="section-title">
+                <i class="fas fa-map-marker-alt"></i>
+                Our Address
+            </h2>
+
+            <div class="address-card">
+                <div class="address-item">
+                    <div class="icon-circle">
+                        <i class="fas fa-location-dot"></i>
+                    </div>
+                    <div class="address-text">
+                        <strong>Dr. PK Clinic</strong>
+                        <p>No: 14, M.G.R Nagar 11th Street,<br>Velachery, Chennai, Tamil Nadu 600042</p>
+                    </div>
+                </div>
+
+                <div class="address-item">
+                    <div class="icon-circle">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <div class="address-text">
+                        <p>drpraveenkumarcardiologist@gmail.com</p>
+                    </div>
+                </div>
+
+                <div class="address-item">
+                    <div class="icon-circle">
+                        <i class="fas fa-phone"></i>
+                    </div>
+                    <div class="address-text">
+                        <p>+91 98765 43210</p>
+                        <p class="phone-secondary">+91 98741 25630</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Business Hours -->
+            <div class="hours-card">
+                <h3><i class="fas fa-clock"></i> Clinic Hours</h3>
+                <div class="hours-item">
+                    <span>Monday - Saturday</span>
+                    <span>9:00 AM - 10:30 PM</span>
+                </div>
+                <div class="hours-item">
+                    <span>Sunday</span>
+                    <span>9:00 AM - 12:00 PM</span>
+                </div>
+                <div class="hours-item holiday">
+                    <span>Government Holidays</span>
+                    <span>Closed</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- MIDDLE : CONTACT CARDS -->
+        <div class="contact-middle">
+            <h2 class="section-title">
+                <i class="fas fa-headset"></i>
+                Get in Touch
+            </h2>
+            
+            <div class="contact-cards-container">
+                <div class="contact-card email">
+                    <div class="card-icon">
+                        <span class="icon">📧</span>
+                    </div>
+                    <h3>Email Us</h3>
+                    <p>Send us your queries</p>
+                    <a href="mailto:drpraveenkumarcardiologist@gmail.com" class="contact-btn">
+                        Send Mail <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+
+                <div class="contact-card phone">
+                    <div class="card-icon">
+                        <span class="icon">☎️</span>
+                    </div>
+                    <h3>Call Us</h3>
+                    <p>24/7 Emergency Support</p>
+                    <a href="tel:+919876543210" class="contact-btn">
+                        Call Now <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- RIGHT : LOCATION MAP -->
+        <div class="contact-right">
+            <h2 class="section-title">
+                <i class="fas fa-map"></i>
+                Find Us Here
+            </h2>
+            <div class="map-card">
+                <div class="map-container">
+                    <iframe
+                        src="https://www.google.com/maps?q=12.978075,80.215034&output=embed"
+                        loading="lazy"
+                        title="Clinic Location">
+                    </iframe>
+                </div>
+                <div class="map-actions">
+                    <a href="https://www.google.com/maps/dir//12.978075,80.215034" target="_blank" class="direction-btn">
+                        <i class="fas fa-directions"></i> Get Directions
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <button id="topBtn" onclick="scrollToTop()">↑</button>
+
+    <!-- FOOTER -->
+    <footer class="site-footer">
+        <div class="footer-container">
+            <!-- About -->
+            <div class="footer-col">
+                <h3>About Us</h3>
+                <p>Dr Praveen Kumar A – Expert in lifestyle disease reversal, an acclaimed author, speaker, and specialist in <strong>natural health</strong>. He has helped a large number of patients of different diseases and reversed it through natural healing, researcher of medicine, launched own natural products for <strong>diabetes reversal</strong>, nutrition and <strong>drug-free healing</strong>.</p>
+                <a href="about.html" class="footer-link">For More Details</a>
+
+                <h4>Find Us On:</h4>
+                <div class="social-icons">
+                    <a href="https://www.facebook.com/profile.php?id=100053479690246" class="facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.youtube.com/@move_with_praveen" class="youtube"><i class="fab fa-youtube"></i></a>
+                    <a href="https://www.linkedin.com/in/praveen-kumar-792b8a395/" class="linkedin"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="https://www.instagram.com/praveeneyy19/" class="instagram"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+
+            <!-- Quick Links -->
+            <div class="footer-col">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#">Biswas E-Magazine</a></li>
+                    <li><a href="#">Download Free Ebook</a></li>
+                    <li><a href="#">Coronakaal.tv</a></li>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Gallery</a></li>
+                    <li><a href="#">Blogs</a></li>
+                    <li><a href="#">Credentials</a></li>
+                    <li><a href="#">Research Papers</a></li>
+                    <li><a href="#">Refund & Cancellation Policy</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Shipping Policy</a></li>
+                </ul>
+            </div>
+
+            <!-- Live -->
+            <div class="footer-col">
+                <h3>Join Dr. PK Clinic</h3>
+                <p>To be a part of Dr. Praveen Kumar's next LIVE event</p>
+                <a href="https://youtu.be/28CYhgjrBLA?si=qzg48QoZ8obTjWdv" class="watch-live">CARDIOVASCULAR SYSTEM OVERVIEW</a>
+                <a href="appointment.html" class="appointment">Book Appointment</a>
+            </div>
+            
+            <div class="footer-col">
+                <h3>Download App</h3>
+                <div class="store-buttons">
+                    <a href="https://play.google.com/store/apps/details?id=com.needstreet.health.hppatient">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Get it on Google Play">
+                    </a>
+                    <a href="https://apps.apple.com/in/app/continuouscare-health-app/id674531353">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/3/3c/Download_on_the_App_Store_Badge.svg" alt="Download on the App Store">
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2026 Dr. PK Clinic. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Back to Top
+        let topButton = document.getElementById("topBtn");
+
+        window.onscroll = function() {
+            if (topButton) {
+                if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+                    topButton.style.display = "block";
+                } else {
+                    topButton.style.display = "none";
+                }
+            }
+        };
+
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+
+        // Styled Logout Popup
+        function showLogoutPopup() {
+            const existingPopup = document.querySelector('.logout-popup');
+            if (existingPopup) existingPopup.remove();
+            
+            const popup = document.createElement('div');
+            popup.className = 'logout-popup';
+            popup.innerHTML = `
+                <div class="popup-content">
+                    <i class="fas fa-check-circle"></i>
+                    <h3>Successfully Logged Out!</h3>
+                    <p class="popup-message">You have been logged out of your account.</p>
+                    <p class="popup-redirect">Redirecting to login page in 2 seconds...</p>
+                    <div class="popup-progress">
+                        <div class="progress-bar"></div>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(popup);
+            document.body.style.overflow = 'hidden';
+            
+            setTimeout(() => {
+                popup.classList.add('fade-out');
+                document.body.style.overflow = '';
+                setTimeout(() => {
+                    popup.remove();
+                    window.location.href = "login.html";
+                }, 300);
+            }, 2000);
+        }
+
+        // Navbar Functions
+        function updateNavbarProfile() {
+            const loginLink = document.getElementById("loginLink");
+            const profileLink = document.getElementById("profileLink");
+            const profileInitial = document.getElementById("profileInitial");
+            
+            const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+            const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+            
+            if (loginLink && profileLink && profileInitial) {
+                if (isLoggedIn && currentUser) {
+                    loginLink.style.display = "none";
+                    profileLink.style.display = "flex";
+                    const initial = (currentUser.name || "U").charAt(0).toUpperCase();
+                    profileInitial.textContent = initial;
+                } else {
+                    loginLink.style.display = "inline-block";
+                    profileLink.style.display = "none";
+                }
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            updateNavbarProfile();
+
+            // Login/Logout functionality
+            const loginLink = document.getElementById("loginLink");
+            if (loginLink) {
+                const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+                if (isLoggedIn) {
+                    loginLink.textContent = "Logout";
+                    loginLink.href = "#";
+                    const newLoginLink = loginLink.cloneNode(true);
+                    loginLink.parentNode.replaceChild(newLoginLink, loginLink);
+                    newLoginLink.addEventListener("click", function(e) {
+                        e.preventDefault();
+                        localStorage.removeItem("isLoggedIn");
+                        localStorage.removeItem("savedCart");
+                        localStorage.removeItem("currentUser");
+                        sessionStorage.removeItem("isLoggedIn");
+                        sessionStorage.removeItem("redirectAfterLogin");
+                        showLogoutPopup();
+                    });
+                } else {
+                    loginLink.textContent = "Login";
+                    loginLink.href = "login.html";
+                }
+            }
+
+            // Active page highlighting
+            const navLinks = document.querySelectorAll(".nav-right a");
+            const currentPage = window.location.pathname.split("/").pop();
+            navLinks.forEach(link => {
+                const linkPage = link.getAttribute("href");
+                if (linkPage === currentPage) link.classList.add("active");
+            });
+        });
+    </script>
+</body>
+</html>
