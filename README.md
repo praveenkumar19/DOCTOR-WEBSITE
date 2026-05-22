@@ -63,15 +63,39 @@ Example:
 ```bash
 DOCTOR-WEBSITE/
 │
-├── index.html
-├── css/
-├── js/
-├── images/
-├── pages/
-└── README.md
+├── Main Pages
+│   ├── index.html
+│   ├── about.html
+│   ├── services.html
+│   ├── contact.html
+│   └── appointment.html
+│
+├── Authentication
+│   ├── login.html
+│   ├── signup.html
+│   └── forgetpassword.html
+│
+├── Patient & Store
+│   ├── profile.html
+│   ├── shopping.html
+│   ├── payment.html
+│   ├── receipt.html
+│   └── tracking.html
+│
+├── Additional Pages
+│   ├── testimonials.html
+│   ├── admin.html
+│   └── artical.html
+│
+├── Doctor Profiles
+│   ├── profile01.html
+│   ├── profile02.html
+│   ├── profile03.html
+│   └── profile04.html
+│
+└── Internal CSS, JS & Images
 ```
 
----
 
 ## ⚙️ Installation & Usage
 
